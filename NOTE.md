@@ -1,6 +1,62 @@
 # git
 
-workflow complet après une Pull Request devient :
+## Pull request : Comment faire?
+
+Tu termines ta fonctionnalité.
+
+Tu fais :
+
+git push -u origin feature/home-screen
+
+Maintenant GitHub connaît ta branche.
+
+Sur GitHub :
+
+Tu vas sur ton dépôt :
+
+score_belote_flutter
+
+GitHub va souvent afficher un bouton :
+Compare & pull request
+Tu cliques dessus.
+
+Tu choisis :
+
+base repository : score_belote_flutter
+base branch : dev
+
+compare branch : feature/home-screen
+
+Ce qui veut dire :
+
+"Je veux prendre les changements de feature/home-screen et les mettre dans dev."
+
+Ensuite tu écris un titre :
+
+feat: add home screen navigation menu
+
+Et une description :
+
+- Created HomeScreen
+- Added reusable MenuButton widget
+- Added navigation to:
+  - Score screen
+  - History screen
+  - Settings screen
+
+Puis :
+
+Create pull request
+
+Après ça, GitHub affiche :
+
+feature/home-screen
+|
+| Pull Request
+↓
+dev
+
+## workflow complet après une Pull Request devient :
 
 revenir sur dev
 git checkout dev
