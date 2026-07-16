@@ -1,17 +1,27 @@
-# score_belote
+# 🃏 Score Belote
 
-A new Flutter project.
+A Flutter application to manage and track scores for Belote Gasy games.
 
-## Getting Started
+Built to learn Flutter while solving a real-life problem.
 
-This project is a starting point for a Flutter application.
+## About
 
-A few resources to get you started if this is your first Flutter project:
+Score Belote is an application designed to make score tracking easier during Belote Gasy games.
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+The idea came from a simple problem: keeping track of scores manually can become confusing and sometimes lead to disagreements during games.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+This project is also my journey to learn Flutter by building a complete application from scratch.
+
+## Features
+
+- ✅ Animated splash screen
+- ✅ Welcome screen
+- 🚧 Home screen
+- ⏳ New game
+- ⏳ Score tracking
+- ⏳ Game history
+
+## Tech Stack
+
+- Flutter
+- Dart
