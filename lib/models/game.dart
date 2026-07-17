@@ -27,9 +27,15 @@ class Game {
     //argument2: fonction qui prend en paramète l'accumulateur total et l'élément courant de la liste
   }
 
+  List<Round> _groupRoundsByTeam(Team team) {
+    return rounds.where((r) => r.winnerTeam == team).toList();
+  }
+
   int get totalScoreA => _totalScore(Team.teamA);
   //C'est un getter Dart. Un getter ressemble à une propriété, mais il exécute du code.
   //on pourrait ecire game.totalScoreB pour récupérer le score total de l'équipe B au lieu de game.totalScoreB() comme une méthode.
 
   int get totalScoreB => _totalScore(Team.teamB);
+  List<Round> get teamARounds => _groupRoundsByTeam(Team.teamA);
+  List<Round> get teamBRounds => _groupRoundsByTeam(Team.teamB);
 }
