@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:score_belote/screens/history_screen.dart';
-import 'package:score_belote/screens/score_screen.dart';
+import 'package:score_belote/screens/new_game_screen.dart';
 import 'package:score_belote/screens/settings_screen.dart';
 import 'package:score_belote/widgets/menu_button.dart';
 
@@ -25,7 +25,7 @@ class HomeScreen extends StatelessWidget {
               Text("bienvenue sur score"),
               MenuButton(
                 text: "Nouvelle partie",
-                onPressed: () => _navigateTo(context, const ScoreScreen()),
+                onPressed: () => _navigateTo(context, const NewGameScreen()),
               ),
               MenuButton(
                 text: "Historique",

@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:score_belote/models/game.dart';
 
 class ScoreScreen extends StatelessWidget {
-  const ScoreScreen({super.key});
+  final Game game;
+
+  const ScoreScreen({super.key, required this.game});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Score de la partie')),
-      body: const Center(child: Text('Aucun score disponible pour le moment.')),
+      body: Center(child: Text("${game.teamA} vs ${game.teamB}")),
     );
   }
 }
