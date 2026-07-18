@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:score_belote/enums/game_variant.dart';
 import 'package:score_belote/enums/round_status.dart';
-import 'package:score_belote/enums/team.dart';
+import 'package:score_belote/enums/team_type.dart';
 import 'package:score_belote/models/round.dart';
 import 'package:score_belote/models/game.dart';
-import 'package:score_belote/services/score_calculator.dart';
+import 'package:score_belote/models/team.dart';
+import 'package:score_belote/widgets/add_round_modal.dart';
 import 'package:score_belote/widgets/menu_button.dart';
 
 class ScoreScreen extends StatefulWidget {
@@ -21,22 +22,42 @@ class _ScoreScreenState extends State<ScoreScreen> {
   //il y a une classe pour le widget et une classe pour l'état du widget.
   // dans la classe _ScoreScreenState, on peut accéder à widget.game pour récupérer l'objet game passé en paramètre au widget ScoreScreen.
 
+  final _roundTestA = Round(
+    gameVariant: GameVariant.clubs,
+    roundStatus: RoundStatus.normal,
+    isCapot: false,
+    winnerTeam: Team(teamType: TeamType.teamA, label: "test"),
+    score: GameVariant.clubs.baseScore,
+  );
+  final _roundTestB = Round(
+    gameVariant: GameVariant.spades,
+    roundStatus: RoundStatus.normal,
+    isCapot: false,
+    winnerTeam: Team(teamType: TeamType.teamB, label: "testB"),
+    score: GameVariant.spades.baseScore,
+  );
+
   @override
   void initState() {
     //comme ng onInit dans angular, c'est appelé quand le widget est créé.
     super.initState();
   }
 
-  void _addRoundToGame(Team team) {
-    final round = Round(
-      gameVariant: GameVariant.clubs,
-      roundStatus: RoundStatus.normal,
-      isCapot: false,
-      winnerTeam: team,
-      score: GameVariant.clubs.baseScore,
-    );
+  void _addRoundToGame(Round round, TeamType team) {
     widget.game.rounds.add(round);
     setState(() {});
+  }
+
+  void _openScoreModal() async {
+    final round = await showModalBottomSheet<Round>(
+      context: context,
+      builder: (context) {
+        return AddRoundModal(game: widget.game);
+      },
+    );
+    if (round != null) {
+      _addRoundToGame(round, round.winnerTeam.teamType);
+    }
   }
 
   @override
@@ -47,7 +68,7 @@ class _ScoreScreenState extends State<ScoreScreen> {
         child: Column(
           children: [
             Text(
-              "${widget.game.teamA} vs ${widget.game.teamB}",
+              "${widget.game.teams[0].label} vs ${widget.game.teams[1].label}",
               style: TextStyle(fontSize: 20),
             ),
             Text("${widget.game.totalScoreA} vs ${widget.game.totalScoreB}"),
@@ -61,7 +82,8 @@ class _ScoreScreenState extends State<ScoreScreen> {
                     ),
                     MenuButton(
                       text: " add for A",
-                      onPressed: () => _addRoundToGame(Team.teamA),
+                      onPressed: () =>
+                          _addRoundToGame(_roundTestA, TeamType.teamA),
                     ),
                   ],
                 ),
@@ -75,12 +97,14 @@ class _ScoreScreenState extends State<ScoreScreen> {
                     ),
                     MenuButton(
                       text: " add for B",
-                      onPressed: () => _addRoundToGame(Team.teamB),
+                      onPressed: () =>
+                          _addRoundToGame(_roundTestB, TeamType.teamB),
                     ),
                   ],
                 ),
               ],
             ),
+            MenuButton(text: "modal", onPressed: () => _openScoreModal()),
           ],
         ),
       ),
