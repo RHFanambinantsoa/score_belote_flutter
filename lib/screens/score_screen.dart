@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:score_belote/constants/score_contants.dart';
-import 'package:score_belote/enums/game_variant.dart';
-import 'package:score_belote/enums/round_status.dart';
-import 'package:score_belote/enums/team_type.dart';
 import 'package:score_belote/models/round.dart';
 import 'package:score_belote/models/game.dart';
 import 'package:score_belote/models/team.dart';
@@ -32,24 +29,33 @@ class _ScoreScreenState extends State<ScoreScreen> {
     super.initState();
   }
 
-  void _checkVictory() {
-    if (widget.game.totalScoreA >= ScoreConstants.targetScore ||
-        widget.game.totalScoreB >= ScoreConstants.targetScore) {
-      Team teamWinner = widget.game.totalScoreA > widget.game.totalScoreB
-          ? widget.game.teams[0]
-          : widget.game.teams[1];
+  int targetScore = ScoreConstants.targetScore;
+
+  void _checkVictory(Game game, int target) {
+    if (game.totalScoreA >= target && game.totalScoreB >= target) {
       setState(() {
-        gameFinish = true;
+        targetScore = target + ScoreConstants.targetIncrementInterval;
       });
       showAboutDialog(
         context: context,
-        children: [
-          Text("naharesy ${teamWinner.label} o"),
-          Text(
-            " scores ${widget.game.totalScoreA} - ${widget.game.totalScoreB}",
-          ),
-        ],
+        children: [Text("samy tonga $target fa maty $targetScore indray")],
       );
+    } else {
+      if (game.totalScoreA >= target || game.totalScoreB >= target) {
+        Team teamWinner = game.totalScoreA > game.totalScoreB
+            ? game.teams[0]
+            : game.teams[1];
+        setState(() {
+          gameFinish = true;
+        });
+        showAboutDialog(
+          context: context,
+          children: [
+            Text("naharesy ${teamWinner.label} o"),
+            Text(" scores ${game.totalScoreA} - ${game.totalScoreB}"),
+          ],
+        );
+      }
     }
   }
 
@@ -63,7 +69,7 @@ class _ScoreScreenState extends State<ScoreScreen> {
         widget.game.rounds.add(rounds[i]);
       }
     });
-    _checkVictory();
+    _checkVictory(widget.game, targetScore);
   }
 
   void _openScoreModal() async {
@@ -89,6 +95,7 @@ class _ScoreScreenState extends State<ScoreScreen> {
               "${widget.game.teams[0].label} vs ${widget.game.teams[1].label}",
               style: TextStyle(fontSize: 20),
             ),
+            Text("target: $targetScore"),
             Text("${widget.game.totalScoreA} vs ${widget.game.totalScoreB}"),
             Row(
               mainAxisSize: MainAxisSize.min,
