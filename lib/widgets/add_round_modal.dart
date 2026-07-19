@@ -202,7 +202,9 @@ class _AddRoundModalState extends State<AddRoundModal> {
                             Text('Capot'),
                           ],
                         ),
-                        if (isCapot)
+                        if (isCapot &&
+                            (selectedGameVariant == GameVariant.allTrump ||
+                                selectedGameVariant == GameVariant.noTrump))
                           Row(
                             children: [
                               Checkbox(

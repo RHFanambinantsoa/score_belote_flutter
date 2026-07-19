@@ -3,8 +3,8 @@ enum GameVariant {
   diamonds("Carreau", 16),
   hearts("Cœur", 16),
   spades("Pique", 16),
-  allTrump("Tout Atout", 26),
-  noTrump("Sans Atout", 52);
+  noTrump("Sans Atout", 52),
+  allTrump("Tout Atout", 26);
 
   final String label;
   final int baseScore;
