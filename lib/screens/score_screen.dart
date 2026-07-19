@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:score_belote/constants/score_contants.dart';
 import 'package:score_belote/enums/game_variant.dart';
 import 'package:score_belote/enums/round_status.dart';
 import 'package:score_belote/enums/team_type.dart';
@@ -7,6 +8,8 @@ import 'package:score_belote/models/game.dart';
 import 'package:score_belote/models/team.dart';
 import 'package:score_belote/widgets/add_round_modal.dart';
 import 'package:score_belote/widgets/menu_button.dart';
+
+import 'package:score_belote/screens/new_game_screen.dart';
 
 class ScoreScreen extends StatefulWidget {
   final Game game;
@@ -21,23 +24,7 @@ class _ScoreScreenState extends State<ScoreScreen> {
   //misy class 2 rehefa stafulwidget,
   //il y a une classe pour le widget et une classe pour l'état du widget.
   // dans la classe _ScoreScreenState, on peut accéder à widget.game pour récupérer l'objet game passé en paramètre au widget ScoreScreen.
-
-  final _roundTestA = Round(
-    gameVariant: GameVariant.clubs,
-    roundStatus: RoundStatus.normal,
-    isCapot: false,
-    isDefending: true,
-    winnerTeam: Team(teamType: TeamType.teamA, label: "test"),
-    score: GameVariant.clubs.baseScore,
-  );
-  final _roundTestB = Round(
-    gameVariant: GameVariant.spades,
-    roundStatus: RoundStatus.normal,
-    isCapot: false,
-    isDefending: true,
-    winnerTeam: Team(teamType: TeamType.teamB, label: "testB"),
-    score: GameVariant.spades.baseScore,
-  );
+  bool gameFinish = false;
 
   @override
   void initState() {
@@ -45,10 +32,29 @@ class _ScoreScreenState extends State<ScoreScreen> {
     super.initState();
   }
 
-  void _addRoundToGame(Round round, TeamType team) {
-    setState(() {
-      widget.game.rounds.add(round);
-    });
+  void _checkVictory() {
+    if (widget.game.totalScoreA >= ScoreConstants.targetScore ||
+        widget.game.totalScoreB >= ScoreConstants.targetScore) {
+      Team teamWinner = widget.game.totalScoreA > widget.game.totalScoreB
+          ? widget.game.teams[0]
+          : widget.game.teams[1];
+      setState(() {
+        gameFinish = true;
+      });
+      showAboutDialog(
+        context: context,
+        children: [
+          Text("naharesy ${teamWinner.label} o"),
+          Text(
+            " scores ${widget.game.totalScoreA} - ${widget.game.totalScoreB}",
+          ),
+        ],
+      );
+    }
+  }
+
+  void _navigateTo(BuildContext context, Widget screen) {
+    Navigator.push(context, MaterialPageRoute(builder: (context) => screen));
   }
 
   void _addRoundsToGame(List<Round> rounds) {
@@ -57,6 +63,7 @@ class _ScoreScreenState extends State<ScoreScreen> {
         widget.game.rounds.add(rounds[i]);
       }
     });
+    _checkVictory();
   }
 
   void _openScoreModal() async {
@@ -91,11 +98,6 @@ class _ScoreScreenState extends State<ScoreScreen> {
                     ...widget.game.teamARounds.map(
                       (round) => Text(" ${round.score}"),
                     ),
-                    MenuButton(
-                      text: " add for A",
-                      onPressed: () =>
-                          _addRoundToGame(_roundTestA, TeamType.teamA),
-                    ),
                   ],
                 ),
                 Column(
@@ -103,16 +105,20 @@ class _ScoreScreenState extends State<ScoreScreen> {
                     ...widget.game.teamBRounds
                     // ... est un spread operator
                     .map((round) => Text(" ${round.score} ")),
-                    MenuButton(
-                      text: " add for B",
-                      onPressed: () =>
-                          _addRoundToGame(_roundTestB, TeamType.teamB),
-                    ),
                   ],
                 ),
               ],
             ),
-            MenuButton(text: "modal", onPressed: () => _openScoreModal()),
+            if (!gameFinish)
+              MenuButton(
+                text: "Ajouter un score",
+                onPressed: () => _openScoreModal(),
+              ),
+            if (gameFinish)
+              MenuButton(
+                text: "Nouvelle partie",
+                onPressed: () => _navigateTo(context, const NewGameScreen()),
+              ),
           ],
         ),
       ),
