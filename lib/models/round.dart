@@ -8,6 +8,7 @@ class Round {
   GameVariant gameVariant;
   RoundStatus roundStatus;
   bool isCapot;
+  bool isDefending;
   Team winnerTeam;
   int score;
 
@@ -15,6 +16,7 @@ class Round {
     required this.gameVariant,
     required this.roundStatus,
     required this.isCapot,
+    required this.isDefending,
     required this.winnerTeam,
     required this.score,
   });
@@ -25,6 +27,7 @@ class Round {
       gameVariant: GameVariant.clubs,
       roundStatus: RoundStatus.normal,
       isCapot: false,
+      isDefending: false,
       winnerTeam: Team(label: "EquipeA", teamType: TeamType.teamA),
       score: GameVariant.clubs.baseScore,
     );
@@ -35,6 +38,7 @@ class Round {
       "gameVariant": gameVariant,
       "roundStatus": roundStatus,
       "isCapot": isCapot,
+      "isDefending": isDefending,
       "winnerTeam": winnerTeam,
       "score": score,
     };

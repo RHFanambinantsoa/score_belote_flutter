@@ -26,6 +26,7 @@ class _ScoreScreenState extends State<ScoreScreen> {
     gameVariant: GameVariant.clubs,
     roundStatus: RoundStatus.normal,
     isCapot: false,
+    isDefending: true,
     winnerTeam: Team(teamType: TeamType.teamA, label: "test"),
     score: GameVariant.clubs.baseScore,
   );
@@ -33,6 +34,7 @@ class _ScoreScreenState extends State<ScoreScreen> {
     gameVariant: GameVariant.spades,
     roundStatus: RoundStatus.normal,
     isCapot: false,
+    isDefending: true,
     winnerTeam: Team(teamType: TeamType.teamB, label: "testB"),
     score: GameVariant.spades.baseScore,
   );
@@ -44,19 +46,28 @@ class _ScoreScreenState extends State<ScoreScreen> {
   }
 
   void _addRoundToGame(Round round, TeamType team) {
-    widget.game.rounds.add(round);
-    setState(() {});
+    setState(() {
+      widget.game.rounds.add(round);
+    });
+  }
+
+  void _addRoundsToGame(List<Round> rounds) {
+    setState(() {
+      for (var i = 0; i < rounds.length; i++) {
+        widget.game.rounds.add(rounds[i]);
+      }
+    });
   }
 
   void _openScoreModal() async {
-    final round = await showModalBottomSheet<Round>(
+    final rounds = await showModalBottomSheet<List<Round>>(
       context: context,
       builder: (context) {
         return AddRoundModal(game: widget.game);
       },
     );
-    if (round != null) {
-      _addRoundToGame(round, round.winnerTeam.teamType);
+    if (rounds != null && rounds.isNotEmpty) {
+      _addRoundsToGame(rounds);
     }
   }
 
@@ -73,12 +84,12 @@ class _ScoreScreenState extends State<ScoreScreen> {
             ),
             Text("${widget.game.totalScoreA} vs ${widget.game.totalScoreB}"),
             Row(
+              mainAxisSize: MainAxisSize.min,
               children: [
                 Column(
                   children: [
                     ...widget.game.teamARounds.map(
-                      (round) =>
-                          Text("${round.gameVariant}: ${round.score} points"),
+                      (round) => Text(" ${round.score}"),
                     ),
                     MenuButton(
                       text: " add for A",
@@ -91,10 +102,7 @@ class _ScoreScreenState extends State<ScoreScreen> {
                   children: [
                     ...widget.game.teamBRounds
                     // ... est un spread operator
-                    .map(
-                      (round) =>
-                          Text("${round.gameVariant}: ${round.score} points"),
-                    ),
+                    .map((round) => Text(" ${round.score} ")),
                     MenuButton(
                       text: " add for B",
                       onPressed: () =>
