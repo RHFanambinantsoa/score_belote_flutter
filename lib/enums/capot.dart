@@ -1,0 +1,1 @@
+enum Capot { capotNormal, capotDedans }

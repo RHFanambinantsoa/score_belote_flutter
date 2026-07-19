@@ -72,6 +72,7 @@ class _SplashScreenState extends State<SplashScreen>
       // Future.delayed est une fonction qui exécute du code après un certain délai. comme setTimeout en JavaScript.
       const Duration(seconds: 4),
       () {
+        if (!mounted) return;
         Navigator.pushReplacement(
           //Le Navigator ne reçoit pas directement un écran. Il reçoit une fonction capable de créer l'écran.
           //pushReplacement remplace l'écran actuel par un nouvel écran.
