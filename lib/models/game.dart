@@ -3,12 +3,19 @@ import 'package:score_belote/models/team.dart';
 import 'round.dart';
 
 class Game {
-  List<Team> teams;
+  DateTime date;
+  TeamType? winner;
   List<Round> rounds;
+  late String teamALabel;
+  late String teamBLabel;
 
-  Game({List<Team>? teams, List<Round>? rounds})
-    : rounds = rounds ?? [],
-      teams = teams ?? [];
+  Game({
+    required this.date,
+    required this.teamALabel,
+    required this.teamBLabel,
+    this.winner,
+    List<Round>? rounds,
+  }) : rounds = rounds ?? [];
 
   //explication du constructeur :
   //si on ne passe pas de liste de rounds, on initialise la liste à une liste vide.
@@ -18,7 +25,7 @@ class Game {
 
   int _totalScore(TeamType teamType) {
     return rounds
-        .where((round) => round.winnerTeam.teamType == teamType)
+        .where((round) => round.winnerTeam == teamType)
         //where: équivalent à filter dans typescript
         .map((round) => round.score)
         .fold(0, (total, score) => total + score);
@@ -29,7 +36,7 @@ class Game {
   }
 
   List<Round> _groupRoundsByTeam(TeamType teamType) {
-    return rounds.where((r) => r.winnerTeam.teamType == teamType).toList();
+    return rounds.where((r) => r.winnerTeam == teamType).toList();
   }
 
   int get totalScoreA => _totalScore(TeamType.teamA);
@@ -39,13 +46,33 @@ class Game {
   int get totalScoreB => _totalScore(TeamType.teamB);
   List<Round> get teamARounds => _groupRoundsByTeam(TeamType.teamA);
   List<Round> get teamBRounds => _groupRoundsByTeam(TeamType.teamB);
+  List<Team> get teams => [
+    Team(teamType: TeamType.teamA, label: teamALabel),
+    Team(teamType: TeamType.teamB, label: teamBLabel),
+  ];
+  Team get teamA => Team(teamType: TeamType.teamA, label: teamALabel);
+
+  Team get teamB => Team(teamType: TeamType.teamB, label: teamBLabel);
 
   Map<String, dynamic> toJson() {
     return {
-      "teams": teams.map((t) => t.toJson()).toList(),
-      "totalScoreA": totalScoreA,
-      "totalScoreB": totalScoreB,
+      "date": date.toIso8601String(),
+      "winner": winner?.name,
+      "teamALabel": teamALabel,
+      "teamBLabel": teamBLabel,
       "rounds": rounds.map((r) => r.toJson()).toList(),
     };
+  }
+
+  factory Game.fromJson(Map<String, dynamic> json) {
+    return Game(
+      rounds: (json["rounds"] as List).map((r) => Round.fromJson(r)).toList(),
+      date: DateTime.parse(json["date"]),
+      teamALabel: json["teamALabel"],
+      teamBLabel: json["teamBLabel"],
+      winner: json["winner"] != null
+          ? TeamType.values.firstWhere((e) => e.name == json["winner"])
+          : null,
+    );
   }
 }

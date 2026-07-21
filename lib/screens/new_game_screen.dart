@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:score_belote/enums/team_type.dart';
-import 'package:score_belote/models/team.dart';
 import 'package:score_belote/screens/score_screen.dart';
 import 'package:score_belote/widgets/buttons.dart';
 import 'package:score_belote/models/game.dart';
@@ -18,7 +16,6 @@ class _NewGameScreenState extends State<NewGameScreen> {
   final teamBController = TextEditingController();
   //textEditingController est un widget qui permet de récupérer la valeur d'un TextField
   String errorMessage = "";
-  List<Team> teams = [];
 
   @override
   void dispose() {
@@ -38,9 +35,12 @@ class _NewGameScreenState extends State<NewGameScreen> {
       });
       return;
     }
-    teams.add(Team(teamType: TeamType.teamA, label: teamALabel));
-    teams.add(Team(teamType: TeamType.teamB, label: teamBLabel));
-    Game newGame = Game(teams: teams);
+    Game newGame = Game(
+      teamALabel: teamALabel,
+      teamBLabel: teamBLabel,
+      date: DateTime.now(),
+      winner: null,
+    );
 
     setState(() {
       errorMessage = "";
