@@ -31,7 +31,9 @@ class AppRadioOption<T> extends StatelessWidget {
           color: AppColors.cream2,
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
-            color: AppColors.brown.withOpacity(0.15),
+            color: AppColors.brown.withValues(alpha: 0.15),
+            //withValues dit "Crée une nouvelle couleur à partir de celle-ci, mais remplace sa valeur alpha par 0.5."
+            //alpha pour la tranparence
             width: 2,
           ),
         ),

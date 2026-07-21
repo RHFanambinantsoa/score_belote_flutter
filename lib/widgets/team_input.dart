@@ -47,7 +47,7 @@ class TeamNameField extends StatelessWidget {
               decoration: InputDecoration(
                 hintText: hint,
                 hintStyle: AppTextStyles.body.copyWith(
-                  color: AppColors.wine.withOpacity(0.4),
+                  color: AppColors.wine.withValues(alpha: 0.4),
                 ),
                 border: InputBorder.none,
                 isDense: true,
