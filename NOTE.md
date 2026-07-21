@@ -101,3 +101,27 @@ Dans Flutter, une animation est presque toujours composée de trois éléments :
    ↓
 
 FadeTransition, ScaleTransition...
+
+## installation de isar
+
+Étape 1 : installer Isar
+
+On commence par le moteur.
+
+Dans pubspec.yaml :
+
+dependencies:
+isar: ^3.1.0+1
+isar_flutter_libs: ^3.1.0+1
+
+dev_dependencies:
+isar_generator: ^3.1.0+1
+build_runner: ^2.4.13
+// Lui ne connaît pas isar.
+Son travail est simplement :
+"Exécuter les générateurs de code."
+Il est utilisé par énormément de packages Flutter (json_serializable, freezed, etc.).
+
+Puis :
+
+flutter pub get

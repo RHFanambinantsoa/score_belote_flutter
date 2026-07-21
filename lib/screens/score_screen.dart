@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:score_belote/constants/score_contants.dart';
 import 'package:score_belote/models/round.dart';
 import 'package:score_belote/models/game.dart';
@@ -31,6 +32,14 @@ class _ScoreScreenState extends State<ScoreScreen> {
 
   int targetScore = ScoreConstants.targetScore;
 
+  void _saveGameToHistory(Game game) {
+    // String dateHeure = DateFormat('dd/MM/yyyy HH:mm:ss').format(DateTime.now());
+
+    print(game.toJson());
+    // box
+    // print(gameHistory.toJson());
+  }
+
   void _checkVictory(Game game, int target) {
     if (game.totalScoreA >= target && game.totalScoreB >= target) {
       setState(() {
@@ -45,9 +54,11 @@ class _ScoreScreenState extends State<ScoreScreen> {
         Team teamWinner = game.totalScoreA > game.totalScoreB
             ? game.teams[0]
             : game.teams[1];
+        game.winner = teamWinner.teamType;
         setState(() {
           gameFinish = true;
         });
+        _saveGameToHistory(game);
         showAboutDialog(
           context: context,
           children: [

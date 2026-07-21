@@ -18,41 +18,15 @@ class AddRoundModal extends StatefulWidget {
 }
 
 class _AddRoundModalState extends State<AddRoundModal> {
-  late bool isCapot;
-  late bool isSplit;
-  late bool isDefending;
-  late Team selectedTeam;
-  late GameVariant selectedGameVariant;
-  late RoundStatus selectedRoundStatus;
-  late SplitScore selectedSplitScore;
+  late bool isCapot = false;
+  late bool isSplit = false;
+  late bool isDefending = false;
+  TeamType selectedTeam = TeamType.teamA;
+  GameVariant selectedGameVariant = GameVariant.clubs;
+  RoundStatus selectedRoundStatus = RoundStatus.normal;
+  SplitScore selectedSplitScore = ScoreConstants.splitAllTrumpScores[0];
 
-  Round roundTest = Round(
-    gameVariant: GameVariant.clubs,
-    roundStatus: RoundStatus.normal,
-    isCapot: false,
-    isDefending: false,
-    winnerTeam: Team(teamType: TeamType.teamA, label: "test"),
-    score: GameVariant.clubs.baseScore,
-  );
-
-  @override
-  void initState() {
-    super.initState();
-    isCapot = false;
-    isSplit = false;
-    isDefending = false;
-    selectedTeam = widget.game.teams[0];
-    selectedGameVariant = GameVariant.clubs;
-    selectedRoundStatus = RoundStatus.normal;
-    selectedSplitScore = ScoreConstants.splitAllTrumpScores[0];
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
-  void _selectTeam(Team? value) {
+  void _selectTeam(TeamType? value) {
     if (value != null) {
       setState(() {
         selectedTeam = value;
@@ -107,12 +81,15 @@ class _AddRoundModalState extends State<AddRoundModal> {
         score: selectedSplitScore.callerScore,
       );
       rounds.add(callerRound);
+      final defenderTeam = widget.game.teams.firstWhere(
+        (team) => team.teamType != selectedTeam,
+      );
       Round defenderRound = Round(
         gameVariant: GameVariant.allTrump,
         roundStatus: RoundStatus.normal,
         isCapot: false,
         isDefending: false,
-        winnerTeam: widget.game.teams.where((t) => t != selectedTeam).first,
+        winnerTeam: defenderTeam.teamType,
         score: selectedSplitScore.defenderScore,
       );
       rounds.add(defenderRound);
@@ -150,17 +127,13 @@ class _AddRoundModalState extends State<AddRoundModal> {
                   if (isSplit) Text("Iza no niantso?"),
                   Row(
                     children: [
-                      RadioMenuButton(
-                        value: widget.game.teams[0],
-                        groupValue: selectedTeam,
-                        onChanged: (value) => _selectTeam(value),
-                        child: Text(widget.game.teams[0].label),
-                      ),
-                      RadioMenuButton(
-                        value: widget.game.teams[1],
-                        groupValue: selectedTeam,
-                        onChanged: (value) => _selectTeam(value),
-                        child: Text(widget.game.teams[1].label),
+                      ...widget.game.teams.map(
+                        (team) => RadioMenuButton(
+                          value: team.teamType,
+                          groupValue: selectedTeam,
+                          onChanged: (value) => _selectTeam(value),
+                          child: Text(team.label),
+                        ),
                       ),
                     ],
                   ),
@@ -169,7 +142,7 @@ class _AddRoundModalState extends State<AddRoundModal> {
                     Column(
                       children: [
                         Text(
-                          "${selectedTeam.teamType == TeamType.teamA ? widget.game.totalScoreA : widget.game.totalScoreB}",
+                          "${selectedTeam == TeamType.teamA ? widget.game.totalScoreA : widget.game.totalScoreB}",
                         ),
                         Text("Jeu"),
                         ...GameVariant.values.map(
