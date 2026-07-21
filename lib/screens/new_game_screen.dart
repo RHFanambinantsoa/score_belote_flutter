@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:score_belote/enums/team_type.dart';
-import 'package:score_belote/models/team.dart';
 import 'package:score_belote/screens/score_screen.dart';
 import 'package:score_belote/widgets/buttons.dart';
 import 'package:score_belote/models/game.dart';

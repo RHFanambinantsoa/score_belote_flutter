@@ -6,7 +6,6 @@ import 'package:score_belote/enums/team_type.dart';
 import 'package:score_belote/models/game.dart';
 import 'package:score_belote/models/round.dart';
 import 'package:score_belote/models/split_score.dart';
-import 'package:score_belote/models/team.dart';
 import 'package:score_belote/services/score_calculator.dart';
 import 'package:score_belote/widgets/buttons.dart';
 import 'package:score_belote/widgets/game_variant_selector.dart';

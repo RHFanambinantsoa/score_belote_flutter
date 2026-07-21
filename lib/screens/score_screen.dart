@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:score_belote/constants/score_contants.dart';
 import 'package:score_belote/models/round.dart';
 import 'package:score_belote/models/game.dart';
@@ -35,7 +34,7 @@ class _ScoreScreenState extends State<ScoreScreen> {
   void _saveGameToHistory(Game game) {
     // String dateHeure = DateFormat('dd/MM/yyyy HH:mm:ss').format(DateTime.now());
 
-    print(game.toJson());
+    // print(game.toJson());
     // box
     // print(gameHistory.toJson());
   }

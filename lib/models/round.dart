@@ -3,7 +3,6 @@ import 'package:isar/isar.dart';
 // (@collection, Id, @Enumerated...)
 
 import 'package:score_belote/enums/team_type.dart';
-import 'package:score_belote/models/team.dart';
 
 import '../enums/game_variant.dart';
 import '../enums/round_status.dart';
