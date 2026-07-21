@@ -8,6 +8,9 @@ import 'package:score_belote/models/round.dart';
 import 'package:score_belote/models/split_score.dart';
 import 'package:score_belote/models/team.dart';
 import 'package:score_belote/services/score_calculator.dart';
+import 'package:score_belote/widgets/buttons.dart';
+import 'package:score_belote/widgets/game_variant_selector.dart';
+import 'package:score_belote/widgets/radio_option.dart';
 
 class AddRoundModal extends StatefulWidget {
   final Game game;
@@ -22,30 +25,14 @@ class _AddRoundModalState extends State<AddRoundModal> {
   late bool isSplit = false;
   late bool isDefending = false;
   TeamType selectedTeam = TeamType.teamA;
-  GameVariant selectedGameVariant = GameVariant.clubs;
-  RoundStatus selectedRoundStatus = RoundStatus.normal;
+  GameVariant _selectedGameVariant = GameVariant.clubs;
+  RoundStatus _selectedRoundStatus = RoundStatus.normal;
   SplitScore selectedSplitScore = ScoreConstants.splitAllTrumpScores[0];
 
   void _selectTeam(TeamType? value) {
     if (value != null) {
       setState(() {
         selectedTeam = value;
-      });
-    }
-  }
-
-  void _selectGameVariant(GameVariant? value) {
-    if (value != null) {
-      setState(() {
-        selectedGameVariant = value;
-      });
-    }
-  }
-
-  void _selectRoundStatus(RoundStatus? value) {
-    if (value != null) {
-      setState(() {
-        selectedRoundStatus = value;
       });
     }
   }
@@ -62,8 +49,8 @@ class _AddRoundModalState extends State<AddRoundModal> {
     List<Round> rounds = [];
     if (!isSplit) {
       Round newRound = Round(
-        gameVariant: selectedGameVariant,
-        roundStatus: selectedRoundStatus,
+        gameVariant: _selectedGameVariant,
+        roundStatus: _selectedRoundStatus,
         isCapot: isCapot,
         isDefending: isDefending,
         winnerTeam: selectedTeam,
@@ -145,21 +132,20 @@ class _AddRoundModalState extends State<AddRoundModal> {
                           "${selectedTeam == TeamType.teamA ? widget.game.totalScoreA : widget.game.totalScoreB}",
                         ),
                         Text("Jeu"),
-                        ...GameVariant.values.map(
-                          (gameVariant) => RadioMenuButton(
-                            value: gameVariant,
-                            groupValue: selectedGameVariant,
-                            onChanged: (value) => _selectGameVariant(value),
-                            child: Text(gameVariant.label),
-                          ),
+                        GameVariantSelector(
+                          selected: _selectedGameVariant,
+                          onSelected: (v) =>
+                              setState(() => _selectedGameVariant = v),
                         ),
+
                         Text("Mode"),
                         ...RoundStatus.values.map(
-                          (roundStatus) => RadioMenuButton(
+                          (roundStatus) => AppRadioOption(
                             value: roundStatus,
-                            groupValue: selectedRoundStatus,
-                            onChanged: (value) => _selectRoundStatus(value),
-                            child: Text(roundStatus.label),
+                            groupValue: _selectedRoundStatus,
+                            label: roundStatus.label,
+                            onChanged: (v) =>
+                                setState(() => _selectedRoundStatus = v),
                           ),
                         ),
                         Row(
@@ -176,8 +162,8 @@ class _AddRoundModalState extends State<AddRoundModal> {
                           ],
                         ),
                         if (isCapot &&
-                            (selectedGameVariant == GameVariant.allTrump ||
-                                selectedGameVariant == GameVariant.noTrump))
+                            (_selectedGameVariant == GameVariant.allTrump ||
+                                _selectedGameVariant == GameVariant.noTrump))
                           Row(
                             children: [
                               Checkbox(
@@ -219,19 +205,25 @@ class _AddRoundModalState extends State<AddRoundModal> {
                     ),
                 ],
               ),
-
-              TextButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: const Text("Annuler"),
-              ),
-
-              ElevatedButton(
-                onPressed: () {
-                  _emitRound();
-                },
-                child: const Text("Ajouter"),
+              const SizedBox(height: 12),
+              Row(
+                children: [
+                  Expanded(
+                    child: AppSecondaryButton(
+                      label: 'Annuler',
+                      onPressed: () => Navigator.of(context).pop(),
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: AppPrimaryButton(
+                      label: 'Valider',
+                      onPressed: () {
+                        _emitRound();
+                      },
+                    ),
+                  ),
+                ],
               ),
             ],
           ),

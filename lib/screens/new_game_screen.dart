@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:score_belote/enums/team_type.dart';
 import 'package:score_belote/models/team.dart';
 import 'package:score_belote/screens/score_screen.dart';
-import 'package:score_belote/widgets/menu_button.dart';
+import 'package:score_belote/widgets/buttons.dart';
 import 'package:score_belote/models/game.dart';
+import 'package:score_belote/widgets/team_input.dart';
 
 class NewGameScreen extends StatefulWidget {
   const NewGameScreen({super.key});
@@ -67,19 +68,17 @@ class _NewGameScreenState extends State<NewGameScreen> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              TextField(
-                controller: teamAController,
-                decoration: const InputDecoration(labelText: "Nom équipe A"),
-              ),
+              Text("equipe 1"),
+              TeamNameField(controller: teamAController, suit: "♣"),
               const SizedBox(height: 25),
               Text("contre"),
               const SizedBox(height: 25),
-              TextField(
-                controller: teamBController,
-                decoration: const InputDecoration(labelText: "Nom équipe B"),
-              ),
+              Text("equipe 2"),
+              TeamNameField(controller: teamBController, suit: "♠"),
+
               const SizedBox(height: 25),
-              MenuButton(text: "commencer", onPressed: _validateTeams),
+
+              AppPrimaryButton(label: 'Commencer', onPressed: _validateTeams),
               if (errorMessage.isNotEmpty)
                 Text(
                   errorMessage,

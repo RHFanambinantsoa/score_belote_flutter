@@ -1,7 +1,7 @@
 enum RoundStatus {
-  normal("normal", 1),
-  doubled("contré", 2),
-  redoubled("surcontré", 4);
+  normal("Normal", 1),
+  doubled("Contré", 2),
+  redoubled("Surcontré", 4);
 
   final String label;
   final int multiplifier;
