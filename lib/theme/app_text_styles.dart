@@ -11,6 +11,7 @@ class AppTextStyles {
   AppTextStyles._();
 
   static TextStyle get _nunito => GoogleFonts.nunito();
+  static TextStyle get _baloo => GoogleFonts.baloo2();
 
   /// Corps de texte courant
   static TextStyle get body => _nunito.copyWith(
@@ -24,4 +25,8 @@ class AppTextStyles {
     fontWeight: FontWeight.w800,
     color: AppColors.wineDeep,
   );
+
+  /// Texte des boutons
+  static TextStyle get button =>
+      _baloo.copyWith(fontSize: 17, fontWeight: FontWeight.w700);
 }

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:score_belote/enums/team_type.dart';
 import 'package:score_belote/models/team.dart';
 import 'package:score_belote/screens/score_screen.dart';
-import 'package:score_belote/widgets/menu_button.dart';
+import 'package:score_belote/widgets/buttons.dart';
 import 'package:score_belote/models/game.dart';
 import 'package:score_belote/widgets/team_input.dart';
 
@@ -75,7 +75,8 @@ class _NewGameScreenState extends State<NewGameScreen> {
               TeamNameField(controller: teamBController, suit: "♠"),
 
               const SizedBox(height: 25),
-              MenuButton(text: "commencer", onPressed: _validateTeams),
+
+              AppPrimaryButton(label: 'Commencer', onPressed: _validateTeams),
               if (errorMessage.isNotEmpty)
                 Text(
                   errorMessage,

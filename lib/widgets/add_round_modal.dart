@@ -8,6 +8,7 @@ import 'package:score_belote/models/round.dart';
 import 'package:score_belote/models/split_score.dart';
 import 'package:score_belote/models/team.dart';
 import 'package:score_belote/services/score_calculator.dart';
+import 'package:score_belote/widgets/buttons.dart';
 import 'package:score_belote/widgets/game_variant_selector.dart';
 import 'package:score_belote/widgets/radio_option.dart';
 
@@ -222,19 +223,25 @@ class _AddRoundModalState extends State<AddRoundModal> {
                     ),
                 ],
               ),
-
-              TextButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: const Text("Annuler"),
-              ),
-
-              ElevatedButton(
-                onPressed: () {
-                  _emitRound();
-                },
-                child: const Text("Ajouter"),
+              const SizedBox(height: 12),
+              Row(
+                children: [
+                  Expanded(
+                    child: AppSecondaryButton(
+                      label: 'Annuler',
+                      onPressed: () => Navigator.of(context).pop(),
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: AppPrimaryButton(
+                      label: 'Valider',
+                      onPressed: () {
+                        _emitRound();
+                      },
+                    ),
+                  ),
+                ],
               ),
             ],
           ),

@@ -4,7 +4,7 @@ import 'package:score_belote/models/round.dart';
 import 'package:score_belote/models/game.dart';
 import 'package:score_belote/models/team.dart';
 import 'package:score_belote/widgets/add_round_modal.dart';
-import 'package:score_belote/widgets/menu_button.dart';
+import 'package:score_belote/widgets/buttons.dart';
 
 import 'package:score_belote/screens/new_game_screen.dart';
 
@@ -117,13 +117,13 @@ class _ScoreScreenState extends State<ScoreScreen> {
               ],
             ),
             if (!gameFinish)
-              MenuButton(
-                text: "Ajouter un score",
+              AppPrimaryButton(
+                label: '+ Ajouter un score',
                 onPressed: () => _openScoreModal(),
               ),
             if (gameFinish)
-              MenuButton(
-                text: "Nouvelle partie",
+              AppPrimaryButton(
+                label: '♠ Nouvelle partie',
                 onPressed: () => _navigateTo(context, const NewGameScreen()),
               ),
           ],
