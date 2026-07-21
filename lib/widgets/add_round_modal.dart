@@ -8,6 +8,7 @@ import 'package:score_belote/models/round.dart';
 import 'package:score_belote/models/split_score.dart';
 import 'package:score_belote/models/team.dart';
 import 'package:score_belote/services/score_calculator.dart';
+import 'package:score_belote/widgets/radio_option.dart';
 
 class AddRoundModal extends StatefulWidget {
   final Game game;
@@ -23,7 +24,7 @@ class _AddRoundModalState extends State<AddRoundModal> {
   late bool isDefending;
   late Team selectedTeam;
   late GameVariant selectedGameVariant;
-  late RoundStatus selectedRoundStatus;
+  late RoundStatus _selectedRoundStatus;
   late SplitScore selectedSplitScore;
 
   Round roundTest = Round(
@@ -43,7 +44,7 @@ class _AddRoundModalState extends State<AddRoundModal> {
     isDefending = false;
     selectedTeam = widget.game.teams[0];
     selectedGameVariant = GameVariant.clubs;
-    selectedRoundStatus = RoundStatus.normal;
+    _selectedRoundStatus = RoundStatus.normal;
     selectedSplitScore = ScoreConstants.splitAllTrumpScores[0];
   }
 
@@ -68,14 +69,6 @@ class _AddRoundModalState extends State<AddRoundModal> {
     }
   }
 
-  void _selectRoundStatus(RoundStatus? value) {
-    if (value != null) {
-      setState(() {
-        selectedRoundStatus = value;
-      });
-    }
-  }
-
   void _selectSplitScore(SplitScore? value) {
     if (value != null) {
       setState(() {
@@ -89,7 +82,7 @@ class _AddRoundModalState extends State<AddRoundModal> {
     if (!isSplit) {
       Round newRound = Round(
         gameVariant: selectedGameVariant,
-        roundStatus: selectedRoundStatus,
+        roundStatus: _selectedRoundStatus,
         isCapot: isCapot,
         isDefending: isDefending,
         winnerTeam: selectedTeam,
@@ -182,11 +175,12 @@ class _AddRoundModalState extends State<AddRoundModal> {
                         ),
                         Text("Mode"),
                         ...RoundStatus.values.map(
-                          (roundStatus) => RadioMenuButton(
+                          (roundStatus) => AppRadioOption(
                             value: roundStatus,
-                            groupValue: selectedRoundStatus,
-                            onChanged: (value) => _selectRoundStatus(value),
-                            child: Text(roundStatus.label),
+                            groupValue: _selectedRoundStatus,
+                            label: roundStatus.label,
+                            onChanged: (v) =>
+                                setState(() => _selectedRoundStatus = v),
                           ),
                         ),
                         Row(
