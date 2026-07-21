@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:score_belote/widgets/buttons.dart';
 import 'home_screen.dart';
 
 class WelcomeScreen extends StatelessWidget {
@@ -69,7 +70,8 @@ class WelcomeScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 40),
 
-                ElevatedButton(
+                AppPrimaryButton(
+                  label: 'Commencer',
                   onPressed: () {
                     Navigator.push(
                       context,
@@ -78,13 +80,6 @@ class WelcomeScreen extends StatelessWidget {
                       ),
                     );
                   },
-                  child: const Text(
-                    "Commencer",
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Color.fromARGB(255, 6, 25, 41),
-                    ),
-                  ),
                 ),
               ],
             ),

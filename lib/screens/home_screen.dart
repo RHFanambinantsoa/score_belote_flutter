@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:score_belote/screens/history_screen.dart';
 import 'package:score_belote/screens/new_game_screen.dart';
 import 'package:score_belote/screens/settings_screen.dart';
-import 'package:score_belote/widgets/menu_button.dart';
+import 'package:score_belote/widgets/buttons.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -15,7 +15,6 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 248, 229, 233),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(24),
@@ -23,16 +22,20 @@ class HomeScreen extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text("bienvenue sur score"),
-              MenuButton(
-                text: "Nouvelle partie",
+
+              AppPrimaryButton(
+                label: '♠ Nouvelle partie',
                 onPressed: () => _navigateTo(context, const NewGameScreen()),
               ),
-              MenuButton(
-                text: "Historique",
+
+              const SizedBox(height: 12),
+              AppSecondaryButton(
+                label: 'Historique',
                 onPressed: () => _navigateTo(context, const HistoryScreen()),
               ),
-              MenuButton(
-                text: "Paramètres",
+              const SizedBox(height: 12),
+              AppGhostButton(
+                label: 'Paramètres',
                 onPressed: () => _navigateTo(context, const SettingsScreen()),
               ),
             ],
