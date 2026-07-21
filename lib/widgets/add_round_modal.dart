@@ -8,6 +8,7 @@ import 'package:score_belote/models/round.dart';
 import 'package:score_belote/models/split_score.dart';
 import 'package:score_belote/models/team.dart';
 import 'package:score_belote/services/score_calculator.dart';
+import 'package:score_belote/widgets/game_variant_selector.dart';
 import 'package:score_belote/widgets/radio_option.dart';
 
 class AddRoundModal extends StatefulWidget {
@@ -23,18 +24,9 @@ class _AddRoundModalState extends State<AddRoundModal> {
   late bool isSplit;
   late bool isDefending;
   late Team selectedTeam;
-  late GameVariant selectedGameVariant;
+  late GameVariant _selectedGameVariant;
   late RoundStatus _selectedRoundStatus;
   late SplitScore selectedSplitScore;
-
-  Round roundTest = Round(
-    gameVariant: GameVariant.clubs,
-    roundStatus: RoundStatus.normal,
-    isCapot: false,
-    isDefending: false,
-    winnerTeam: Team(teamType: TeamType.teamA, label: "test"),
-    score: GameVariant.clubs.baseScore,
-  );
 
   @override
   void initState() {
@@ -43,7 +35,7 @@ class _AddRoundModalState extends State<AddRoundModal> {
     isSplit = false;
     isDefending = false;
     selectedTeam = widget.game.teams[0];
-    selectedGameVariant = GameVariant.clubs;
+    _selectedGameVariant = GameVariant.clubs;
     _selectedRoundStatus = RoundStatus.normal;
     selectedSplitScore = ScoreConstants.splitAllTrumpScores[0];
   }
@@ -61,14 +53,6 @@ class _AddRoundModalState extends State<AddRoundModal> {
     }
   }
 
-  void _selectGameVariant(GameVariant? value) {
-    if (value != null) {
-      setState(() {
-        selectedGameVariant = value;
-      });
-    }
-  }
-
   void _selectSplitScore(SplitScore? value) {
     if (value != null) {
       setState(() {
@@ -81,7 +65,7 @@ class _AddRoundModalState extends State<AddRoundModal> {
     List<Round> rounds = [];
     if (!isSplit) {
       Round newRound = Round(
-        gameVariant: selectedGameVariant,
+        gameVariant: _selectedGameVariant,
         roundStatus: _selectedRoundStatus,
         isCapot: isCapot,
         isDefending: isDefending,
@@ -165,14 +149,12 @@ class _AddRoundModalState extends State<AddRoundModal> {
                           "${selectedTeam.teamType == TeamType.teamA ? widget.game.totalScoreA : widget.game.totalScoreB}",
                         ),
                         Text("Jeu"),
-                        ...GameVariant.values.map(
-                          (gameVariant) => RadioMenuButton(
-                            value: gameVariant,
-                            groupValue: selectedGameVariant,
-                            onChanged: (value) => _selectGameVariant(value),
-                            child: Text(gameVariant.label),
-                          ),
+                        GameVariantSelector(
+                          selected: _selectedGameVariant,
+                          onSelected: (v) =>
+                              setState(() => _selectedGameVariant = v),
                         ),
+
                         Text("Mode"),
                         ...RoundStatus.values.map(
                           (roundStatus) => AppRadioOption(
@@ -197,8 +179,8 @@ class _AddRoundModalState extends State<AddRoundModal> {
                           ],
                         ),
                         if (isCapot &&
-                            (selectedGameVariant == GameVariant.allTrump ||
-                                selectedGameVariant == GameVariant.noTrump))
+                            (_selectedGameVariant == GameVariant.allTrump ||
+                                _selectedGameVariant == GameVariant.noTrump))
                           Row(
                             children: [
                               Checkbox(
