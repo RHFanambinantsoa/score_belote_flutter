@@ -26,20 +26,12 @@ class _AddRoundModalState extends State<AddRoundModal> {
   TeamType selectedTeam = TeamType.teamA;
   GameVariant _selectedGameVariant = GameVariant.clubs;
   RoundStatus _selectedRoundStatus = RoundStatus.normal;
-  SplitScore selectedSplitScore = ScoreConstants.splitAllTrumpScores[0];
+  SplitScore _selectedSplitScore = ScoreConstants.splitAllTrumpScores[0];
 
   void _selectTeam(TeamType? value) {
     if (value != null) {
       setState(() {
         selectedTeam = value;
-      });
-    }
-  }
-
-  void _selectSplitScore(SplitScore? value) {
-    if (value != null) {
-      setState(() {
-        selectedSplitScore = value;
       });
     }
   }
@@ -64,7 +56,7 @@ class _AddRoundModalState extends State<AddRoundModal> {
         isCapot: false,
         isDefending: false,
         winnerTeam: selectedTeam,
-        score: selectedSplitScore.callerScore,
+        score: _selectedSplitScore.callerScore,
       );
       rounds.add(callerRound);
       final defenderTeam = widget.game.teams.firstWhere(
@@ -76,7 +68,7 @@ class _AddRoundModalState extends State<AddRoundModal> {
         isCapot: false,
         isDefending: false,
         winnerTeam: defenderTeam.teamType,
-        score: selectedSplitScore.defenderScore,
+        score: _selectedSplitScore.defenderScore,
       );
       rounds.add(defenderRound);
     }
@@ -191,13 +183,13 @@ class _AddRoundModalState extends State<AddRoundModal> {
                         ),
                         Text("Tout Atout"),
                         ...ScoreConstants.splitAllTrumpScores.map(
-                          (splitScore) => RadioMenuButton(
+                          (splitScore) => AppRadioOption(
                             value: splitScore,
-                            groupValue: selectedSplitScore,
-                            onChanged: (value) => _selectSplitScore(value),
-                            child: Text(
-                              "${splitScore.defenderScore} - ${splitScore.callerScore}",
-                            ),
+                            groupValue: _selectedSplitScore,
+                            label:
+                                " ${splitScore.defenderScore}  -  ${splitScore.callerScore} ",
+                            onChanged: (v) =>
+                                setState(() => _selectedSplitScore = v),
                           ),
                         ),
                       ],
