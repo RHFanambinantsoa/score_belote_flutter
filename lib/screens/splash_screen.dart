@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:score_belote/widgets/splash_background.dart';
 import 'welcome_screen.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -101,28 +102,46 @@ class _SplashScreenState extends State<SplashScreen>
     // On appelle ensuite la méthode dispose de la classe parente (State).
   }
 
+  // @override
+  // Widget build(BuildContext context) {
+  //   // build est une méthode spéciale qui est appelée à chaque fois que le widget doit être redessiné.
+  //   //appelle cette methode pour savoir comment il doit s'afficher à l'écran.
+  //   return Scaffold(
+  //     // Scaffold est un widget qui fournit une structure de base pour l'application (barre d'applications, corps, etc.)
+  //     body: Container(
+  //       // Container est un widget qui permet de créer une boîte avec des dimensions, des marges, des couleurs, etc.
+  //       decoration: const BoxDecoration(
+  //         // BoxDecoration est un objet qui permet de décorer un Container avec des couleurs, des images, des bordures, etc.
+  //         gradient: LinearGradient(
+  //           // LinearGradient est un objet qui permet de créer un dégradé de couleurs.
+  //           colors: [
+  //             Color.fromARGB(255, 202, 49, 22),
+  //             Color.fromARGB(255, 231, 226, 228),
+  //             Color.fromARGB(255, 15, 4, 2),
+  //           ],
+  //           begin: Alignment.topLeft,
+  //           end: Alignment.bottomRight,
+  //         ),
+  //       ),
+
+  //       child: Center(
+  //         child: FadeTransition(
+  //           opacity: _fadeAnimation,
+
+  //           child: ScaleTransition(
+  //             scale: _scaleAnimation,
+
+  //             child: Image.asset("assets/images/logo.png", width: 150),
+  //           ),
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
   @override
   Widget build(BuildContext context) {
-    // build est une méthode spéciale qui est appelée à chaque fois que le widget doit être redessiné.
-    //appelle cette methode pour savoir comment il doit s'afficher à l'écran.
     return Scaffold(
-      // Scaffold est un widget qui fournit une structure de base pour l'application (barre d'applications, corps, etc.)
-      body: Container(
-        // Container est un widget qui permet de créer une boîte avec des dimensions, des marges, des couleurs, etc.
-        decoration: const BoxDecoration(
-          // BoxDecoration est un objet qui permet de décorer un Container avec des couleurs, des images, des bordures, etc.
-          gradient: LinearGradient(
-            // LinearGradient est un objet qui permet de créer un dégradé de couleurs.
-            colors: [
-              Color.fromARGB(255, 202, 49, 22),
-              Color.fromARGB(255, 231, 226, 228),
-              Color.fromARGB(255, 15, 4, 2),
-            ],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ),
-        ),
-
+      body: SplashBackground(
         child: Center(
           child: FadeTransition(
             opacity: _fadeAnimation,

@@ -469,3 +469,323 @@ Le prochain gros morceau à maîtriser est surtout :
 car ils sont l'équivalent du **Flexbox CSS**, mais avec des règles plus strictes.
 
 Comprendre ces widgets permet de construire presque toutes les interfaces Flutter.
+
+**********************\*\*\*\***********************\_\_\_**********************\*\*\*\***********************
+
+# Comprendre un widget complexe : SplashBackground
+
+Le widget `SplashBackground` est un excellent exemple de **composition de widgets**.
+
+Contrairement au HTML/CSS où l'on écrit directement du HTML puis du CSS, Flutter construit l'interface en assemblant des widgets.
+
+L'ordre des éléments est :
+
+```
+Fond
+↓
+Symboles de cartes
+↓
+Lueur
+↓
+Logo (child)
+```
+
+---
+
+## Le paramètre `child`
+
+Très souvent, un widget Flutter possède un paramètre :
+
+```dart
+final Widget child;
+```
+
+Cela signifie que le widget ne connaît pas à l'avance ce qu'il affichera.
+
+Par exemple :
+
+```dart
+SplashBackground(
+  child: Image.asset("assets/images/logo.png"),
+)
+```
+
+ou
+
+```dart
+SplashBackground(
+  child: Text("Bienvenue"),
+)
+```
+
+Le fond reste identique, seul le contenu change.
+
+Équivalent HTML :
+
+```html
+<div class="background">
+  <!-- child -->
+</div>
+```
+
+---
+
+## `DecoratedBox`
+
+Permet d'ajouter une décoration :
+
+- couleur
+- bordure
+- coins arrondis
+- dégradé
+
+Équivalent CSS :
+
+```css
+background:
+border:
+border-radius:
+```
+
+---
+
+## `RadialGradient`
+
+Crée un dégradé circulaire.
+
+Équivalent CSS :
+
+```css
+background: radial-gradient(...);
+```
+
+Principaux paramètres :
+
+```dart
+center:
+```
+
+Position du centre.
+
+```dart
+radius:
+```
+
+Rayon du dégradé.
+
+```dart
+colors:
+```
+
+Liste des couleurs.
+
+```dart
+stops:
+```
+
+Position de chaque couleur dans le dégradé.
+
+---
+
+## `Stack`
+
+`Stack` empile les widgets les uns sur les autres.
+
+Équivalent CSS :
+
+```css
+position: relative;
+```
+
+avec plusieurs éléments :
+
+```css
+position: absolute;
+```
+
+Les widgets sont dessinés dans l'ordre.
+
+Le dernier est affiché au-dessus des autres.
+
+---
+
+## `StackFit.expand`
+
+```dart
+Stack(
+  fit: StackFit.expand,
+)
+```
+
+Le Stack prend toute la place disponible.
+
+Équivalent CSS :
+
+```css
+width: 100%;
+height: 100%;
+```
+
+---
+
+## `LayoutBuilder`
+
+Permet de connaître la taille disponible avant de construire les widgets.
+
+Flutter fournit :
+
+```dart
+constraints.maxWidth
+constraints.maxHeight
+```
+
+Exemple :
+
+```dart
+top: constraints.maxHeight * 0.20
+```
+
+Le widget sera placé à 20 % de la hauteur.
+
+Très utile pour créer des interfaces adaptatives.
+
+---
+
+## `Positioned`
+
+Permet de positionner un widget dans un `Stack`.
+
+Équivalent CSS :
+
+```css
+position: absolute;
+top:
+left:
+right:
+bottom:
+```
+
+---
+
+## `Transform.rotate`
+
+Permet de faire pivoter un widget.
+
+Équivalent CSS :
+
+```css
+transform: rotate(...);
+```
+
+---
+
+## `Center`
+
+Centre un widget horizontalement et verticalement.
+
+Équivalent CSS :
+
+```css
+display: flex;
+justify-content: center;
+align-items: center;
+```
+
+---
+
+## `map()`
+
+Très utilisé en Flutter.
+
+Transforme une liste de données en liste de widgets.
+
+Exemple :
+
+```dart
+_symbols.map((symbol) {
+    return Widget(...);
+}).toList()
+```
+
+Équivalent JavaScript :
+
+```javascript
+symbols.map(...)
+```
+
+Le `.toList()` est obligatoire car Flutter attend une `List<Widget>`.
+
+---
+
+## Créer une petite classe pour stocker des données
+
+Au lieu de faire :
+
+```dart
+[
+  ['♠', 0.1, 0.2, 54],
+]
+```
+
+on crée une classe :
+
+```dart
+class _SuitMark {
+  final String symbol;
+  final double top;
+  final double left;
+  final double angle;
+  final double size;
+}
+```
+
+Puis :
+
+```dart
+_SuitMark(
+  '♠',
+  top: 0.06,
+  left: 0.10,
+  angle: -0.21,
+  size: 54,
+)
+```
+
+Le code est beaucoup plus lisible et chaque valeur est clairement identifiée.
+
+---
+
+# Comparaison Flutter / CSS
+
+| CSS                     | Flutter                  |
+| ----------------------- | ------------------------ |
+| background              | DecoratedBox / Container |
+| radial-gradient()       | RadialGradient           |
+| position: relative      | Stack                    |
+| position: absolute      | Positioned               |
+| transform: rotate()     | Transform.rotate         |
+| display:flex + center   | Center                   |
+| width:100%; height:100% | StackFit.expand          |
+| box-shadow              | BoxShadow                |
+| HTML imbriqué           | Composition de widgets   |
+
+---
+
+# Ce qu'il faut retenir
+
+Flutter ne dessine presque jamais directement à l'écran.
+
+On construit l'interface en assemblant de petits widgets :
+
+- `Stack`
+- `Row`
+- `Column`
+- `Container`
+- `Padding`
+- `Center`
+- `Transform`
+- `Positioned`
+
+Chaque widget possède une responsabilité précise.
+
+Une interface complexe est simplement une combinaison de nombreux petits widgets.
