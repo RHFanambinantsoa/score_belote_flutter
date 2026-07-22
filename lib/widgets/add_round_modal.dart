@@ -8,6 +8,7 @@ import 'package:score_belote/models/round.dart';
 import 'package:score_belote/models/split_score.dart';
 import 'package:score_belote/services/score_calculator.dart';
 import 'package:score_belote/widgets/buttons.dart';
+import 'package:score_belote/widgets/check_option.dart';
 import 'package:score_belote/widgets/game_variant_selector.dart';
 import 'package:score_belote/widgets/radio_option.dart';
 
@@ -21,12 +22,12 @@ class AddRoundModal extends StatefulWidget {
 
 class _AddRoundModalState extends State<AddRoundModal> {
   late bool isCapot = false;
-  late bool isSplit = false;
+  late bool _isSplit = false;
   late bool isDefending = false;
   TeamType selectedTeam = TeamType.teamA;
   GameVariant _selectedGameVariant = GameVariant.clubs;
   RoundStatus _selectedRoundStatus = RoundStatus.normal;
-  SplitScore selectedSplitScore = ScoreConstants.splitAllTrumpScores[0];
+  SplitScore _selectedSplitScore = ScoreConstants.splitAllTrumpScores[0];
 
   void _selectTeam(TeamType? value) {
     if (value != null) {
@@ -36,17 +37,9 @@ class _AddRoundModalState extends State<AddRoundModal> {
     }
   }
 
-  void _selectSplitScore(SplitScore? value) {
-    if (value != null) {
-      setState(() {
-        selectedSplitScore = value;
-      });
-    }
-  }
-
   void _emitRound() {
     List<Round> rounds = [];
-    if (!isSplit) {
+    if (!_isSplit) {
       Round newRound = Round(
         gameVariant: _selectedGameVariant,
         roundStatus: _selectedRoundStatus,
@@ -64,7 +57,7 @@ class _AddRoundModalState extends State<AddRoundModal> {
         isCapot: false,
         isDefending: false,
         winnerTeam: selectedTeam,
-        score: selectedSplitScore.callerScore,
+        score: _selectedSplitScore.callerScore,
       );
       rounds.add(callerRound);
       final defenderTeam = widget.game.teams.firstWhere(
@@ -76,7 +69,7 @@ class _AddRoundModalState extends State<AddRoundModal> {
         isCapot: false,
         isDefending: false,
         winnerTeam: defenderTeam.teamType,
-        score: selectedSplitScore.defenderScore,
+        score: _selectedSplitScore.defenderScore,
       );
       rounds.add(defenderRound);
     }
@@ -86,7 +79,6 @@ class _AddRoundModalState extends State<AddRoundModal> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 700,
       child: Padding(
         padding: const EdgeInsets.all(20),
         child: SingleChildScrollView(
@@ -98,19 +90,18 @@ class _AddRoundModalState extends State<AddRoundModal> {
                 children: [
                   Row(
                     children: [
-                      Checkbox(
-                        value: isSplit,
-                        onChanged: (value) {
-                          setState(() {
-                            isSplit = value!;
-                          });
-                        },
+                      Expanded(
+                        child: AppCheckOption(
+                          label: "Split",
+                          checked: _isSplit,
+                          onChanged: (v) => setState(() => _isSplit = v),
+                        ),
                       ),
-                      Text('Split'),
                     ],
                   ),
-                  if (!isSplit) Text("GAGNANT"),
-                  if (isSplit) Text("Iza no niantso?"),
+
+                  if (!_isSplit) Text("GAGNANT"),
+                  if (_isSplit) Text("Iza no niantso?"),
                   Row(
                     children: [
                       ...widget.game.teams.map(
@@ -124,7 +115,7 @@ class _AddRoundModalState extends State<AddRoundModal> {
                     ],
                   ),
 
-                  if (!isSplit)
+                  if (!_isSplit)
                     Column(
                       children: [
                         Text(
@@ -147,6 +138,7 @@ class _AddRoundModalState extends State<AddRoundModal> {
                                 setState(() => _selectedRoundStatus = v),
                           ),
                         ),
+
                         Row(
                           children: [
                             Checkbox(
@@ -178,7 +170,7 @@ class _AddRoundModalState extends State<AddRoundModal> {
                           ),
                       ],
                     ),
-                  if (isSplit)
+                  if (_isSplit)
                     Column(
                       children: [
                         Row(
@@ -191,13 +183,13 @@ class _AddRoundModalState extends State<AddRoundModal> {
                         ),
                         Text("Tout Atout"),
                         ...ScoreConstants.splitAllTrumpScores.map(
-                          (splitScore) => RadioMenuButton(
+                          (splitScore) => AppRadioOption(
                             value: splitScore,
-                            groupValue: selectedSplitScore,
-                            onChanged: (value) => _selectSplitScore(value),
-                            child: Text(
-                              "${splitScore.defenderScore} - ${splitScore.callerScore}",
-                            ),
+                            groupValue: _selectedSplitScore,
+                            label:
+                                " ${splitScore.defenderScore}  -  ${splitScore.callerScore} ",
+                            onChanged: (v) =>
+                                setState(() => _selectedSplitScore = v),
                           ),
                         ),
                       ],

@@ -7,6 +7,7 @@ import 'package:score_belote/widgets/add_round_modal.dart';
 import 'package:score_belote/widgets/buttons.dart';
 
 import 'package:score_belote/screens/new_game_screen.dart';
+import 'package:score_belote/widgets/topbar.dart';
 
 class ScoreScreen extends StatefulWidget {
   final Game game;
@@ -97,7 +98,7 @@ class _ScoreScreenState extends State<ScoreScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Score de la partie')),
+      appBar: AppTopBar(title: 'Score', showDot: false),
       body: Center(
         child: Column(
           children: [

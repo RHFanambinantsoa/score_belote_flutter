@@ -3,6 +3,7 @@ import 'package:score_belote/screens/score_screen.dart';
 import 'package:score_belote/widgets/buttons.dart';
 import 'package:score_belote/models/game.dart';
 import 'package:score_belote/widgets/team_input.dart';
+import 'package:score_belote/widgets/topbar.dart';
 
 class NewGameScreen extends StatefulWidget {
   const NewGameScreen({super.key});
@@ -59,7 +60,7 @@ class _NewGameScreenState extends State<NewGameScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Nouvelle partie')),
+      appBar: AppTopBar(title: 'Nouvelle partie'),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(24),
