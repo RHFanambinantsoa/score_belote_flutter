@@ -36,9 +36,10 @@ class AppTextStyles {
 
   static TextStyle get backButton => const TextStyle(
     fontFamily: _balooFont,
-    fontSize: 26,
+    fontSize: 30,
     color: AppColors.gold,
     fontWeight: FontWeight.w700,
+    height: 1,
   );
 
   /// Titre de topbar (fond bordeaux)
