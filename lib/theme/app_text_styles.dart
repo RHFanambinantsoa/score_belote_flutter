@@ -49,4 +49,12 @@ class AppTextStyles {
     fontWeight: FontWeight.w700,
     color: AppColors.cream,
   );
+
+  /// Titre principal (ex: "SCORE?" sur l'accueil)
+  static TextStyle get appTitle => const TextStyle(
+    fontFamily: _balooFont,
+    fontSize: 34,
+    fontWeight: FontWeight.w800,
+    color: AppColors.wineDeep,
+  );
 }
