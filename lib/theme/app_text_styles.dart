@@ -57,4 +57,12 @@ class AppTextStyles {
     fontWeight: FontWeight.w800,
     color: AppColors.wineDeep,
   );
+
+  /// Libellé de section, majuscules espacées (ex: "ANNONCE")
+  static TextStyle get sectionLabel => const TextStyle(
+    fontSize: 14,
+    fontWeight: FontWeight.w700,
+    color: AppColors.wine,
+    letterSpacing: 1.2,
+  );
 }

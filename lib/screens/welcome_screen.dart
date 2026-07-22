@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:score_belote/constants/app_strings.dart';
 import 'package:score_belote/widgets/buttons.dart';
+import 'package:score_belote/widgets/emoji_badge.dart';
 import 'package:score_belote/widgets/warning_box.dart';
 import 'home_screen.dart';
 import '../theme/app_colors.dart';
@@ -32,25 +33,7 @@ class WelcomeScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 //mainAxisAlignment.center permet de centrer les widgets enfants sur l'axe principal (vertical dans ce cas)
                 children: [
-                  Container(
-                    width: 84,
-                    height: 84,
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                      gradient: RadialGradient(
-                        colors: [AppColors.wineLight, AppColors.wineDeep],
-                        center: Alignment(-0.3, -0.4),
-                      ),
-                      border: Border.fromBorderSide(
-                        BorderSide(color: AppColors.gold, width: 3),
-                      ),
-                    ),
-                    alignment: Alignment.center,
-                    child: const Text(
-                      AppStrings.thinkingEmoji,
-                      style: TextStyle(fontSize: 36),
-                    ),
-                  ),
+                  EmojiBadge(isLarge: false),
                   const SizedBox(height: 14),
                   RichText(
                     textAlign: TextAlign.center,
