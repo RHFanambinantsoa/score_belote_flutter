@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'app_colors.dart';
 
 /// Deux familles, comme sur les maquettes :
@@ -10,23 +9,43 @@ import 'app_colors.dart';
 class AppTextStyles {
   AppTextStyles._();
 
-  static TextStyle get _nunito => GoogleFonts.nunito();
-  static TextStyle get _baloo => GoogleFonts.baloo2();
+  static const String _balooFont = "Baloo2";
+  static const String _nunitoFont = "Nunito";
 
   /// Corps de texte courant
-  static TextStyle get body => _nunito.copyWith(
+  static TextStyle get body => const TextStyle(
+    fontFamily: _balooFont,
     fontSize: 14,
     fontWeight: FontWeight.w600,
     color: AppColors.brown,
   );
 
-  static TextStyle get bodyBold => _nunito.copyWith(
+  static TextStyle get bodyBold => const TextStyle(
+    fontFamily: _nunitoFont,
     fontSize: 14,
     fontWeight: FontWeight.w800,
     color: AppColors.wineDeep,
   );
 
   /// Texte des boutons
-  static TextStyle get button =>
-      _baloo.copyWith(fontSize: 17, fontWeight: FontWeight.w700);
+  static TextStyle get button => const TextStyle(
+    fontFamily: _balooFont,
+    fontSize: 17,
+    fontWeight: FontWeight.w700,
+  );
+
+  static TextStyle get backButton => const TextStyle(
+    fontFamily: _balooFont,
+    fontSize: 26,
+    color: AppColors.gold,
+    fontWeight: FontWeight.w700,
+  );
+
+  /// Titre de topbar (fond bordeaux)
+  static TextStyle get screenTitle => const TextStyle(
+    fontFamily: _balooFont,
+    fontSize: 18,
+    fontWeight: FontWeight.w700,
+    color: AppColors.cream,
+  );
 }

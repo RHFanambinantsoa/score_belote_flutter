@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:score_belote/enums/game_variant.dart';
 import '../theme/app_colors.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 /// Ajoute des propriétés d'affichage à GameVariant.
 /// L'enum reste uniquement responsable des valeurs possibles,
@@ -52,7 +51,8 @@ class GameVariantSelector extends StatelessWidget {
       child: Center(
         child: Text(
           variant.symbol,
-          style: GoogleFonts.nunito().copyWith(
+          style: TextStyle(
+            fontFamily: "Nunito",
             fontSize: 14,
             fontWeight: FontWeight.w800,
             color: isActive
