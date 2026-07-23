@@ -24,6 +24,20 @@ class AppStrings {
   static const String defaultTeamAName = "Nous";
   static const String defaultTeamBName = "Eux";
 
+  static const String newScore = "Nouveau score";
+  static const String splitScoreMode = "Score partagé";
+  static const String winner = "GAGNANT";
+  static const String caller = "Qui a fait l'appel?";
+  static const String game = "Jeu";
+  static const String allTrump = "Tout Atout";
+  static const String noTrump = "Sans Atout";
+  static const String mode = "Mode";
+  static const String capot = "Capot";
+  static const String dedans = "Dedans";
+  static const String splitValues = "Valeur du partage";
+  static const String cancel = "Annuler";
+  static const String submit = "Valider";
+
   static const warningEmoji = "⚠️";
   static const thinkingEmoji = "🤔";
 

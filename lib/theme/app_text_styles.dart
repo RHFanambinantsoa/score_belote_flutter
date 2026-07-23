@@ -60,9 +60,18 @@ class AppTextStyles {
 
   /// Libellé de section, majuscules espacées (ex: "ANNONCE")
   static TextStyle get sectionLabel => const TextStyle(
+    fontFamily: _balooFont,
     fontSize: 14,
     fontWeight: FontWeight.w700,
     color: AppColors.wine,
     letterSpacing: 1.2,
+  );
+
+  /// Titre de modal / bottom sheet
+  static TextStyle get modalTitle => const TextStyle(
+    fontFamily: _balooFont,
+    fontSize: 19,
+    fontWeight: FontWeight.w800,
+    color: AppColors.wineDeep,
   );
 }
