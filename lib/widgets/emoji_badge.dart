@@ -1,6 +1,5 @@
 import 'package:flutter/widgets.dart';
 import '../theme/app_colors.dart';
-import '../theme/app_text_styles.dart';
 
 class EmojiBadge extends StatelessWidget {
   final bool isLarge;

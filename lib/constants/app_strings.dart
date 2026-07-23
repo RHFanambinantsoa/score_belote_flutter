@@ -11,9 +11,18 @@ class AppStrings {
       "elle vous permet de suivre le score sans avoir à vous soucier des calculs complexes.";
 
   static const String startGame = "Commencer";
+  static const String play = "Jouer";
+
   static const String history = "Historique";
   static const String settings = "Paramètres";
   static const String newGame = "Nouvelle partie";
+  static const String teams = "Les équipes ...";
+  static const String teamInputHint = "Nom de l'équipe";
+  static const String teamA = "EQUIPE 1";
+  static const String teamB = "EQUIPE 2";
+  static const String versus = "◆ CONTRE ◆";
+  static const String defaultTeamAName = "Nous";
+  static const String defaultTeamBName = "Eux";
 
   static const warningEmoji = "⚠️";
   static const thinkingEmoji = "🤔";
@@ -22,4 +31,13 @@ class AppStrings {
   static const diamonds = '♦';
   static const hearts = '♥';
   static const spades = '♠';
+}
+
+class ErrorMessages {
+  ErrorMessages._();
+
+  static const String duplicateTeamsNames =
+      "Les deux équipes doivent avoir un nom différent";
+  static const String emptyTeamField =
+      "Le nom de l'équipe ne peut pas être vide";
 }
