@@ -6,6 +6,7 @@ import 'package:score_belote/models/team.dart';
 import 'package:score_belote/widgets/add_round_modal.dart';
 import 'package:score_belote/widgets/buttons.dart';
 import 'package:score_belote/screens/new_game_screen.dart';
+import 'package:score_belote/widgets/rounds_title_section.dart';
 import 'package:score_belote/widgets/topbar.dart';
 import 'package:score_belote/widgets/total_score_section.dart';
 
@@ -104,6 +105,7 @@ class _ScoreScreenState extends State<ScoreScreen> {
           children: [
             // En-tête : nom + total, séparés par VS
             TotalScoreSection(game: widget.game, targetScore: targetScore),
+            RoundsTitleSection(game: widget.game),
             Row(
               mainAxisSize: MainAxisSize.min,
               children: [
