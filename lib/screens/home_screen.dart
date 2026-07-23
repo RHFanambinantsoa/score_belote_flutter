@@ -3,6 +3,10 @@ import 'package:score_belote/screens/history_screen.dart';
 import 'package:score_belote/screens/new_game_screen.dart';
 import 'package:score_belote/screens/settings_screen.dart';
 import 'package:score_belote/widgets/buttons.dart';
+import 'package:score_belote/constants/app_strings.dart';
+import 'package:score_belote/theme/app_colors.dart';
+import 'package:score_belote/theme/app_text_styles.dart';
+import 'package:score_belote/widgets/emoji_badge.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -15,27 +19,46 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
+      backgroundColor: AppColors.cream,
+      body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(24),
+          padding: const EdgeInsets.symmetric(horizontal: 26),
           child: Column(
-            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text("bienvenue sur score"),
-
+              EmojiBadge(isLarge: true),
+              const SizedBox(height: 12),
+              RichText(
+                text: TextSpan(
+                  children: [
+                    TextSpan(text: 'SCORE', style: AppTextStyles.appTitle),
+                    TextSpan(
+                      text: '?',
+                      style: AppTextStyles.appTitle.copyWith(
+                        color: AppColors.gold,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Text(
+                AppStrings.slogan,
+                style: AppTextStyles.sectionLabel.copyWith(letterSpacing: 2),
+              ),
+              const SizedBox(height: 40),
               AppPrimaryButton(
-                label: '♠ Nouvelle partie',
+                label: AppStrings.newGame,
                 onPressed: () => _navigateTo(context, const NewGameScreen()),
               ),
 
               const SizedBox(height: 12),
               AppSecondaryButton(
-                label: 'Historique',
+                label: AppStrings.history,
                 onPressed: () => _navigateTo(context, const HistoryScreen()),
               ),
               const SizedBox(height: 12),
               AppGhostButton(
-                label: 'Paramètres',
+                label: AppStrings.settings,
                 onPressed: () => _navigateTo(context, const SettingsScreen()),
               ),
             ],

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:score_belote/constants/app_strings.dart';
 import 'package:score_belote/screens/score_screen.dart';
+import 'package:score_belote/theme/app_colors.dart';
+import 'package:score_belote/theme/app_text_styles.dart';
 import 'package:score_belote/widgets/buttons.dart';
 import 'package:score_belote/models/game.dart';
 import 'package:score_belote/widgets/team_input.dart';
@@ -13,39 +16,52 @@ class NewGameScreen extends StatefulWidget {
 }
 
 class _NewGameScreenState extends State<NewGameScreen> {
-  final teamAController = TextEditingController();
-  final teamBController = TextEditingController();
+  final _teamAController = TextEditingController(
+    text: AppStrings.defaultTeamAName,
+  );
+  final _teamBController = TextEditingController(
+    text: AppStrings.defaultTeamBName,
+  );
   //textEditingController est un widget qui permet de récupérer la valeur d'un TextField
-  String errorMessage = "";
+  @override
+  void initState() {
+    super.initState();
+
+    _teamAController.addListener(_onTextChanged);
+    _teamBController.addListener(_onTextChanged);
+  }
+
+  void _onTextChanged() {
+    setState(() {});
+  }
 
   @override
   void dispose() {
-    teamAController.dispose();
-    teamBController.dispose();
+    _teamAController.removeListener(_onTextChanged);
+    _teamBController.removeListener(_onTextChanged);
+
+    _teamAController.dispose();
+    _teamBController.dispose();
     super.dispose();
   }
 
-  void _validateTeams() {
-    final teamALabel = teamAController.text.trim();
-    final teamBLabel = teamBController.text.trim();
+  String get _a => _teamAController.text.trim();
+  String get _b => _teamBController.text.trim();
 
-    if (teamBLabel.isEmpty || teamALabel.isEmpty || teamALabel == teamBLabel) {
-      setState(() {
-        errorMessage =
-            "Veuillez entrer les noms des deux équipes et assurez-vous qu'ils sont différents.";
-      });
-      return;
-    }
+  bool get _aEmpty => _a.isEmpty;
+  bool get _bEmpty => _b.isEmpty;
+  bool get _duplicate =>
+      !_aEmpty && !_bEmpty && _a.toLowerCase() == _b.toLowerCase();
+
+  bool get _isValid => !_aEmpty && !_bEmpty && !_duplicate;
+
+  void _validateTeams() {
     Game newGame = Game(
-      teamALabel: teamALabel,
-      teamBLabel: teamBLabel,
+      teamALabel: _a,
+      teamBLabel: _b,
       date: DateTime.now(),
       winner: null,
     );
-
-    setState(() {
-      errorMessage = "";
-    });
 
     _navigateTo(context, ScoreScreen(game: newGame));
   }
@@ -60,33 +76,87 @@ class _NewGameScreenState extends State<NewGameScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppTopBar(title: 'Nouvelle partie'),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(24),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text("equipe 1"),
-              TeamNameField(controller: teamAController, suit: "♣"),
-              const SizedBox(height: 25),
-              Text("contre"),
-              const SizedBox(height: 25),
-              Text("equipe 2"),
-              TeamNameField(controller: teamBController, suit: "♠"),
+      appBar: AppTopBar(title: AppStrings.newGame),
+      body: Padding(
+        padding: const EdgeInsets.all(24),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
 
-              const SizedBox(height: 25),
+          children: [
+            Center(
+              child: Text(AppStrings.teams, style: AppTextStyles.appTitle),
+            ),
+            const SizedBox(height: 40),
 
-              AppPrimaryButton(label: 'Commencer', onPressed: _validateTeams),
-              if (errorMessage.isNotEmpty)
-                Text(
-                  errorMessage,
-                  style: const TextStyle(color: Colors.red),
-                ), //comme ngIf en Angular,
-            ],
-          ),
+            Text(AppStrings.teamA, style: AppTextStyles.sectionLabel),
+            const SizedBox(height: 12),
+            TeamNameField(
+              controller: _teamAController,
+              suit: AppStrings.diamonds,
+            ),
+            SizedBox(
+              height: 24,
+              child: _aEmpty ? _warning(ErrorMessages.emptyTeamField) : null,
+            ),
+
+            const SizedBox(height: 12),
+            Center(
+              child: Text(
+                AppStrings.versus,
+                style: AppTextStyles.sectionLabel.copyWith(
+                  color: AppColors.goldDeep,
+                  fontWeight: FontWeight(800),
+                ),
+              ),
+            ),
+            const SizedBox(height: 12),
+            Text(AppStrings.teamB, style: AppTextStyles.sectionLabel),
+            const SizedBox(height: 12),
+            TeamNameField(
+              controller: _teamBController,
+              suit: AppStrings.spades,
+            ),
+            SizedBox(
+              height: 24,
+              child: _bEmpty
+                  ? _warning(ErrorMessages.emptyTeamField)
+                  : _duplicate
+                  ? _warning(ErrorMessages.duplicateTeamsNames)
+                  : null,
+            ),
+            const SizedBox(height: 40),
+
+            AppPrimaryButton(
+              label: AppStrings.play,
+              onPressed: _isValid ? _validateTeams : null,
+            ),
+            //comme ngIf en Angular,
+          ],
         ),
       ),
     );
   }
+
+  Widget _warning(String text) => Padding(
+    padding: const EdgeInsets.only(top: 6),
+    child: Row(
+      children: [
+        const Text(
+          '⚠ ',
+          style: TextStyle(color: AppColors.red, fontWeight: FontWeight.w800),
+        ),
+        Expanded(
+          child: Text(
+            text,
+            style: AppTextStyles.body.copyWith(
+              color: AppColors.red,
+              fontSize: 12,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+        ),
+      ],
+    ),
+  );
 }

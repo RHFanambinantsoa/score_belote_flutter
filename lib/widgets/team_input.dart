@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import '../theme/app_colors.dart';
-import '../theme/app_text_styles.dart';
+import 'package:score_belote/theme/app_colors.dart';
+import 'package:score_belote/theme/app_text_styles.dart';
+import 'package:score_belote/constants/app_strings.dart';
 
 class TeamNameField extends StatelessWidget {
   final TextEditingController controller;
@@ -11,7 +12,7 @@ class TeamNameField extends StatelessWidget {
     super.key,
     required this.controller,
     required this.suit,
-    this.hint = "Nom de l'équipe",
+    this.hint = AppStrings.teamInputHint,
   });
 
   @override
@@ -26,8 +27,8 @@ class TeamNameField extends StatelessWidget {
       child: Row(
         children: [
           Container(
-            width: 26,
-            height: 26,
+            width: 28,
+            height: 28,
             alignment: Alignment.center,
             decoration: const BoxDecoration(
               color: AppColors.wine,
