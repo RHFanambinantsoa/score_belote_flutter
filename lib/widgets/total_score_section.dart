@@ -5,7 +5,12 @@ import '../theme/app_colors.dart';
 
 class TotalScoreSection extends StatelessWidget {
   final Game game;
-  const TotalScoreSection({super.key, required this.game});
+  final int targetScore;
+  const TotalScoreSection({
+    super.key,
+    required this.game,
+    required this.targetScore,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -15,23 +20,60 @@ class TotalScoreSection extends StatelessWidget {
         border: Border(bottom: BorderSide(color: AppColors.gold, width: 4)),
       ),
       padding: const EdgeInsets.symmetric(vertical: 14),
-      child: Row(
+      child: Column(
+        spacing: 10,
         children: [
-          Expanded(child: _headerColumn(game.teams[0].label, game.totalScoreA)),
-          SizedBox(
-            width: 34,
-            child: Text(
-              'VS',
-              textAlign: TextAlign.center,
-              style: AppTextStyles.button.copyWith(
-                fontWeight: FontWeight.w800,
-                fontSize: 11,
-                color: AppColors.gold.withValues(alpha: 0.6),
-                letterSpacing: 0.5,
-              ),
+          RichText(
+            text: TextSpan(
+              children: [
+                TextSpan(
+                  text: 'Objectif : ',
+                  style: AppTextStyles.sectionLabel.copyWith(
+                    fontSize: 18,
+                    color: AppColors.cream2,
+                  ),
+                ),
+                TextSpan(
+                  text: "$targetScore",
+                  style: AppTextStyles.sectionLabel.copyWith(
+                    fontSize: 20,
+                    color: AppColors.goldDeep,
+                  ),
+                ),
+              ],
             ),
           ),
-          Expanded(child: _headerColumn(game.teams[1].label, game.totalScoreB)),
+          Container(
+            height: 2,
+            margin: const EdgeInsets.symmetric(vertical: 2),
+            decoration: BoxDecoration(
+              color: AppColors.brown.withOpacity(0.15),
+              borderRadius: BorderRadius.circular(2),
+            ),
+          ),
+          Row(
+            children: [
+              Expanded(
+                child: _headerColumn(game.teams[0].label, game.totalScoreA),
+              ),
+              SizedBox(
+                width: 34,
+                child: Text(
+                  'VS',
+                  textAlign: TextAlign.center,
+                  style: AppTextStyles.button.copyWith(
+                    fontWeight: FontWeight.w800,
+                    fontSize: 11,
+                    color: AppColors.gold.withValues(alpha: 0.6),
+                    letterSpacing: 0.5,
+                  ),
+                ),
+              ),
+              Expanded(
+                child: _headerColumn(game.teams[1].label, game.totalScoreB),
+              ),
+            ],
+          ),
         ],
       ),
     );

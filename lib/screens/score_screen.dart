@@ -103,13 +103,7 @@ class _ScoreScreenState extends State<ScoreScreen> {
         child: Column(
           children: [
             // En-tête : nom + total, séparés par VS
-            TotalScoreSection(game: widget.game),
-            Text(
-              "${widget.game.teams[0].label} vs ${widget.game.teams[1].label}",
-              style: TextStyle(fontSize: 20),
-            ),
-            Text("target: $targetScore"),
-            Text("${widget.game.totalScoreA} vs ${widget.game.totalScoreB}"),
+            TotalScoreSection(game: widget.game, targetScore: targetScore),
             Row(
               mainAxisSize: MainAxisSize.min,
               children: [
