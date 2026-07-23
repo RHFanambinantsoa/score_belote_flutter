@@ -34,6 +34,14 @@ class AppTextStyles {
     fontWeight: FontWeight.w700,
   );
 
+  /// Gros score
+  static TextStyle get bigScore => const TextStyle(
+    fontFamily: _balooFont,
+    fontSize: 32,
+    fontWeight: FontWeight.w800,
+    color: AppColors.wineDeep,
+  );
+
   static TextStyle get backButton => const TextStyle(
     fontFamily: _balooFont,
     fontSize: 30,
