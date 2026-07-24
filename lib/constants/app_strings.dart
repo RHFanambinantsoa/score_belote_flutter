@@ -40,6 +40,7 @@ class AppStrings {
 
   static const String warningEmoji = "⚠️";
   static const String thinkingEmoji = "🤔";
+  static const String binEmoji = '🗑️';
 
   static const String clubsSymbol = '♣';
   static const String diamondsSymbol = '♦';
@@ -52,6 +53,7 @@ class AppStrings {
   static const String dedansAbbreviation = "D";
   static const String capotAbbreviation = "Cap.";
 
+  //setting screen
   static const String gameOptions = "Options du jeu";
   static const String allowSplitScore = "Autoriser le partage du score (TA)";
   static const String allowClubsRedoubleScore = "Autoriser le Trèfle Surcontré";
@@ -62,6 +64,13 @@ class AppStrings {
   static const String data = "Données";
   static const String deleteHistory = "Effacer l'historique";
   static const String reset = 'Réinitialiser';
+
+  //modals
+  static const String deleteHistoryModalTitle = "Supprimer l'historique ?";
+  static const String deleteHistoryModalMessage =
+      'Toutes les parties enregistrées seront définitivement supprimées. '
+      'Cette action est irréversible.';
+  static const String delete = 'Supprimer';
 }
 
 class ErrorMessages {

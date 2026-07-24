@@ -5,6 +5,7 @@ import 'package:score_belote/models/split_score.dart';
 import 'package:score_belote/theme/app_colors.dart';
 import 'package:score_belote/theme/app_text_styles.dart';
 import 'package:score_belote/widgets/check_option.dart';
+import 'package:score_belote/widgets/confirm_modal.dart';
 import 'package:score_belote/widgets/switch_option.dart';
 import 'package:score_belote/widgets/topbar.dart';
 
@@ -93,11 +94,27 @@ class SettingsScreenState extends State<SettingsScreen> {
                 SizedBox(height: 20),
                 Center(child: _groupLabel(AppStrings.data.toUpperCase())),
                 _rowExpanded(
-                  _valueRow(
-                    context,
-                    AppStrings.deleteHistory,
-                    AppStrings.reset,
-                    valueColor: AppColors.red,
+                  GestureDetector(
+                    onTap: () async {
+                      final confirmed = await AppConfirmDialog.show(
+                        context,
+                        title: AppStrings.deleteHistoryModalTitle,
+                        message: AppStrings.deleteHistoryModalMessage,
+                        confirmLabel: AppStrings.delete,
+                        isDestructive: true,
+                        icon: AppStrings.binEmoji,
+                      );
+                      if (confirmed == true) {
+                        _doSomething("reinitialiser");
+                        // todo : suppresssion de l'historique
+                      }
+                    },
+                    child: _valueRow(
+                      context,
+                      AppStrings.deleteHistory,
+                      AppStrings.reset,
+                      valueColor: AppColors.red,
+                    ),
                   ),
                 ),
               ],
@@ -126,16 +143,11 @@ class SettingsScreenState extends State<SettingsScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(label, style: AppTextStyles.bodyBold.copyWith(fontSize: 14)),
-            GestureDetector(
-              onTap: () {
-                _doSomething(label);
-              },
-              child: Text(
-                value,
-                style: AppTextStyles.button.copyWith(
-                  fontSize: 13,
-                  color: valueColor ?? AppColors.wine,
-                ),
+            Text(
+              value,
+              style: AppTextStyles.button.copyWith(
+                fontSize: 13,
+                color: valueColor ?? AppColors.wine,
               ),
             ),
           ],
