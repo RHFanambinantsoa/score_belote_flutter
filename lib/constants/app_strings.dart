@@ -24,13 +24,33 @@ class AppStrings {
   static const String defaultTeamAName = "Nous";
   static const String defaultTeamBName = "Eux";
 
-  static const warningEmoji = "⚠️";
-  static const thinkingEmoji = "🤔";
+  static const String newScore = "Nouveau score";
+  static const String splitScoreMode = "Score partagé";
+  static const String winner = "GAGNANT";
+  static const String caller = "Qui a fait l'appel?";
+  static const String game = "Jeu";
+  static const String allTrump = "Tout Atout";
+  static const String noTrump = "Sans Atout";
+  static const String mode = "Mode";
+  static const String capot = "Capot";
+  static const String dedans = "Dedans";
+  static const String splitValues = "Valeur du partage";
+  static const String cancel = "Annuler";
+  static const String submit = "Valider";
 
-  static const clubs = '♣';
-  static const diamonds = '♦';
-  static const hearts = '♥';
-  static const spades = '♠';
+  static const String warningEmoji = "⚠️";
+  static const String thinkingEmoji = "🤔";
+
+  static const String clubsSymbol = '♣';
+  static const String diamondsSymbol = '♦';
+  static const String heartsSymbol = '♥';
+  static const String spadesSymbol = '♠';
+  static const String allTrumpAbbreviation = "TA";
+  static const String noTrumpAbbreviation = "SA";
+  static const String doubledAbbreviation = "x2";
+  static const String redoubledAbbreviation = "x4";
+  static const String dedansAbbreviation = "D";
+  static const String capotAbbreviation = "Cap.";
 }
 
 class ErrorMessages {

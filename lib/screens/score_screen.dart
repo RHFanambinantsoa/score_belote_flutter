@@ -5,9 +5,11 @@ import 'package:score_belote/models/game.dart';
 import 'package:score_belote/models/team.dart';
 import 'package:score_belote/widgets/add_round_modal.dart';
 import 'package:score_belote/widgets/buttons.dart';
-
 import 'package:score_belote/screens/new_game_screen.dart';
+import 'package:score_belote/widgets/rounds_title_section.dart';
 import 'package:score_belote/widgets/topbar.dart';
+import 'package:score_belote/widgets/total_score_section.dart';
+import 'package:score_belote/widgets/rounds_listview.dart';
 
 class ScoreScreen extends StatefulWidget {
   final Game game;
@@ -102,31 +104,10 @@ class _ScoreScreenState extends State<ScoreScreen> {
       body: Center(
         child: Column(
           children: [
-            Text(
-              "${widget.game.teams[0].label} vs ${widget.game.teams[1].label}",
-              style: TextStyle(fontSize: 20),
-            ),
-            Text("target: $targetScore"),
-            Text("${widget.game.totalScoreA} vs ${widget.game.totalScoreB}"),
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Column(
-                  children: [
-                    ...widget.game.teamARounds.map(
-                      (round) => Text(" ${round.score}"),
-                    ),
-                  ],
-                ),
-                Column(
-                  children: [
-                    ...widget.game.teamBRounds
-                    // ... est un spread operator
-                    .map((round) => Text(" ${round.score} ")),
-                  ],
-                ),
-              ],
-            ),
+            // En-tête : nom + total, séparés par VS
+            TotalScoreSection(game: widget.game, targetScore: targetScore),
+            RoundsTitleSection(game: widget.game),
+            Expanded(child: RoundsListview(rounds: widget.game.rounds)),
             if (!gameFinish)
               AppPrimaryButton(
                 label: '+ Ajouter un score',
