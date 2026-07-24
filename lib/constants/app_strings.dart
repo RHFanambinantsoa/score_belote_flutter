@@ -51,6 +51,17 @@ class AppStrings {
   static const String redoubledAbbreviation = "x4";
   static const String dedansAbbreviation = "D";
   static const String capotAbbreviation = "Cap.";
+
+  static const String gameOptions = "Options du jeu";
+  static const String allowSplitScore = "Autoriser le partage du score (TA)";
+  static const String allowClubsRedoubleScore = "Autoriser le Trèfle Surcontré";
+  static const String allowNoTrumpRedoubleScore =
+      "Autoriser le Sans Atout Surcontré";
+  static const String endGameRoundsLabel = "Fin de la partie";
+  static const String allTrumpCapotDedansEndGame = "Tout Atout Capot Dedans";
+  static const String data = "Données";
+  static const String deleteHistory = "Effacer l'historique";
+  static const String reset = 'Réinitialiser';
 }
 
 class ErrorMessages {
