@@ -41,6 +41,8 @@ class AppStrings {
   static const String warningEmoji = "⚠️";
   static const String thinkingEmoji = "🤔";
   static const String binEmoji = '🗑️';
+  static const String versusEmoji = '🆚';
+  static const String trophyEmoji = '🏆';
 
   static const String clubsSymbol = '♣';
   static const String diamondsSymbol = '♦';
@@ -71,6 +73,14 @@ class AppStrings {
       'Toutes les parties enregistrées seront définitivement supprimées. '
       'Cette action est irréversible.';
   static const String delete = 'Supprimer';
+
+  //history
+  static const String emptyHistoryMessage =
+      "Aucune partie jouée pour l'instant.\nLancez votre première partie depuis le menu !";
+
+  //history modal
+  static const String classicVictory = "🎉 Victoire classique";
+  static const String CapotVictory = "🔥 Victoire par Capot 👉 ";
 }
 
 class ErrorMessages {
