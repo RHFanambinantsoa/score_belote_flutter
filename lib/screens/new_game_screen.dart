@@ -93,7 +93,7 @@ class _NewGameScreenState extends State<NewGameScreen> {
             const SizedBox(height: 12),
             TeamNameField(
               controller: _teamAController,
-              suit: AppStrings.diamonds,
+              suit: AppStrings.diamondsSymbol,
             ),
             SizedBox(
               height: 24,
@@ -115,7 +115,7 @@ class _NewGameScreenState extends State<NewGameScreen> {
             const SizedBox(height: 12),
             TeamNameField(
               controller: _teamBController,
-              suit: AppStrings.spades,
+              suit: AppStrings.spadesSymbol,
             ),
             SizedBox(
               height: 24,

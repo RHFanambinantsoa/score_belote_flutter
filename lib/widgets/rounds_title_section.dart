@@ -18,7 +18,7 @@ class RoundsTitleSection extends StatelessWidget {
           Row(
             children: [
               Expanded(
-                flex: 2,
+                flex: 5,
                 child: Center(
                   child: Text(
                     AppStrings.game,
@@ -31,7 +31,7 @@ class RoundsTitleSection extends StatelessWidget {
               ),
               _verticalLine(),
               Expanded(
-                flex: 3,
+                flex: 4,
                 child: Center(
                   child: Text(
                     game.teamALabel,
@@ -46,7 +46,7 @@ class RoundsTitleSection extends StatelessWidget {
 
               _verticalLine(),
               Expanded(
-                flex: 3,
+                flex: 4,
                 child: Center(
                   child: Text(
                     game.teamBLabel,
@@ -81,10 +81,10 @@ class RoundsTitleSection extends StatelessWidget {
 
   Widget _horizontalLine() {
     return Container(
-      height: 2,
+      height: 3,
       margin: const EdgeInsets.symmetric(vertical: 2),
       decoration: BoxDecoration(
-        color: AppColors.brown.withValues(alpha: 0.15),
+        color: AppColors.wineDeep.withValues(alpha: 0.5),
         borderRadius: BorderRadius.circular(2),
       ),
     );

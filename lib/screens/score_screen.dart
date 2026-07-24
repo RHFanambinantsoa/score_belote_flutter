@@ -9,6 +9,7 @@ import 'package:score_belote/screens/new_game_screen.dart';
 import 'package:score_belote/widgets/rounds_title_section.dart';
 import 'package:score_belote/widgets/topbar.dart';
 import 'package:score_belote/widgets/total_score_section.dart';
+import 'package:score_belote/widgets/rounds_listview.dart';
 
 class ScoreScreen extends StatefulWidget {
   final Game game;
@@ -106,25 +107,7 @@ class _ScoreScreenState extends State<ScoreScreen> {
             // En-tête : nom + total, séparés par VS
             TotalScoreSection(game: widget.game, targetScore: targetScore),
             RoundsTitleSection(game: widget.game),
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Column(
-                  children: [
-                    ...widget.game.teamARounds.map(
-                      (round) => Text(" ${round.score}"),
-                    ),
-                  ],
-                ),
-                Column(
-                  children: [
-                    ...widget.game.teamBRounds
-                    // ... est un spread operator
-                    .map((round) => Text(" ${round.score} ")),
-                  ],
-                ),
-              ],
-            ),
+            Expanded(child: RoundsListview(rounds: widget.game.rounds)),
             if (!gameFinish)
               AppPrimaryButton(
                 label: '+ Ajouter un score',
