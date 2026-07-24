@@ -108,16 +108,24 @@ class _ScoreScreenState extends State<ScoreScreen> {
             TotalScoreSection(game: widget.game, targetScore: targetScore),
             RoundsTitleSection(game: widget.game),
             Expanded(child: RoundsListview(rounds: widget.game.rounds)),
-            if (!gameFinish)
-              AppPrimaryButton(
-                label: '+ Ajouter un score',
-                onPressed: () => _openScoreModal(),
-              ),
-            if (gameFinish)
-              AppPrimaryButton(
-                label: '♠ Nouvelle partie',
-                onPressed: () => _navigateTo(context, const NewGameScreen()),
-              ),
+            Row(
+              spacing: 4,
+              children: [
+                SizedBox(width: 10),
+                Expanded(
+                  child: AppPrimaryButton(
+                    label: !gameFinish
+                        ? '+ Ajouter un score'
+                        : '♠ Nouvelle partie',
+                    onPressed: () => !gameFinish
+                        ? _openScoreModal()
+                        : _navigateTo(context, NewGameScreen()),
+                  ),
+                ),
+                SizedBox(width: 10),
+              ],
+            ),
+            SizedBox(height: 20),
           ],
         ),
       ),
