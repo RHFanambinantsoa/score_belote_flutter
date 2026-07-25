@@ -43,6 +43,7 @@ class AppStrings {
   static const String binEmoji = '🗑️';
   static const String versusEmoji = '🆚';
   static const String trophyEmoji = '🏆';
+  static const String cardEmoji = '🃏';
 
   static const String clubsSymbol = '♣';
   static const String diamondsSymbol = '♦';

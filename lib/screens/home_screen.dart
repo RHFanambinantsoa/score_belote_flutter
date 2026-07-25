@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:score_belote/constants/fake_datas.dart';
 import 'package:score_belote/screens/history_screen.dart';
 import 'package:score_belote/screens/new_game_screen.dart';
 import 'package:score_belote/screens/settings_screen.dart';
@@ -54,7 +55,10 @@ class HomeScreen extends StatelessWidget {
               const SizedBox(height: 12),
               AppSecondaryButton(
                 label: AppStrings.history,
-                onPressed: () => _navigateTo(context, const HistoryScreen()),
+                onPressed: () => _navigateTo(
+                  context,
+                  HistoryScreen(items: FakeDatas.fakeItems),
+                ),
               ),
               const SizedBox(height: 12),
               AppGhostButton(

@@ -10,6 +10,7 @@ class GameHistoryItem {
   final String teamBName;
   final int scoreA;
   final int scoreB;
+  final String capotWinGameName;
 
   const GameHistoryItem({
     required this.dateLabel,
@@ -18,6 +19,7 @@ class GameHistoryItem {
     required this.teamBName,
     required this.scoreA,
     required this.scoreB,
+    required this.capotWinGameName,
   });
 
   bool get aWins => scoreA > scoreB;
@@ -25,64 +27,50 @@ class GameHistoryItem {
 
 class HistoryCard extends StatelessWidget {
   final GameHistoryItem item;
-  final String capotWinGameName;
 
-  const HistoryCard({
-    super.key,
-    required this.item,
-    required this.capotWinGameName,
-  });
+  const HistoryCard({super.key, required this.item});
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-          decoration: BoxDecoration(
-            color: AppColors.cream2,
-            borderRadius: BorderRadius.circular(16),
-            border: Border.all(
-              color: AppColors.brown.withValues(alpha: 0.15),
-              width: 2,
-            ),
-          ),
-          child: Column(
-            spacing: 6,
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+      decoration: BoxDecoration(
+        color: AppColors.cream2,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(
+          color: AppColors.brown.withValues(alpha: 0.15),
+          width: 2,
+        ),
+      ),
+      child: Column(
+        spacing: 6,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    item.time,
-                    style: AppTextStyles.bodyBold.copyWith(
-                      fontSize: 11,
-                      color: AppColors.wine,
-                      fontWeight: FontWeight.w800,
-                    ),
-                  ),
-                ],
+              Text(
+                item.time,
+                style: AppTextStyles.bodyBold.copyWith(
+                  fontSize: 11,
+                  color: AppColors.wine,
+                  fontWeight: FontWeight.w800,
+                ),
               ),
-              Row(
-                children: [
-                  Expanded(
-                    child: _side(item.teamAName, item.scoreA, item.aWins),
-                  ),
-                  const Text(
-                    AppStrings.versusEmoji,
-                    style: TextStyle(color: AppColors.wine, fontSize: 20),
-                  ),
-                  Expanded(
-                    child: _side(item.teamBName, item.scoreB, !item.aWins),
-                  ),
-                ],
-              ),
-              _aboutSection(capotWinGameName),
             ],
           ),
-        ),
-        const SizedBox(height: 20),
-      ],
+          Row(
+            children: [
+              Expanded(child: _side(item.teamAName, item.scoreA, item.aWins)),
+              const Text(
+                AppStrings.versusEmoji,
+                style: TextStyle(color: AppColors.wine, fontSize: 20),
+              ),
+              Expanded(child: _side(item.teamBName, item.scoreB, !item.aWins)),
+            ],
+          ),
+          _aboutSection(item.capotWinGameName),
+        ],
+      ),
     );
   }
 }
