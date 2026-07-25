@@ -7,6 +7,7 @@ import 'package:score_belote/theme/app_text_styles.dart';
 import 'package:score_belote/widgets/check_option.dart';
 import 'package:score_belote/widgets/switch_option.dart';
 import 'package:score_belote/widgets/topbar.dart';
+import 'package:score_belote/widgets/delete_history_button.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -15,9 +16,8 @@ class SettingsScreen extends StatefulWidget {
   State<SettingsScreen> createState() => SettingsScreenState();
 }
 
-_doSomething(String label) {
+_doSomething() {
   print("reinitialiser ");
-  print("checkbox ${label}");
 }
 
 class SettingsScreenState extends State<SettingsScreen> {
@@ -92,14 +92,7 @@ class SettingsScreenState extends State<SettingsScreen> {
                 ),
                 SizedBox(height: 20),
                 Center(child: _groupLabel(AppStrings.data.toUpperCase())),
-                _rowExpanded(
-                  _valueRow(
-                    context,
-                    AppStrings.deleteHistory,
-                    AppStrings.reset,
-                    valueColor: AppColors.red,
-                  ),
-                ),
+                _rowExpanded(AppDeleteHistoryButton(onPressed: _doSomething)),
               ],
             ),
           ),
@@ -119,42 +112,6 @@ class SettingsScreenState extends State<SettingsScreen> {
   );
 
   Widget _rowExpanded(Widget child) => Row(children: [Expanded(child: child)]);
-
-  Widget _valueRow(context, String label, String value, {Color? valueColor}) =>
-      _rowContainer(
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(label, style: AppTextStyles.bodyBold.copyWith(fontSize: 14)),
-            GestureDetector(
-              onTap: () {
-                _doSomething(label);
-              },
-              child: Text(
-                value,
-                style: AppTextStyles.button.copyWith(
-                  fontSize: 13,
-                  color: valueColor ?? AppColors.wine,
-                ),
-              ),
-            ),
-          ],
-        ),
-      );
-
-  Widget _rowContainer(Widget child) => Container(
-    margin: const EdgeInsets.only(bottom: 10),
-    padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
-    decoration: BoxDecoration(
-      color: AppColors.cream2,
-      borderRadius: BorderRadius.circular(14),
-      border: Border.all(
-        color: AppColors.brown.withValues(alpha: 0.15),
-        width: 2,
-      ),
-    ),
-    child: child,
-  );
 
   Widget _selectScoreSplitGroupSection() {
     return Row(
