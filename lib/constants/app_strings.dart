@@ -92,3 +92,25 @@ class ErrorMessages {
   static const String emptyTeamField =
       "Le nom de l'équipe ne peut pas être vide";
 }
+
+class BeloteRule {
+  BeloteRule._();
+
+  static const String authorNoteTitle = "Note de l'autrice";
+  static const List<String> authorNoteParagraphs = [
+    "Dans ce document, j'ai essayé d'expliquer les règles du jeu du mieux possible, en m'appuyant sur mes connaissances et mon expérience de la Belote Gasy.",
+    "Malgré le soin apporté à sa rédaction, il est possible que certaines explications soient incomplètes, imprécises ou ne correspondent pas aux règles pratiquées dans toutes les régions ou tous les cercles de joueurs.",
+    "Si vous remarquez une erreur, une information à corriger, une règle manquante ou si vous avez des suggestions permettant d'améliorer ce document, je vous serais très reconnaissante de me les faire parvenir.",
+    "Toute remarque constructive est la bienvenue et contribuera à rendre cette documentation plus claire, plus complète et plus fidèle aux différentes pratiques du jeu.",
+    "Merci pour votre lecture et votre contribution.",
+  ];
+
+  static const String gamePresentationTitle = "Présentation du jeu";
+  static const List<String> gamePresentationParagraphs = [
+    "La Belote Gasy est une variante de la belote classique.",
+    "Elle reprend les principes généraux du jeu : choisir un type de jeu, jouer des plis, compter les points et atteindre un objectif afin de remporter la partie.",
+    "Cette version possède toutefois certaines règles particulières qui la distinguent de la belote classique.",
+  ];
+  static const String gamePresentationNote =
+      "À noter :   Certaines règles ou pratiques peuvent varier selon les régions ou les groupes de joueurs.";
+}

@@ -1,20 +1,21 @@
-Dans ce document, rédigée par moi, j'essaie d'expliquer du mieux que je peux selon mes connaissances du jeu. Si vous avez des remarques ou des suggestions à faire pour améliorer ce que j'ai écrit ou corriger certains parties de ce document. merci de me contacter.
+Dans ce document, j'ai essayé d'expliquer les règles du jeu du mieux possible, en m'appuyant sur mes connaissances et mon expérience de la Belote Gasy.
+
+Malgré le soin apporté à sa rédaction, il est possible que certaines explications soient incomplètes, imprécises ou ne correspondent pas aux règles pratiquées dans toutes les régions ou tous les cercles de joueurs.
+
+Si vous remarquez une erreur, une information à corriger, une règle manquante ou si vous avez des suggestions permettant d'améliorer ce document, je vous serais très reconnaissant de me les faire parvenir. Toute remarque constructive est la bienvenue et contribuera à rendre cette documentation plus claire, plus complète et plus fidèle aux différentes pratiques du jeu.
+
+Merci pour votre lecture et votre contribution.
 
 # 🃏 Règles de la Belote Gasy
 
 ## 1. Présentation du jeu
 
 La Belote Gasy est une variante de la belote classique.
+Elle reprend les principes généraux : choisir un type de jeu, jouer des plis, compter les points et atteindre un objectif pour gagner la partie.
 
-et reprend les principes généraux de la belote :
-choisir un type de jeu,
-jouer des plis,
-compter les points
-et atteindre un objectif pour gagner la partie.
+Cette version possède cependant quelques règles particulières.
 
-Cette version possède cependant dquelques règles particulières.
-
-Remarque : Le Belote Gasy ne possède pas de règles officielles uniques. Certaines pratiques peuvent varier selon les régions ou les groupes de joueurs.
+À noter : Certaines pratiques peuvent varier selon les régions ou les groupes de joueurs.
 
 # 2. Cartes utilisées
 
@@ -575,7 +576,7 @@ La dernière pli remportée de la manche, appelée communément "derna", rapport
 
 La partie prend fin dès qu'une équipe atteint l'objectif sans qu'une égalité ne prolonge la partie.
 
--******\*\*******\_\_\_******\*\*******
+-**\*\***\*\***\*\***\_\_\_**\*\***\*\***\*\***
 
 ## Ordre des cartes pour chaque jeu.
 
