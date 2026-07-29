@@ -98,9 +98,9 @@ class BeloteRule {
 
   static const String authorNoteTitle = "Note de l'autrice";
   static const List<String> authorNoteParagraphs = [
-    "Dans ce document, j'ai essayé d'expliquer les règles du jeu du mieux possible, en m'appuyant sur mes connaissances et mon expérience de la Belote Gasy.",
+    "Dans cette documentation, j'ai essayé d'expliquer les règles du jeu du mieux possible, en m'appuyant sur mes connaissances et mon expérience de la Belote Gasy.",
     "Malgré le soin apporté à sa rédaction, il est possible que certaines explications soient incomplètes, imprécises ou ne correspondent pas aux règles pratiquées dans toutes les régions ou tous les cercles de joueurs.",
-    "Si vous remarquez une erreur, une information à corriger, une règle manquante ou si vous avez des suggestions permettant d'améliorer ce document, je vous serais très reconnaissante de me les faire parvenir.",
+    "Si vous remarquez une erreur, une information à corriger, une règle manquante ou si vous avez des suggestions permettant d'améliorer cette documentation, je vous serais très reconnaissante de me les faire parvenir.",
     "Toute remarque constructive est la bienvenue et contribuera à rendre cette documentation plus claire, plus complète et plus fidèle aux différentes pratiques du jeu.",
     "Merci pour votre lecture et votre contribution.",
   ];
@@ -113,4 +113,15 @@ class BeloteRule {
   ];
   static const String gamePresentationNote =
       "À noter :   Certaines règles ou pratiques peuvent varier selon les régions ou les groupes de joueurs.";
+
+  static const String gamePlayersTitle = "Nombre de joueurs";
+  static const String gamePlayersNote =
+      "La suite de cette documentation sera consacrée à la belote à 4 joueurs.";
+  static const List<String> gamePlayersParagraphs1 = [
+    "Les joueurs sont répartis en deux équipes de deux joueurs. Les partenaires d'une même équipe sont placés face à face.",
+  ];
+  static const List<String> gamePlayersParagraphs2 = [
+    "3 joueurs (jeu de capot) : 24 cartes utilisées.",
+    "2 joueurs : 32 cartes, chaque joueur reçoit 16 cartes.",
+  ];
 }

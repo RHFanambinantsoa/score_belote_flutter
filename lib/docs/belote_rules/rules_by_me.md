@@ -86,6 +86,8 @@ C'est la configuration principale décrite dans ce document.
 
 --fin de pas important
 
+La suite de cette documentation sera consacrée à la belote à quatre joueurs.
+
 # 4. Objectif de la partie
 
 L'objectif principal est d'atteindre **150 points**.
