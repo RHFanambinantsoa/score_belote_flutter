@@ -26,6 +26,16 @@ class RuleExample extends RuleBlock {
   const RuleExample(this.text);
 }
 
+class RuleNote extends RuleBlock {
+  final String text;
+  const RuleNote(this.text);
+}
+
+class RuleWarning extends RuleBlock {
+  final String text;
+  const RuleWarning(this.text);
+}
+
 /// Une ligne libellé/valeur dans un tableau de référence.
 class RuleRow {
   final String label;
