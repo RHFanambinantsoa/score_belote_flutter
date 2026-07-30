@@ -29,11 +29,7 @@ class BoxInfo extends StatelessWidget {
                 ),
               ),
             ),
-            child: Text(switch (type) {
-              BoxInfoType.note => "A noté : $text",
-              BoxInfoType.example => text,
-              BoxInfoType.warning => "Attention : $text",
-            }, style: AppTextStyles.body.copyWith(fontSize: 12)),
+            child: Text(text, style: AppTextStyles.body.copyWith(fontSize: 12)),
           ),
         ),
       ],
