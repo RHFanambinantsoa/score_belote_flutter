@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:score_belote/constants/app_strings.dart';
 import 'package:score_belote/constants/rule_data.dart';
 import 'package:score_belote/theme/app_text_styles.dart';
 import 'package:score_belote/widgets/rule_accordeon_section.dart';
@@ -78,18 +77,4 @@ class RuleScreen extends StatelessWidget {
       ),
     );
   }
-}
-
-class _SubHeading extends StatelessWidget {
-  final String text;
-  const _SubHeading(this.text);
-
-  @override
-  Widget build(BuildContext context) => Padding(
-    padding: const EdgeInsets.only(bottom: 4),
-    child: Text(
-      text,
-      style: AppTextStyles.sectionLabel.copyWith(fontSize: 11.5),
-    ),
-  );
 }

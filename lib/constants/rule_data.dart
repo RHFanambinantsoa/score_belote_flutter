@@ -94,9 +94,7 @@ final Map<String, RuleGlossaryTerm> ruleGlossary = {
   ),
 };
 
-/// Les 12 sections numérotées de l'écran, dans l'ordre d'affichage.
-/// La section "13. Tableaux de référence" est gérée séparément (voir
-/// [ruleReferenceTables]) car elle n'a pas de numéro d'accordéon propre.
+/// Les sections de l'écran, dans l'ordre d'affichage.
 final List<RuleSection> ruleSections = [
   const RuleSection(
     number: '0.',
@@ -221,13 +219,13 @@ final List<RuleSection> ruleSections = [
       RuleParagraph(
         'Lorsque les joueurs choisissent de ne pas mélanger les cartes '
         'pendant la partie, une préparation spéciale peut être faite au '
-        'début de la partie:\n\n'
+        'début de la partie:\n'
         '1. Les cartes sont mélangées une seule fois.\n'
         '2. Une première manche est jouée obligatoirement en ToutA.\n'
         '3. Cette manche sert uniquement de préparation.\n'
         '4. Ses points ne sont pas comptabilisés.\n'
         "5. Ensuite, les cartes ne sont plus mélangées jusqu'à la fin de "
-        'la partie.\n\n'
+        'la partie.\n'
         'Le but est de rendre les cartes jouables avant de commencer la '
         'vraie partie.',
       ),
@@ -387,7 +385,7 @@ final List<RuleSection> ruleSections = [
       RuleParagraph(
         "Après l'appel, le même distributeur continue : chaque joueur reçoit "
         "les 3 cartes restantes, toujours dans le sens des aiguilles d'une "
-        'montre, par paquets de 3.\n',
+        'montre, par paquets de 3.',
       ),
       RuleNote(
         'Chaque joueur possède alors ses 8 cartes en main. '
@@ -597,7 +595,7 @@ final List<RuleSection> ruleSections = [
       ),
       RuleSubtitle("Calcul du score de manche final"),
       RuleParagraph(
-        "Le score de base est ensuite :"
+        "Le score de base est ensuite :\n"
         " - conservé tel quel si le contrat n'a été ni contré ni surcontré ; \n"
         " - multiplié par 2 si le contrat a été contré ; \n"
         " - multiplié par 4 si le contrat a été surcontré. ",
