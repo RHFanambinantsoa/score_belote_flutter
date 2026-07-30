@@ -92,3 +92,7 @@ class ErrorMessages {
   static const String emptyTeamField =
       "Le nom de l'équipe ne peut pas être vide";
 }
+
+class BeloteRule {
+  BeloteRule._();
+}

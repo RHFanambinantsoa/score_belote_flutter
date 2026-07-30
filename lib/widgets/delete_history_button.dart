@@ -21,7 +21,8 @@ class AppDeleteHistoryButton extends StatelessWidget {
         icon: AppStrings.binEmoji,
       );
       if (confirmed == true) {
-        onPressed;
+        onPressed!();
+        //execution de la fonction ou onPressed?.call()
         // todo : suppresssion de l'historique
       }
     },

@@ -47,7 +47,7 @@ class TotalScoreSection extends StatelessWidget {
             height: 2,
             margin: const EdgeInsets.symmetric(vertical: 2),
             decoration: BoxDecoration(
-              color: AppColors.brown.withOpacity(0.15),
+              color: AppColors.brown.withValues(alpha: 0.15),
               borderRadius: BorderRadius.circular(2),
             ),
           ),
