@@ -40,8 +40,8 @@ final Map<String, RuleGlossaryTerm> ruleGlossary = {
         "4. Il prend la partie restante et la place sur l'autre partie.",
       ),
       RuleWarning(
-        'Règle de coupe du paquet : la partie séparée doit contenir au minimum 4 '
-        "cartes. Une coupe de moins de 4 cartes n'est pas autorisée.",
+        'Règle de coupe du paquet : la partie séparée doit contenir au minimum 6 '
+        "cartes. Une coupe de moins de 6 cartes n'est pas autorisée.",
       ),
     ],
   ),
@@ -259,7 +259,7 @@ final List<RuleSection> ruleSections = [
   ),
   const RuleSection(
     number: '7.',
-    title: "L'appel et le choix du jeu",
+    title: "Appel et choix du jeu",
     blocks: [
       RuleParagraph(
         'Après avoir reçu les 5 premières cartes, les joueurs procèdent à '
@@ -646,70 +646,141 @@ final List<RuleSection> ruleSections = [
   ),
 ];
 
-/// Les tableaux de référence (section 13), affichés après l'accordéon,
-/// hors structure repliable.
-final List<RuleTableBlock> ruleReferenceTables = [
-  const RuleTableBlock(
-    heading: 'Ordre des cartes par jeu',
-    rows: [
-      RuleRow('SansA', 'As > 10 > Roi > Dame > Valet > 9 > 8 > 7'),
-      RuleRow('ToutA', 'Valet > 9 > As > 10 > Roi > Dame > 8 >7'),
-      RuleRow('Couleur — atout', 'Valet > 9 > As > 10 > Roi > Dame > 8 > 7'),
-      RuleRow('Couleur — autres', 'As > 10 > Roi > Dame > Valet > 9 > 8 > 7'),
+const quickAccessCategories = [
+  RuleTableReferenceCategory(
+    label: "Cartes",
+    icon: "🎴",
+    blocks: [
+      RuleSubtitle("Ordre des cartes"),
+      RuleNote(
+        "L'ordre des cartes est important pour déterminer quelle carte remporte un pli.",
+      ),
+      RuleParagraph(
+        "L'ordre des cartes en belote varie selon le type de jeu joué dans chaque manche",
+      ),
+      RuleSubtitle("SansA"),
+      RuleNote("As > 10 > Roi > Dame > Valet > 9 > 8 > 7 "),
+      RuleSubtitle("ToutA"),
+      RuleNote("Valet > 9 > As > 10 > Roi > Dame > 8 > 7 "),
+      RuleSubtitle("Couleur"),
+      RuleParagraph(
+        "L'ordre des cartes est le même que celui du ToutA pour la couleur d'atout, "
+        "et le même que celui du SansA pour les autres couleurs.",
+      ),
+      RuleParagraph(
+        "Exemple : \n"
+        "Jeu : Cœur ♥ (atout)\n"
+        "Ordre des cartes de Cœur ♥ :\n"
+        "Valet♥ >9♥ > As♥ > 10♥ > Roi♥ > Dame♥ > 8♥ > 7 > "
+        "Ordre des cartes de Trèfle ♣, Carreau ♦ et Pique ♠ : \n"
+        "As > 10 > Roi > Dame > Valet > 9 > 8 > 7  ",
+      ),
     ],
   ),
-  const RuleTableBlock(
-    heading: 'Valeur des cartes — SansA / Non Atout (en couleur)',
-    rows: [
-      RuleRow('As', '11'),
-      RuleRow('10', '10'),
-      RuleRow('Roi', '4'),
-      RuleRow('Dame', '3'),
-      RuleRow('Valet', '2'),
-      RuleRow('9 / 8 / 7', '0'),
+
+  RuleTableReferenceCategory(
+    label: "Comptage des plis",
+    icon: "🧮",
+    blocks: [
+      RuleSubtitle("Comptage des plis"),
+      RuleNote(
+        "Le comptage des plis est important pour déterminer quelle équipe obtient le score de la manche.",
+      ),
+      RuleParagraph(
+        "Lors du comptage des plis, chaque carte a une valeur bien définie en fonction du type de jeu joué dans la manche.",
+      ),
+      RuleSubtitle("Valeur des cartes"),
+      RuleTableBlock(
+        heading: 'SansA | Non Atout (en couleur)',
+        rows: [
+          RuleRow('As', '11'),
+          RuleRow('10', '10'),
+          RuleRow('Roi', '4'),
+          RuleRow('Dame', '3'),
+          RuleRow('Valet', '2'),
+          RuleRow('9 / 8 / 7', '0'),
+        ],
+      ),
+      RuleTableBlock(
+        heading: 'ToutA | Atout (en couleur)',
+        rows: [
+          RuleRow('Valet', '20'),
+          RuleRow('9', '14'),
+          RuleRow('As', '11'),
+          RuleRow('10', '10'),
+          RuleRow('Roi', '4'),
+          RuleRow('Dame', '3'),
+          RuleRow('8 / 7', '0'),
+        ],
+      ),
+      RuleSubtitle("Capot"),
+      RuleNote(
+        "Une équipe réalise un capot lorsqu'elle remporte tous les plis de la manche.",
+      ),
+      RuleSubtitle("Dedans"),
+      RuleNote(
+        "Une équipe est considérée comme \"dedans\" lorsque c'est elle qui a fait l'appel "
+        "mais qu'après le comptage des plis le total de ses points est inférieur à celui de l'équipe adverse.",
+      ),
+      RuleSubtitle("Litige"),
+      RuleParagraph(
+        'Il y a litige lorsque les deux équipes obtiennent exactement '
+        'le même total de points après le comptage des plis.',
+      ),
+      RuleTableBlock(
+        heading: 'Litige parfait selon le jeu',
+        rows: [
+          RuleRow('Couleur', '81'),
+          RuleRow('SansA', '65'),
+          RuleRow('ToutA', '129'),
+        ],
+      ),
+      RuleWarning(
+        "Pour le jeu de toutA, un total compris entre 124 et 134 est considéré comme un litige. "
+        "Mais encore une fois, celà dépend des habitudes des joueurs.\n"
+        "Il est donc préférable de se mettre d'accord avant la partie sur la valeur exacte du litige pour le jeu de ToutA.",
+      ),
     ],
   ),
-  const RuleTableBlock(
-    heading: 'Valeur des cartes — ToutA / Atout (en couleur)',
-    rows: [
-      RuleRow('Valet', '20'),
-      RuleRow('9', '14'),
-      RuleRow('As', '11'),
-      RuleRow('10', '10'),
-      RuleRow('Roi', '4'),
-      RuleRow('Dame', '3'),
-      RuleRow('8 / 7', '0'),
+
+  RuleTableReferenceCategory(
+    label: "Score",
+    icon: "🏆",
+    blocks: [
+      RuleSubtitle("Scores"),
+      RuleParagraph(
+        "Le score d'une manche est calculé en fonction du type de jeu joué "
+        "et de quelques autres facteurs tels que le Capot, le Contré et le Surcontré.",
+      ),
+      RuleTableBlock(
+        heading: 'Score normal',
+        rows: [
+          RuleRow('Trèfle', '32 pts'),
+          RuleRow('Carreau / Cœur / Pique ♠', '16 pts'),
+          RuleRow('SansA', '52 pts'),
+          RuleRow('ToutA', '26 pts'),
+        ],
+      ),
+      RuleTableBlock(
+        heading: 'Score capot',
+        rows: [
+          RuleRow('Couleur', 'Victoire'),
+          RuleRow('SansA', '70 pts'),
+          RuleRow('SansA — Dedans', '90 pts'),
+          RuleRow('ToutA', '35 pts'),
+          RuleRow('ToutA — Dedans', 'Victoire ou 35 pts*'),
+        ],
+        footnote:
+            '* Réglable dans les paramètres selon la préférence des joueurs.',
+      ),
+      RuleWarning(
+        "Quand une équipe réalise un Capot Dedans toutA, "
+        "il peut y avoir une victoire directe, selon les habitudes des joueurs et les accords avant la partie.",
+      ),
+      RuleTableBlock(
+        heading: 'Multiplicateurs',
+        rows: [RuleRow('Contré', '×2'), RuleRow('Surcontré', '×4')],
+      ),
     ],
-  ),
-  const RuleTableBlock(
-    heading: 'Litige parfait selon le jeu',
-    rows: [
-      RuleRow('Couleur', '81'),
-      RuleRow('SansA', '65'),
-      RuleRow('ToutA', '129'),
-    ],
-  ),
-  const RuleTableBlock(
-    heading: 'Score normal selon le jeu',
-    rows: [
-      RuleRow('Trèfle', '32 pts'),
-      RuleRow('Carreau / Cœur / Pique ♠', '16 pts'),
-      RuleRow('SansA', '52 pts'),
-      RuleRow('ToutA', '26 pts'),
-    ],
-  ),
-  const RuleTableBlock(
-    heading: 'Score capot selon le jeu',
-    rows: [
-      RuleRow('Couleur', 'Victoire directe'),
-      RuleRow('SansA', '70 pts'),
-      RuleRow('SansA — Capot Dedans', '90 pts'),
-      RuleRow('ToutA', '35 pts'),
-      RuleRow('ToutA — Capot Dedans', 'Victoire ou 35 pts*'),
-    ],
-  ),
-  const RuleTableBlock(
-    heading: 'Multiplicateurs',
-    rows: [RuleRow('Contré', '×2'), RuleRow('Surcontré', '×4')],
   ),
 ];
