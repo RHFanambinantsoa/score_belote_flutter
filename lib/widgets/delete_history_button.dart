@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:score_belote/constants/app_strings.dart';
 import 'package:score_belote/theme/app_colors.dart';
 import 'package:score_belote/theme/app_text_styles.dart';
-import 'package:score_belote/widgets/confirm_modal.dart';
+import 'package:score_belote/widgets/modals/confirm_modal.dart';
 
 class AppDeleteHistoryButton extends StatelessWidget {
   final VoidCallback? onPressed;

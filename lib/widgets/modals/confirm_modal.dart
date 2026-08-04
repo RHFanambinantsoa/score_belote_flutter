@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../theme/app_colors.dart';
-import '../theme/app_text_styles.dart';
+import '../../theme/app_colors.dart';
+import '../../theme/app_text_styles.dart';
 
 /// Modal de confirmation générique — "Voulez-vous vraiment quitter ?",
 /// "Voulez-vous vraiment supprimer l'historique ?", etc.
