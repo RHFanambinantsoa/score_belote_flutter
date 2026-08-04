@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:score_belote/constants/app_strings.dart';
+import 'package:score_belote/screens/new_game_screen.dart';
 import 'package:score_belote/widgets/buttons.dart';
 import '../../theme/app_colors.dart';
 import '../../theme/app_text_styles.dart';
@@ -8,13 +9,9 @@ class VictoryModal extends StatelessWidget {
   final String winningTeam;
   final int scoreA;
   final int scoreB;
-  final VoidCallback onNewGame;
-  final VoidCallback onBack;
 
   const VictoryModal({
     super.key,
-    required this.onNewGame,
-    required this.onBack,
     required this.winningTeam,
     required this.scoreA,
     required this.scoreB,
@@ -91,7 +88,13 @@ class VictoryModal extends StatelessWidget {
 
                 AppPrimaryButton(
                   label: '♠ Nouvelle partie',
-                  onPressed: onNewGame,
+                  onPressed: () => {
+                    Navigator.of(context).pop(true),
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => NewGameScreen()),
+                    ),
+                  },
                 ),
               ],
             ),
@@ -101,7 +104,7 @@ class VictoryModal extends StatelessWidget {
             top: 14,
             right: 14,
             child: GestureDetector(
-              onTap: onBack,
+              onTap: () => Navigator.of(context).pop(false),
               child: Text(
                 '✕',
                 style: AppTextStyles.button.copyWith(

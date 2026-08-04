@@ -26,6 +26,7 @@ class _ScoreScreenState extends State<ScoreScreen> {
   //il y a une classe pour le widget et une classe pour l'état du widget.
   // dans la classe _ScoreScreenState, on peut accéder à widget.game pour récupérer l'objet game passé en paramètre au widget ScoreScreen.
   bool gameFinish = false;
+  bool? startNewGameFromDialog = true;
 
   @override
   void initState() {
@@ -62,22 +63,21 @@ class _ScoreScreenState extends State<ScoreScreen> {
           gameFinish = true;
         });
         _saveGameToHistory(game);
-        await showDialog<bool>(
+        startNewGameFromDialog = await showDialog<bool>(
           context: context,
           barrierColor: const Color(0x8D14080C),
           builder: (_) => VictoryModal(
             winningTeam: teamWinner.label,
             scoreA: game.totalScoreA,
             scoreB: game.totalScoreB,
-            onNewGame: () {
-              Navigator.pop(context);
-              _navigateTo(context, NewGameScreen());
-            },
-            onBack: () {
-              Navigator.pop(context);
-            },
           ),
         );
+        if (startNewGameFromDialog == false) {
+          setState(() {
+            startNewGameFromDialog = false;
+          });
+        }
+        ;
       }
     }
   }
@@ -122,16 +122,20 @@ class _ScoreScreenState extends State<ScoreScreen> {
               spacing: 4,
               children: [
                 SizedBox(width: 10),
-                Expanded(
-                  child: AppPrimaryButton(
-                    label: !gameFinish
-                        ? '+ Ajouter un score'
-                        : '♠ Nouvelle partie',
-                    onPressed: () => !gameFinish
-                        ? _openScoreModal()
-                        : _navigateTo(context, NewGameScreen()),
+                if (!gameFinish)
+                  Expanded(
+                    child: AppPrimaryButton(
+                      label: '+ Ajouter un score',
+                      onPressed: () => _openScoreModal(),
+                    ),
                   ),
-                ),
+                if (gameFinish && !startNewGameFromDialog!)
+                  Expanded(
+                    child: AppPrimaryButton(
+                      label: '♠ Nouvelle partie',
+                      onPressed: () => _navigateTo(context, NewGameScreen()),
+                    ),
+                  ),
                 SizedBox(width: 10),
               ],
             ),
