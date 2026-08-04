@@ -363,7 +363,7 @@ Un pli correspond à un tour pendant lequel chaque joueur pose une carte.
 chaque joueur possède 8 cartes ;
 la manche est donc composée de 8 plis.
 
-L'objectif de chaque équipe est de remporter un maximum de plis afin d'obtenir davantage de points grâce aux cartes gagnées que l'équipe adverse. (Voir la valeur des cartes selon le type de jeu : lien)
+Le but de chaque équipe est de remporter un maximum de plis afin de totaliser plus de points que l'équipe adverse grâce aux cartes remportées. (Voir la valeur des cartes selon le type de jeu : lien)
 
 # Début d'un pli
 
@@ -377,11 +377,7 @@ le joueur qui remporte un pli commence le pli suivant.
 
 # Déroulement du tour
 
-Le joueur qui commence pose une carte de son choix.
-
-Les autres joueurs jouent ensuite chacun leur tour dans le sens des aiguilles d'une montre.
-
-Chaque joueur doit respecter certaines règles lorsqu'il pose sa carte.
+Le joueur qui ouvre le pli joue la carte de son choix. Les autres joueurs jouent ensuite, l'un après l'autre, dans le sens des aiguilles d'une montre, tout en respectant les règles de pose des cartes
 
 ## Règle principale :
 
@@ -503,14 +499,15 @@ Il doit jouer Pique 9 pour dépasser l'atout déjà posé.
 
 - Remporter un pli
 
-À la fin du tour :
+Une fois que les quatre joueurs ont posé une carte, le pli est attribué selon les règles suivantes :
 
-la carte la plus forte de la couleur demandée remporte le pli ;
-sauf dans le jeu de couleur : l'atout le plus fort remporte le pli.
+En Tout Atout et en Sans Atout, le pli est remporté par le joueur ayant joué la carte la plus forte dans la couleur demandée.
+En jeu de Couleur, si un ou plusieurs atouts ont été joués, le pli est remporté par le joueur ayant joué l'atout le plus fort. Dans le cas contraire, c'est la carte la plus forte de la couleur demandée qui remporte le pli.
 
-Le joueur qui gagne le pli :
-récupère les cartes jouées ;
-commence le pli suivant.
+Le joueur qui remporte le pli :
+
+récupère toutes les cartes du pli ;
+ouvre le pli suivant en jouant la première carte.
 
 ## Fin de la manche et comptage des plis
 
@@ -569,6 +566,8 @@ La dernière pli remportée de la manche, appelée communément "derna", rapport
 
     Le mode de Split utilisé est généralement défini avant le début de la partie.
     (choisir d'autoriser ou pas le split et selectionner vos répartitions dans paramètres(lien vers paramètre)).
+
+Attribution du score de manche
 
 ## Manche suivant
 

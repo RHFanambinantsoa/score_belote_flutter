@@ -8,7 +8,7 @@ import '../models/rule_content.dart';
 final Map<String, RuleGlossaryTerm> ruleGlossary = {
   'cartes françaises': const RuleGlossaryTerm(
     title: 'Cartes françaises',
-    icon: '🃏',
+    icon: '🂡',
     body: [
       RuleParagraph(
         'Les cartes françaises désignent un type de jeu de cartes dont les '
@@ -40,32 +40,51 @@ final Map<String, RuleGlossaryTerm> ruleGlossary = {
         "4. Il prend la partie restante et la place sur l'autre partie.",
       ),
       RuleWarning(
-        'Règle de coupe : la partie séparée doit contenir au minimum 4 '
-        "cartes. Une coupe de moins de 4 cartes n'est pas autorisée.",
+        'Règle de coupe du paquet : la partie séparée doit contenir au minimum 6 '
+        "cartes. Une coupe de moins de 6 cartes n'est pas autorisée.",
       ),
     ],
   ),
   'atout': const RuleGlossaryTerm(
     title: "Qu'est-ce qu'un atout ?",
-    icon: '🂡',
     body: [
       RuleParagraph(
-        'Un atout désigne une couleur spéciale qui devient plus forte que '
-        "les autres pendant une manche. Une carte de cette couleur peut "
-        "battre une carte d'une autre couleur, même si sa valeur normale "
-        "est inférieure.",
+        'Un atout désigne une couleur spéciale, désignée en début de manche, '
+        "qui devient plus forte que toutes les autres pendant une manche. \n"
+        "Lorsqu'une couleur est l'atout, toute carte de cette couleur peut "
+        "battre une carte d'une autre couleur, même si sa valeur est normalement inférieure. ",
       ),
-      RuleExample(
-        "Jeu en Cœur.\n "
-        "Un joueur joue ♠ As. Un autre, sans pique, joue ♥ 7. "
-        "Même si c'est une petite carte, le ♥ 7 remporte le pli car le "
-        "cœur est l'atout.",
+      RuleParagraph(
+        "Exemple : \n"
+        "Jeu : Cœur ♥ (atout).\n "
+        "Le joueur A joue : As♠\n"
+        "Le joueur B ne possède pas de Pique ♠ et joue : 7♥\n"
+        "Même si c'est une petite carte, le 7♥ remporte le pli car le "
+        "cœur ♥ est l'atout.",
+      ),
+    ],
+  ),
+  'Couper un pli': const RuleGlossaryTerm(
+    title: 'Que signifie "Couper" lors d\'un jeu de couleur?',
+    body: [
+      RuleParagraph(
+        "Couper consiste à jouer un atout afin de remporter le pli.\n"
+        "Lorsqu'un joueur ne possède pas la couleur demandée mais possède au moins un atout, "
+        "il est obligatoire de couper.",
+      ),
+      RuleParagraph(
+        "Exemple : \n"
+        "Jeu : Pique ♠ (atout)\n"
+        "Couleur demandée : Cœur ♥\n"
+        "Le joueur ne possède aucun Cœur. Il possède : \n"
+        "9♠\n"
+        "As♦\n"
+        "Il doit obligatoirement jouer le 9♠.(puisque Pique ♠ est l'atout)\n",
       ),
     ],
   ),
   'bonne': const RuleGlossaryTerm(
     title: "Que signifie le terme \"Bonne\" ?",
-    icon: '🂡',
     body: [
       RuleParagraph(
         "Quand un joueur dit \"bonne\" cela signifie qu'il accepte le type de jeu annoncé "
@@ -75,9 +94,7 @@ final Map<String, RuleGlossaryTerm> ruleGlossary = {
   ),
 };
 
-/// Les 12 sections numérotées de l'écran, dans l'ordre d'affichage.
-/// La section "13. Tableaux de référence" est gérée séparément (voir
-/// [ruleReferenceTables]) car elle n'a pas de numéro d'accordéon propre.
+/// Les sections de l'écran, dans l'ordre d'affichage.
 final List<RuleSection> ruleSections = [
   const RuleSection(
     number: '0.',
@@ -122,7 +139,6 @@ final List<RuleSection> ruleSections = [
   const RuleSection(
     number: '2.',
     title: 'Cartes utilisées',
-    initiallyOpen: true,
     blocks: [
       RuleParagraph(
         'La Belote Gasy se joue avec des {{cartes françaises}}, comme la '
@@ -203,13 +219,13 @@ final List<RuleSection> ruleSections = [
       RuleParagraph(
         'Lorsque les joueurs choisissent de ne pas mélanger les cartes '
         'pendant la partie, une préparation spéciale peut être faite au '
-        'début de la partie:\n\n'
+        'début de la partie:\n'
         '1. Les cartes sont mélangées une seule fois.\n'
         '2. Une première manche est jouée obligatoirement en ToutA.\n'
         '3. Cette manche sert uniquement de préparation.\n'
         '4. Ses points ne sont pas comptabilisés.\n'
         "5. Ensuite, les cartes ne sont plus mélangées jusqu'à la fin de "
-        'la partie.\n\n'
+        'la partie.\n'
         'Le but est de rendre les cartes jouables avant de commencer la '
         'vraie partie.',
       ),
@@ -243,8 +259,7 @@ final List<RuleSection> ruleSections = [
   ),
   const RuleSection(
     number: '7.',
-    title: "L'appel et le choix du jeu",
-    initiallyOpen: true,
+    title: "Appel et choix du jeu",
     blocks: [
       RuleParagraph(
         'Après avoir reçu les 5 premières cartes, les joueurs procèdent à '
@@ -305,7 +320,6 @@ final List<RuleSection> ruleSections = [
   const RuleSection(
     number: '8.',
     title: 'Validation du jeu',
-    initiallyOpen: true,
     blocks: [
       RuleParagraph(
         "Un jeu est joué dès que tous les joueurs se sont mis d'accord. \n"
@@ -371,9 +385,11 @@ final List<RuleSection> ruleSections = [
       RuleParagraph(
         "Après l'appel, le même distributeur continue : chaque joueur reçoit "
         "les 3 cartes restantes, toujours dans le sens des aiguilles d'une "
-        'montre, par paquets de 3.\n'
-        'Chaque joueur possède alors ses 8 cartes en main. \n Le jeu peut '
-        'commencer.',
+        'montre, par paquets de 3.',
+      ),
+      RuleNote(
+        'Chaque joueur possède alors ses 8 cartes en main. '
+        'Le jeu est joué avec le type de jeu validé pendant l\'appel.',
       ),
     ],
   ),
@@ -381,99 +397,248 @@ final List<RuleSection> ruleSections = [
     number: '10.',
     title: "Déroulement d'un pli",
     blocks: [
+      RuleSubtitle("Les plis"),
+      RuleParagraph("Une manche de Belote est composée de plusieurs plis."),
+      RuleExample(
+        "Un pli correspond à un tour pendant lequel chaque joueur pose une carte (4 cartes en tout).",
+      ),
       RuleParagraph(
-        'Une manche est composée de plusieurs plis. À 4 joueurs, chaque '
-        'joueur possède 8 cartes, donc la manche compte 8 plis. Le '
-        'premier joueur qui joue une carte est appelé "le joueur qui '
-        'entame" — lors du premier pli, c\'est celui situé à gauche du '
-        'distributeur ; ensuite, c\'est celui qui a remporté le pli '
-        'précédent.',
+        'À 4 joueurs, chaque joueur possède 8 cartes, donc la manche compte 8 plis.',
       ),
-      RuleSubtitle('Règle principale : fournir la couleur demandée'),
-      RuleExample(
-        'Le premier joueur pose ♥ Roi. Les autres doivent jouer un cœur '
-        "s'ils en possèdent — ils ne peuvent pas jouer une autre couleur.",
+      RuleNote(
+        'Le but de chaque équipe pendant une manche est de remporter un maximum de plis '
+        'afin de totaliser plus de points que l\'équipe adverse grâce aux cartes remportées. ',
       ),
-      RuleSubtitle('Obligation de monter au jeu de ToutA'),
-      RuleExample(
-        'Joueur A joue 10 de pique. Le joueur B a 9 et 7 de pique — il '
-        'doit obligatoirement jouer le 9, seule carte supérieure au 10.',
-      ),
-      RuleSubtitle("Si un joueur n'a pas la couleur demandée"),
+      RuleSubtitle("Début d'un pli"),
       RuleParagraph(
-        'Cas 1 — ToutA ou SansA : le joueur peut jouer une carte de son '
-        'choix dans une autre couleur. Le pli est remporté par la carte '
-        'la plus haute dans la couleur demandée.\n\n'
-        'Cas 2 — Jeu de Couleur (une couleur est atout) : la couleur '
-        "choisie devient l'{{atout}} et surpasse toutes les autres. Jouer "
-        'un atout pour prendre le pli s\'appelle "couper".',
+        "Le premier joueur qui joue une carte est appelé le joueur qui entame. (izy no main)",
       ),
-      RuleSubtitle('Obligation de couper'),
-      RuleExample(
-        'Jeu en Pique, couleur demandée : cœur. Un joueur sans cœur '
-        'possède Pique 9 et Carreau As — il doit obligatoirement jouer '
-        'Pique 9.',
+      RuleParagraph(
+        'Premier pli : C\'est le joueur situé à gauche du distributeur qui commence le premier pli \n'
+        'Pli suivant : C\'est au tour du joueur qui a remporté le pli précédent.\n'
+        'Et ainsi de suite.',
+      ),
+      RuleSubtitle("Déroulement d'un tour"),
+      RuleParagraph(
+        "Le joueur qui entame le pli choisit librement la première carte",
+      ),
+      RuleParagraph(
+        "Les autres joueurs jouent ensuite, l'un après l'autre, dans le sens des aiguilles d'une montre, "
+        "tout en respectant les règles de pose des cartes.",
+      ),
+      RuleSubtitle('Règles principale'),
+      RuleWarning("1. Les joueurs doivent fournir la couleur demandée"),
+      RuleParagraph(
+        "Lorsqu'le joueur qui entame pose une carte, il impose une couleur à suivre.",
+      ),
+      RuleParagraph(
+        "Exemple : \n"
+        "Le premier joueur pose :  Roi♥ (Cœur) \n"
+        "Les autres joueurs doivent jouer une carte de la même couleur (cœur) s'ils en possèdent."
+        "Ils ne peuvent pas jouer une autre couleur.",
+      ),
+      RuleWarning('2. Obligation de monter au ToutA'),
+      RuleParagraph(
+        "Lorsque le jeu est ToutA, il est obligatoire de monter si l'on possède une carte "
+        "de la couleur demandée supérieure à celle qui est actuellement la plus forte du pli.",
+      ),
+      RuleParagraph(
+        "Exemple : \n"
+        "Le joueur A joue le 10♠.\n"
+        "Le joueur B possède le 9♠ et le 7♠.\n"
+        "Le 9♠ étant une carte supérieure au 10♠ au ToutA, le joueur B est obligé de jouer le 9♠. "
+        "Il ne peut pas choisir de jouer le 7♠.",
+      ),
+      RuleSubtitle("Si un joueur ne possède pas la couleur demandée"),
+      RuleParagraph(
+        "Lorsqu'un joueur ne possède aucune carte dans la couleur demandée, les règles à appliquer dépendent du type de jeu.",
+      ),
+      RuleWarning(
+        '3. Jeu de ToutA ou SansA : \n Si un joueur ne possède pas la couleur demandée, '
+        'il peut jouer n\'importe quelle carte d\'une autre couleur. ',
+      ),
+      RuleSubtitle("Jeu de couleur (avec atout)"),
+      RuleParagraph(
+        "Dans un jeu de Couleur, une couleur est désignée comme {{atout}}. "
+        "Cette couleur est supérieure à toutes les autres pendant toute la manche.",
+      ),
+      RuleParagraph("{{Couper un pli}}"),
+      RuleWarning(
+        "4. Jeu de Couleur : \n"
+        "un joueur qui ne possède pas la couleur demandée doit obligatoirement couper avec un atout s'il en possède ;\n"
+        "s'il ne possède ni la couleur demandée ni d'atout, il peut jouer n'importe quelle autre carte.",
       ),
       RuleSubtitle("Obligation de monter à l'atout"),
-      RuleParagraph(
+      RuleWarning(
+        "5. Jeu de Couleur : \n"
         "Si un joueur doit couper et qu'un atout plus fort a déjà été "
         "posé, il doit jouer un atout supérieur s'il en a un.",
       ),
-      RuleExample(
-        'Contrat en Pique. Joueur A joue Cœur As, Joueur B joue Pique 8. '
-        'Le joueur C, sans cœur, a Pique 9 et Pique 7 — il doit jouer '
-        "Pique 9 pour dépasser l'atout déjà posé.",
+      RuleParagraph(
+        "Exempe : \n"
+        "Jeu : Pique ♠.\n"
+        "Joueur A joue : As♥ (couleur demandée Cœur ♥)\n"
+        "Joueur B joue : 8♠\n"
+        "Joueur C, n'a pas de cœur ♥ en main.\n"
+        "Il a 9♠ et 7♠ \n"
+        "— Il doit obligatoirement jouer 9♠ pour dépasser l'atout déjà posé.",
       ),
       RuleSubtitle('Remporter un pli'),
       RuleParagraph(
-        'La carte la plus forte de la couleur demandée remporte le pli — '
-        "sauf en jeu de Couleur, où l'atout le plus fort remporte le pli. "
-        'Le gagnant du pli récupère les cartes et commence le pli '
-        'suivant.',
+        "Une fois que les quatre joueurs ont posé une carte, le pli est attribué selon les règles suivantes :",
+      ),
+      RuleNote(
+        '1. En ToutA et en SansA : le pli est remporté par le joueur ayant joué la carte la plus forte dans la couleur demandée.'
+        '2. En jeu de Couleur : si un ou plusieurs atouts ont été joués, le pli est remporté par le joueur ayant joué l\'atout le plus fort. '
+        'Dans le cas contraire, c\'est la carte la plus forte de la couleur demandée qui remporte le pli.',
+      ),
+      RuleParagraph(
+        "Le joueur qui remporte le pli : récupère toutes les cartes du pli et commence le pli suivant.",
       ),
     ],
   ),
   const RuleSection(
     number: '11.',
     title: 'Fin de manche et comptage des plis',
-    initiallyOpen: true,
     blocks: [
       RuleParagraph(
-        'Une fois toutes les cartes jouées, on compte les plis obtenus.\n\n'
-        "Capot : si une équipe ne remporte aucun pli, l'équipe adverse "
-        'réalise un capot et obtient le score correspondant.\n\n'
-        'Si les deux équipes ont remporté au moins un pli, on compte les '
-        'points des cartes remportées par chacune. Le dernier pli de la '
-        'manche (la "derna") rapporte un bonus de 10 points.\n\n'
-        'Litige : si les deux équipes obtiennent le même total, aucun '
-        "score de manche n'est attribué.\n\n"
-        "Score normal : l'équipe ayant obtenu le plus grand total "
-        'remporte le score de la manche.',
+        "Lorsque tous les joueurs ont joué leurs huit cartes, la manche est terminée. "
+        "On procédé alors au comptage des plis remportés par chaque équipe.",
       ),
-      RuleSubtitle('Split (ToutA mizara)'),
-      RuleParagraph(
-        'Règle optionnelle : elle consiste à partager les 26 points du '
-        'ToutA normal entre les deux équipes, selon les dizaines '
-        "obtenues par chacune, si l'équipe adverse dépasse 8 dizaines "
-        '(valeur ajustable selon les préférences des joueurs).',
-      ),
-      RuleExample(
-        'Total équipe A = 100 pts (10 dizaines), équipe B = 158 pts. '
-        'Score pour A : +10 pts. Score pour B : +16 pts (26 − 10).',
+      RuleSubtitle("Capot"),
+      RuleWarning(
+        "Une équipe réalise un capot lorsqu'elle remporte tous les plis de la manche.",
       ),
       RuleParagraph(
-        'Répartitions les plus courantes : 8–18, 10–16, 12–14. Certains '
-        'joueurs utilisent une variante plus souple à partir de 6–20.',
+        "Dans ce cas, elle obtient le score de capot correspondant au type de jeu joué.",
+      ),
+      RuleSubtitle("Comptage des points des cartes"),
+      RuleParagraph(
+        "Si les deux équipes ont remporté au moins un pli, "
+        "on additionne la valeur des cartes remportées par chacune des équipes.",
+      ),
+      RuleSubtitle("Derna"),
+      RuleWarning(
+        "Le dernier pli de la manche, appelé communément \"derna\", "
+        "rapporte un bonus de 10 points à l'équipe qui le remporte.",
+      ),
+      RuleSubtitle("Litige"),
+      RuleParagraph(
+        "Il y a litige lorsque, après le comptage des cartes (bonus de la derna inclus), "
+        "les deux équipes obtiennent exactement le même total de points.",
+      ),
+      RuleParagraph(
+        "Exemple : \n"
+        "Jeu : SansA \n"
+        "Équipe A : 65 pts. \n"
+        "Équipe B : 65 pts.",
+      ),
+      RuleWarning(
+        "En cas de litige, aucun score de manche n'est attribué à aucune des deux équipes.",
+      ),
+      RuleSubtitle("Équipe gagnante"),
+      RuleWarning(
+        "Si les deux équipes n'ont pas le même total, l'équipe ayant obtenu le plus de points "
+        "grâce à ses plis remporte la manche et marque le score correspondant au type de jeu.",
+      ),
+      RuleSubtitle("Split (ToutA Mizara)"),
+      RuleParagraph(
+        "Le Split est une règle optionnelle, très répandue dans certaines parties de Belote Gasy.",
+      ),
+      RuleParagraph(
+        "Au lieu d'attribuer les 26 points du ToutA normal à une seule équipe, ces points sont répartis "
+        "entre les deux équipes en fonction du nombre de dizaines obtenues lors du comptage des plis.",
+      ),
+      RuleSubtitle("Quand appliquer le Split?"),
+      RuleParagraph(
+        "Le Split s'applique uniquement lorsque :\n"
+        "1. la manche est jouée en ToutA normal (sans contre)\n"
+        "2. la règle du Split a été convenue avant le début de la partie\n"
+        "3. l'équipe qui a appelé ToutA remporte la manche (obtenir plus de points que l'équipe adverse)\n"
+        "4. l'équipe adverse atteint le seuil de dizaines défini pour déclencher le partage",
+      ),
+      RuleNote(
+        "Ce seuil est généralement fixé à 8 dizaines, mais il peut être modifié selon les habitudes des joueurs.",
+      ),
+      RuleParagraph(
+        "Exemple :\n"
+        "Equipe qui a appelé : Equipe B\n"
+        "Total des points après le comptage : \n"
+        "Equipe A : 100pts. → 10 dizaines\n"
+        "Equipe B : 158pts.\n"
+        "On aura : \n"
+        "Equipe A +10pts.\n"
+        "Equipe B +16pts.",
+      ),
+      RuleWarning("Les deux scores additionnés donnent toujours 26 points."),
+      RuleParagraph(
+        "Les répartitions les plus utilisées sont :\n"
+        "8 – 18, 10 – 16, 12 – 14",
+      ),
+      RuleParagraph(
+        "Certaines joueurs utilisent une variante plus souple qui autorise le partage, "
+        "à partir de 6 dizaines, permettant ainsi d'obtenir des répartitions comme :\n"
+        "6 – 20, 7 – 19, 8 – 18, 9 – 17, 10 – 16, 11 – 15, 12 – 14",
+      ),
+      RuleParagraph(
+        "** Allez dans paramètres pour autoriser ou non le Split et "
+        "selectionner les répartitions utilisées lors de vos parties **",
       ),
     ],
   ),
   const RuleSection(
     number: '12.',
-    title: 'Manche suivante et fin de partie',
+    title: 'Attribution des points de manche',
     blocks: [
       RuleParagraph(
-        'À la fin de chaque manche, le rôle de distributeur passe au '
-        "joueur suivant, dans le sens des aiguilles d'une montre.\n\n"
+        "Le résultat de la manche (score normal, capot ou Split) détermine un score de base.",
+      ),
+      RuleSubtitle("Calcul du score de manche final"),
+      RuleParagraph(
+        "Le score de base est ensuite :\n"
+        " - conservé tel quel si le contrat n'a été ni contré ni surcontré ; \n"
+        " - multiplié par 2 si le contrat a été contré ; \n"
+        " - multiplié par 4 si le contrat a été surcontré. ",
+      ),
+      RuleParagraph(
+        "Exemples :\n"
+        "Score normal : 16 pts.\n"
+        "Contré : 32 pts.\n"
+        "Surcontré : 64 pts.\n"
+        "Capot à 35 pts.\n"
+        "Contré : 70 pts.\n"
+        "Surcontré : 140 pts.",
+      ),
+      RuleNote(
+        "Le score ainsi obtenu est ajouté au score total de l'équipe ou des équipes concernées "
+        "avant le début de la manche suivante.",
+      ),
+    ],
+  ),
+  const RuleSection(
+    number: '13.',
+    title: 'Nouvelle manche',
+    blocks: [
+      RuleNote(
+        "À la fin de chaque manche, le rôle de distributeur passe au joueur suivant, dans le sens des aiguilles d'une montre.",
+      ),
+      RuleParagraph(
+        " Une nouvelle manche commence alors avec :\n"
+        " - la distribution des cartes ;\n"
+        " - l'appel du jeu ; ;\n"
+        " - le déroulement des plis ;\n"
+        " - le comptage des points à partir des plis obtenus.",
+      ),
+      RuleParagraph(
+        "Les manches s'enchaînent jusqu'à ce qu'une équipe atteigne l'objectif de score fixé.",
+      ),
+    ],
+  ),
+  const RuleSection(
+    number: '14.',
+    title: 'Fin de partie',
+    blocks: [
+      RuleNote(
         "La partie prend fin dès qu'une équipe atteint l'objectif, sans "
         "qu'une égalité ne prolonge la partie.",
       ),
@@ -481,70 +646,141 @@ final List<RuleSection> ruleSections = [
   ),
 ];
 
-/// Les tableaux de référence (section 13), affichés après l'accordéon,
-/// hors structure repliable.
-final List<RuleTableBlock> ruleReferenceTables = [
-  const RuleTableBlock(
-    heading: 'Ordre des cartes par jeu',
-    rows: [
-      RuleRow('SansA', 'As > 10 > R > D > V > 9 > 8 > 7'),
-      RuleRow('Couleur — atout', 'V>9>As>10>R>D>8>7'),
-      RuleRow('Couleur — autres', 'As>10>R>D>V>9>8>7'),
-      RuleRow('ToutA', 'V>9>As>10>R>D>8>7'),
+const quickAccessCategories = [
+  RuleTableReferenceCategory(
+    label: "Cartes",
+    icon: "🎴",
+    blocks: [
+      RuleSubtitle("Ordre des cartes"),
+      RuleNote(
+        "L'ordre des cartes est important pour déterminer quelle carte remporte un pli.",
+      ),
+      RuleParagraph(
+        "L'ordre des cartes en belote varie selon le type de jeu joué dans chaque manche",
+      ),
+      RuleSubtitle("SansA"),
+      RuleNote("As > 10 > Roi > Dame > Valet > 9 > 8 > 7 "),
+      RuleSubtitle("ToutA"),
+      RuleNote("Valet > 9 > As > 10 > Roi > Dame > 8 > 7 "),
+      RuleSubtitle("Couleur"),
+      RuleParagraph(
+        "L'ordre des cartes est le même que celui du ToutA pour la couleur d'atout, "
+        "et le même que celui du SansA pour les autres couleurs.",
+      ),
+      RuleParagraph(
+        "Exemple : \n"
+        "Jeu : Cœur ♥ (atout)\n"
+        "Ordre des cartes de Cœur ♥ :\n"
+        "Valet♥ >9♥ > As♥ > 10♥ > Roi♥ > Dame♥ > 8♥ > 7 > "
+        "Ordre des cartes de Trèfle ♣, Carreau ♦ et Pique ♠ : \n"
+        "As > 10 > Roi > Dame > Valet > 9 > 8 > 7  ",
+      ),
     ],
   ),
-  const RuleTableBlock(
-    heading: 'Valeur des cartes — SansA',
-    rows: [
-      RuleRow('As', '11'),
-      RuleRow('10', '10'),
-      RuleRow('Roi', '4'),
-      RuleRow('Dame', '3'),
-      RuleRow('Valet', '2'),
-      RuleRow('9 / 8 / 7', '0'),
+
+  RuleTableReferenceCategory(
+    label: "Comptage des plis",
+    icon: "🧮",
+    blocks: [
+      RuleSubtitle("Comptage des plis"),
+      RuleNote(
+        "Le comptage des plis est important pour déterminer quelle équipe obtient le score de la manche.",
+      ),
+      RuleParagraph(
+        "Lors du comptage des plis, chaque carte a une valeur bien définie en fonction du type de jeu joué dans la manche.",
+      ),
+      RuleSubtitle("Valeur des cartes"),
+      RuleTableBlock(
+        heading: 'SansA | Non Atout (en couleur)',
+        rows: [
+          RuleRow('As', '11'),
+          RuleRow('10', '10'),
+          RuleRow('Roi', '4'),
+          RuleRow('Dame', '3'),
+          RuleRow('Valet', '2'),
+          RuleRow('9 / 8 / 7', '0'),
+        ],
+      ),
+      RuleTableBlock(
+        heading: 'ToutA | Atout (en couleur)',
+        rows: [
+          RuleRow('Valet', '20'),
+          RuleRow('9', '14'),
+          RuleRow('As', '11'),
+          RuleRow('10', '10'),
+          RuleRow('Roi', '4'),
+          RuleRow('Dame', '3'),
+          RuleRow('8 / 7', '0'),
+        ],
+      ),
+      RuleSubtitle("Capot"),
+      RuleNote(
+        "Une équipe réalise un capot lorsqu'elle remporte tous les plis de la manche.",
+      ),
+      RuleSubtitle("Dedans"),
+      RuleNote(
+        "Une équipe est considérée comme \"dedans\" lorsque c'est elle qui a fait l'appel "
+        "mais qu'après le comptage des plis le total de ses points est inférieur à celui de l'équipe adverse.",
+      ),
+      RuleSubtitle("Litige"),
+      RuleParagraph(
+        'Il y a litige lorsque les deux équipes obtiennent exactement '
+        'le même total de points après le comptage des plis.',
+      ),
+      RuleTableBlock(
+        heading: 'Litige parfait selon le jeu',
+        rows: [
+          RuleRow('Couleur', '81'),
+          RuleRow('SansA', '65'),
+          RuleRow('ToutA', '129'),
+        ],
+      ),
+      RuleWarning(
+        "Pour le jeu de toutA, un total compris entre 124 et 134 est considéré comme un litige. "
+        "Mais encore une fois, celà dépend des habitudes des joueurs.\n"
+        "Il est donc préférable de se mettre d'accord avant la partie sur la valeur exacte du litige pour le jeu de ToutA.",
+      ),
     ],
   ),
-  const RuleTableBlock(
-    heading: 'Valeur des cartes — ToutA / Atout',
-    rows: [
-      RuleRow('Valet', '20'),
-      RuleRow('9', '14'),
-      RuleRow('As', '11'),
-      RuleRow('10', '10'),
-      RuleRow('Roi', '4'),
-      RuleRow('Dame', '3'),
-      RuleRow('8 / 7', '0'),
+
+  RuleTableReferenceCategory(
+    label: "Score",
+    icon: "🏆",
+    blocks: [
+      RuleSubtitle("Scores"),
+      RuleParagraph(
+        "Le score d'une manche est calculé en fonction du type de jeu joué "
+        "et de quelques autres facteurs tels que le Capot, le Contré et le Surcontré.",
+      ),
+      RuleTableBlock(
+        heading: 'Score normal',
+        rows: [
+          RuleRow('Trèfle', '32 pts'),
+          RuleRow('Carreau / Cœur / Pique ♠', '16 pts'),
+          RuleRow('SansA', '52 pts'),
+          RuleRow('ToutA', '26 pts'),
+        ],
+      ),
+      RuleTableBlock(
+        heading: 'Score capot',
+        rows: [
+          RuleRow('Couleur', 'Victoire'),
+          RuleRow('SansA', '70 pts'),
+          RuleRow('SansA — Dedans', '90 pts'),
+          RuleRow('ToutA', '35 pts'),
+          RuleRow('ToutA — Dedans', 'Victoire ou 35 pts*'),
+        ],
+        footnote:
+            '* Réglable dans les paramètres selon la préférence des joueurs.',
+      ),
+      RuleWarning(
+        "Quand une équipe réalise un Capot Dedans toutA, "
+        "il peut y avoir une victoire directe, selon les habitudes des joueurs et les accords avant la partie.",
+      ),
+      RuleTableBlock(
+        heading: 'Multiplicateurs',
+        rows: [RuleRow('Contré', '×2'), RuleRow('Surcontré', '×4')],
+      ),
     ],
-  ),
-  const RuleTableBlock(
-    heading: 'Litige parfait selon le jeu',
-    rows: [
-      RuleRow('Couleur', '81'),
-      RuleRow('SansA', '65'),
-      RuleRow('ToutA', '129'),
-    ],
-  ),
-  const RuleTableBlock(
-    heading: 'Score normal selon le jeu',
-    rows: [
-      RuleRow('Trèfle', '32 pts'),
-      RuleRow('Carreau / Cœur / Pique', '16 pts'),
-      RuleRow('SansA', '52 pts'),
-      RuleRow('ToutA', '26 pts'),
-    ],
-  ),
-  const RuleTableBlock(
-    heading: 'Score capot selon le jeu',
-    rows: [
-      RuleRow('Couleur', 'Victoire directe'),
-      RuleRow('SansA', '70 pts'),
-      RuleRow('SansA — Capot Dedans', '90 pts'),
-      RuleRow('ToutA', '35 pts'),
-      RuleRow('ToutA — Capot Dedans', 'Victoire ou 35 pts*'),
-    ],
-  ),
-  const RuleTableBlock(
-    heading: 'Multiplicateurs',
-    rows: [RuleRow('Contré', '×2'), RuleRow('Surcontré', '×4')],
   ),
 ];

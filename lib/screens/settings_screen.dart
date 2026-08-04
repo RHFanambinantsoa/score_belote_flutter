@@ -145,7 +145,7 @@ class SettingsScreenState extends State<SettingsScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              "Règle du jeu",
+              AppStrings.gameRules,
               style: AppTextStyles.bodyBold.copyWith(fontSize: 14),
             ),
             Icon(Icons.chevron_right, color: AppColors.wine, size: 18),

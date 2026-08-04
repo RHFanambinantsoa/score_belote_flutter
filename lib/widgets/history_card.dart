@@ -110,7 +110,7 @@ Widget _aboutSection(String roundName) {
       Text(
         roundName.isEmpty
             ? AppStrings.classicVictory
-            : "${AppStrings.CapotVictory} $roundName",
+            : "${AppStrings.capotVictory} $roundName",
         style: AppTextStyles.button.copyWith(fontSize: 13),
         overflow: TextOverflow.ellipsis,
       ),

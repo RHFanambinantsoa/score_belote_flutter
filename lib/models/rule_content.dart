@@ -46,8 +46,15 @@ class RuleRow {
 /// Un tableau de référence (score normal, multiplicateurs, etc.).
 class RuleTableBlock extends RuleBlock {
   final String? heading;
+  final String? footnote;
   final List<RuleRow> rows;
-  const RuleTableBlock({this.heading, required this.rows});
+  final List<RuleBlock>? blocks;
+  const RuleTableBlock({
+    this.heading,
+    required this.rows,
+    this.footnote,
+    this.blocks,
+  });
 }
 
 /// Une section numérotée de l'écran des règles (ex: "7. L'appel et le
@@ -76,5 +83,17 @@ class RuleGlossaryTerm {
     required this.title,
     this.icon = '📖',
     required this.body,
+  });
+}
+
+class RuleTableReferenceCategory {
+  final String label;
+  final String icon;
+  final List<RuleBlock> blocks;
+
+  const RuleTableReferenceCategory({
+    required this.label,
+    required this.icon,
+    required this.blocks,
   });
 }

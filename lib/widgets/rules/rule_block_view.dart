@@ -44,40 +44,52 @@ class _RuleBlockView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return switch (block) {
-      RuleSubtitle(:final text) => Text(
-        text,
-        style: AppTextStyles.sectionLabel.copyWith(fontSize: 11.5),
-      ),
+    return Row(
+      children: [
+        Expanded(
+          child: switch (block) {
+            RuleSubtitle(:final text) => Text(
+              text,
+              style: AppTextStyles.sectionLabel.copyWith(fontSize: 11.5),
+            ),
 
-      RuleParagraph(:final text) => _RichParagraph(
-        text: text,
-        glossary: glossary,
-      ),
-      //pattern matching
-      //equivalent à
-      //       if (block is RuleParagraph) {
-      //   final text = block.text;
+            RuleParagraph(:final text) => _RichParagraph(
+              text: text,
+              glossary: glossary,
+            ),
+            //pattern matching
+            //equivalent à
+            //       if (block is RuleParagraph) {
+            //   final text = block.text;
 
-      //   return _RichParagraph(
-      //     text: text,
-      //     glossary: glossary,
-      //   );
-      // }
-      RuleExample(:final text) => BoxInfo(
-        text: text,
-        type: BoxInfoType.example,
-      ),
-      RuleNote(:final text) => BoxInfo(text: text, type: BoxInfoType.note),
-      RuleWarning(:final text) => BoxInfo(
-        text: text,
-        type: BoxInfoType.warning,
-      ),
-      RuleTableBlock(:final heading, :final rows) => table_widget.RuleTable(
-        heading: heading,
-        rows: rows.map((r) => table_widget.RuleRow(r.label, r.value)).toList(),
-      ),
-    };
+            //   return _RichParagraph(
+            //     text: text,
+            //     glossary: glossary,
+            //   );
+            // }
+            RuleExample(:final text) => BoxInfo(
+              text: text,
+              type: BoxInfoType.example,
+            ),
+            RuleNote(:final text) => BoxInfo(
+              text: text,
+              type: BoxInfoType.note,
+            ),
+            RuleWarning(:final text) => BoxInfo(
+              text: text,
+              type: BoxInfoType.warning,
+            ),
+            RuleTableBlock(:final heading, :final rows) =>
+              table_widget.RuleTable(
+                heading: heading,
+                rows: rows
+                    .map((r) => table_widget.RuleRow(r.label, r.value))
+                    .toList(),
+              ),
+          },
+        ),
+      ],
+    );
   }
 }
 
