@@ -75,6 +75,8 @@ class AppStrings {
       'Toutes les parties enregistrées seront définitivement supprimées. '
       'Cette action est irréversible.';
   static const String delete = 'Supprimer';
+  static const String victory = 'Victoire !';
+  static const String winGame = 'remporte la partie';
 
   //history
   static const String emptyHistoryMessage =
