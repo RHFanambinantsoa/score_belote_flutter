@@ -61,9 +61,9 @@ class AppStrings {
   static const String allowSplitScore = "Autoriser le partage du score (TA)";
   static const String allowClubsRedoubleScore = "Autoriser le Trèfle Surcontré";
   static const String allowNoTrumpRedoubleScore =
-      "Autoriser le Sans Atout Surcontré";
+      "Autoriser le SansA Surcontré";
   static const String endGameRoundsLabel = "Fin de la partie";
-  static const String allTrumpCapotDedansEndGame = "Tout Atout Capot Dedans";
+  static const String allTrumpCapotDedansEndGame = "Capot Dedans ToutA";
   static const String data = "Données";
   static const String deleteHistory = "Effacer l'historique";
   static const String reset = 'Réinitialiser';
@@ -81,7 +81,7 @@ class AppStrings {
 
   //history modal
   static const String classicVictory = "🎉 Victoire classique";
-  static const String CapotVictory = "🔥 Victoire par Capot 👉 ";
+  static const String capotVictory = "🔥 Victoire par Capot 👉 ";
 }
 
 class ErrorMessages {
