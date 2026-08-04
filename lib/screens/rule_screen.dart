@@ -5,6 +5,7 @@ import 'package:score_belote/widgets/rules/rule_block_view.dart';
 import 'package:score_belote/widgets/rules/rule_quick_access_bar.dart';
 import 'package:score_belote/widgets/topbar.dart';
 import '../theme/app_colors.dart';
+import 'package:score_belote/constants/app_strings.dart';
 
 class RuleScreen extends StatelessWidget {
   const RuleScreen({super.key});
@@ -12,7 +13,7 @@ class RuleScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.cream,
-      appBar: const AppTopBar(title: 'Règles du jeu'),
+      appBar: const AppTopBar(title: AppStrings.gameRules),
       body: Column(
         children: [
           RuleQuickAccessBar(referenceCategories: quickAccessCategories),

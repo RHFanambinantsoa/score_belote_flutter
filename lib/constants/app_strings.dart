@@ -67,6 +67,7 @@ class AppStrings {
   static const String data = "Données";
   static const String deleteHistory = "Effacer l'historique";
   static const String reset = 'Réinitialiser';
+  static const String gameRules = "Règles du jeu";
 
   //modals
   static const String deleteHistoryModalTitle = "Supprimer l'historique ?";
