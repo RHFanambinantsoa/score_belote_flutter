@@ -70,6 +70,13 @@ class SettingsScreenState extends State<SettingsScreen> {
                       setState(() {
                         SettingsService.update((settings) {
                           settings.allowSplit = v;
+                          if (v == false) {
+                            settings.allowedSplits.clear();
+                          } else {
+                            settings.allowedSplits.addAll(
+                              ScoreConstants.communSplitAllTrumpScores,
+                            );
+                          }
                         });
                       });
                     },
