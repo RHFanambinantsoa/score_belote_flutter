@@ -145,7 +145,12 @@ class _AddRoundModalState extends State<AddRoundModal> {
                               ),
                             ),
                             if (_isCapot &&
-                                (_selectedGameVariant == GameVariant.allTrump ||
+                                ((_selectedGameVariant ==
+                                            GameVariant.allTrump &&
+                                        widget
+                                            .game
+                                            .settings
+                                            .allTrumpCapotDedansEndGame) ||
                                     _selectedGameVariant ==
                                         GameVariant.noTrump))
                               Expanded(
