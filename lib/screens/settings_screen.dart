@@ -17,8 +17,8 @@ class SettingsScreen extends StatefulWidget {
   State<SettingsScreen> createState() => SettingsScreenState();
 }
 
-_doSomething() {
-  print("reinitialiser ");
+void _doSomething() {
+  // print("reinitialiser ");
 }
 
 class SettingsScreenState extends State<SettingsScreen> {
@@ -35,7 +35,7 @@ class SettingsScreenState extends State<SettingsScreen> {
       } else {
         splitValuesAllowed.add(splitScore);
       }
-      print(splitValuesAllowed.length);
+      // print(splitValuesAllowed.length);
     });
   }
 

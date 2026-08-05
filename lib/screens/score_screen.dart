@@ -77,7 +77,6 @@ class _ScoreScreenState extends State<ScoreScreen> {
             startNewGameFromDialog = false;
           });
         }
-        ;
       }
     }
   }

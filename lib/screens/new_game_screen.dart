@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:score_belote/constants/app_strings.dart';
+import 'package:score_belote/constants/score_contants.dart';
+import 'package:score_belote/enums/team_type.dart';
 import 'package:score_belote/screens/score_screen.dart';
 import 'package:score_belote/theme/app_colors.dart';
 import 'package:score_belote/theme/app_text_styles.dart';
 import 'package:score_belote/widgets/buttons.dart';
 import 'package:score_belote/models/game.dart';
+import 'package:score_belote/models/team.dart';
 import 'package:score_belote/widgets/team_input.dart';
 import 'package:score_belote/widgets/topbar.dart';
 
@@ -56,11 +59,10 @@ class _NewGameScreenState extends State<NewGameScreen> {
   bool get _isValid => !_aEmpty && !_bEmpty && !_duplicate;
 
   void _validateTeams() {
-    Game newGame = Game(
-      teamALabel: _a,
-      teamBLabel: _b,
-      date: DateTime.now(),
-      winner: null,
+    Game newGame = Game.create(
+      teamA: Team(teamType: TeamType.teamA, label: _a),
+      teamB: Team(teamType: TeamType.teamB, label: _b),
+      targetScore: ScoreConstants.targetScore,
     );
 
     _navigateTo(context, ScoreScreen(game: newGame));

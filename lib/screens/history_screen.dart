@@ -63,7 +63,11 @@ class _HistoryList extends StatelessWidget {
         spacing: 5,
         children: [
           _rowExpanded(
-            AppDeleteHistoryButton(onPressed: () => print(items.length)),
+            AppDeleteHistoryButton(
+              onPressed: () => {
+                // print(items.length)
+              },
+            ),
           ),
           Container(
             height: 2,
