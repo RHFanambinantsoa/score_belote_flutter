@@ -1,11 +1,11 @@
 import 'package:score_belote/enums/team_type.dart';
-import 'package:isar/isar.dart';
+// import 'package:isar/isar.dart';
 
-part 'team.g.dart';
+// part 'team.g.dart';
 
-@embedded
+// @embedded
 class Team {
-  @Enumerated(EnumType.name)
+  // @Enumerated(EnumType.name)
   late TeamType teamType;
 
   late String label;

@@ -1,4 +1,4 @@
-import 'package:isar/isar.dart';
+// import 'package:isar/isar.dart';
 // Import des annotations et types nécessaires pour utiliser Isar
 // (@collection, Id, @Enumerated...)
 
@@ -7,29 +7,29 @@ import 'package:score_belote/enums/team_type.dart';
 import '../enums/game_variant.dart';
 import '../enums/round_status.dart';
 
-part 'round.g.dart';
+// part 'round.g.dart';
 // Indique qu'un fichier généré automatiquement par Isar complète cette classe.
 // Le fichier team.g.dart sera créé avec build_runner.
 
 // @collection Indique à Isar que cette classe est une donnée persistante.
 // Chaque objet Team pourra être enregistré dans la base.
-@collection
+// @collection
 class Round {
-  Id id = Isar.autoIncrement;
+  // Id id = Isar.autoIncrement;
   // Identifiant unique généré automatiquement par Isar.
   // Comparable à une clé primaire en base de données.
 
-  @Enumerated(EnumType.name)
+  // @Enumerated(EnumType.name)
   // @Enumerated(EnumType.name): Indique à Isar comment sauvegarder l'enum.
   // Indique à Isar de sauvegarder l'enum avec son nom.
   // Exemple : TeamType.teamA devient "teamA"
   // Cela évite les problèmes si l'ordre des valeurs de l'enum change.
   late GameVariant gameVariant;
 
-  @Enumerated(EnumType.name)
+  // @Enumerated(EnumType.name)
   late RoundStatus roundStatus;
 
-  @Enumerated(EnumType.name)
+  // @Enumerated(EnumType.name)
   late TeamType winnerTeam;
 
   late bool isCapot;
