@@ -32,6 +32,7 @@ class _AddRoundModalState extends State<AddRoundModal> {
   GameVariant _selectedGameVariant = GameVariant.clubs;
   RoundStatus _selectedRoundStatus = RoundStatus.normal;
   SplitScore _selectedSplitScore = ScoreConstants.splitAllTrumpScores[0];
+  bool _hideRedouble = false;
 
   void _emitRound() {
     Round round;
@@ -50,6 +51,13 @@ class _AddRoundModalState extends State<AddRoundModal> {
       _selectedSplitScore,
     );
     Navigator.pop(context, round);
+  }
+
+  bool _hideRedoubleRoundStatusOptions() {
+    return (_selectedGameVariant == GameVariant.clubs &&
+            widget.game.settings.allowClubsRedouble == false) ||
+        (_selectedGameVariant == GameVariant.noTrump &&
+            widget.game.settings.allowNoTrumpRedouble == false);
   }
 
   @override
@@ -72,13 +80,14 @@ class _AddRoundModalState extends State<AddRoundModal> {
                 children: [
                   Row(
                     children: [
-                      Expanded(
-                        child: SwitchOption(
-                          label: AppStrings.splitScoreMode,
-                          value: _isSplit,
-                          onChanged: (v) => setState(() => _isSplit = v),
+                      if (widget.game.settings.allowSplit == true)
+                        Expanded(
+                          child: SwitchOption(
+                            label: AppStrings.splitScoreMode,
+                            value: _isSplit,
+                            onChanged: (v) => setState(() => _isSplit = v),
+                          ),
                         ),
-                      ),
                     ],
                   ),
                   Column(
@@ -114,33 +123,17 @@ class _AddRoundModalState extends State<AddRoundModal> {
                             _groupLabel(AppStrings.game),
                             GameVariantSelector(
                               selected: _selectedGameVariant,
-                              onSelected: (v) =>
-                                  setState(() => _selectedGameVariant = v),
+                              onSelected: (v) {
+                                setState(() {
+                                  _selectedGameVariant = v;
+                                  _hideRedouble =
+                                      _hideRedoubleRoundStatusOptions();
+                                });
+                              },
                             ),
                           ],
                         ),
-                        Column(
-                          spacing: 4,
-                          children: [
-                            _groupLabel(AppStrings.mode),
-                            Column(
-                              spacing: 4,
-                              children: [
-                                ...RoundStatus.values.map(
-                                  (roundStatus) => AppRadioOption(
-                                    value: roundStatus,
-                                    groupValue: _selectedRoundStatus,
-                                    label: roundStatus.label,
-                                    onChanged: (v) => setState(
-                                      () => _selectedRoundStatus = v,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-
+                        SizedBox(height: 10),
                         Row(
                           spacing: 10,
                           children: [
@@ -163,6 +156,31 @@ class _AddRoundModalState extends State<AddRoundModal> {
                                       setState(() => isDefending = v),
                                 ),
                               ),
+                          ],
+                        ),
+
+                        Column(
+                          spacing: 4,
+                          children: [
+                            _groupLabel(AppStrings.mode),
+                            Column(
+                              spacing: 4,
+                              children: [
+                                ...(_hideRedouble
+                                        ? RoundStatus.withoutRedoubled
+                                        : RoundStatus.values)
+                                    .map(
+                                      (roundStatus) => AppRadioOption(
+                                        value: roundStatus,
+                                        groupValue: _selectedRoundStatus,
+                                        label: roundStatus.label,
+                                        onChanged: (v) => setState(
+                                          () => _selectedRoundStatus = v,
+                                        ),
+                                      ),
+                                    ),
+                              ],
+                            ),
                           ],
                         ),
                       ],

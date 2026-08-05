@@ -6,4 +6,7 @@ enum RoundStatus {
   final String label;
   final int multiplifier;
   const RoundStatus(this.label, this.multiplifier);
+
+  static List<RoundStatus> get withoutRedoubled =>
+      values.sublist(0, values.length - 1);
 }
