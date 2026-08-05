@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
           ),
           iconTheme: const IconThemeData(color: AppColors.gold),
         ),
-        colorScheme: .fromSeed(seedColor: AppColors.wine),
+        colorScheme: ColorScheme.fromSeed(seedColor: AppColors.wine),
       ),
       // home: const MyHomePage(title: 'Flutter Demo Home Page'),
       home: const SplashScreen(),

@@ -7,7 +7,7 @@ import 'package:score_belote/enums/team_type.dart';
 import '../enums/game_variant.dart';
 import '../enums/round_status.dart';
 
-// part 'round.g.dart';
+part 'round.g.dart';
 // Indique qu'un fichier généré automatiquement par Isar complète cette classe.
 // Le fichier team.g.dart sera créé avec build_runner.
 
