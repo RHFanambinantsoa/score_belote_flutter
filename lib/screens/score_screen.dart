@@ -36,13 +36,7 @@ class _ScoreScreenState extends State<ScoreScreen> {
 
   int targetScore = ScoreConstants.targetScore;
 
-  void _saveGameToHistory(Game game) {
-    // String dateHeure = DateFormat('dd/MM/yyyy HH:mm:ss').format(DateTime.now());
-
-    // print(game.toJson());
-    // box
-    // print(gameHistory.toJson());
-  }
+  void _saveGameToHistory(Game game) {}
 
   void _checkVictory(Game game, int target) async {
     if (game.totalScoreA >= target && game.totalScoreB >= target) {
@@ -58,7 +52,7 @@ class _ScoreScreenState extends State<ScoreScreen> {
         Team teamWinner = game.totalScoreA > game.totalScoreB
             ? game.teams[0]
             : game.teams[1];
-        game.winner = teamWinner.teamType;
+        game.finishGame(teamWinner.teamType);
         setState(() {
           gameFinish = true;
         });
@@ -77,7 +71,6 @@ class _ScoreScreenState extends State<ScoreScreen> {
             startNewGameFromDialog = false;
           });
         }
-        ;
       }
     }
   }
@@ -86,24 +79,22 @@ class _ScoreScreenState extends State<ScoreScreen> {
     Navigator.push(context, MaterialPageRoute(builder: (context) => screen));
   }
 
-  void _addRoundsToGame(List<Round> rounds) {
+  void _addRoundsToGame(Round round) {
     setState(() {
-      for (var i = 0; i < rounds.length; i++) {
-        widget.game.rounds.add(rounds[i]);
-      }
+      widget.game.rounds.add(round);
     });
     _checkVictory(widget.game, targetScore);
   }
 
   void _openScoreModal() async {
-    final rounds = await showModalBottomSheet<List<Round>>(
+    final round = await showModalBottomSheet<Round>(
       context: context,
       builder: (context) {
         return AddRoundModal(game: widget.game);
       },
     );
-    if (rounds != null && rounds.isNotEmpty) {
-      _addRoundsToGame(rounds);
+    if (round != null) {
+      _addRoundsToGame(round);
     }
   }
 

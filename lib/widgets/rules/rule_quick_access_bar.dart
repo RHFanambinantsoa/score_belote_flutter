@@ -20,7 +20,7 @@ class RuleQuickAccessBar extends StatelessWidget {
         child: ListView.separated(
           scrollDirection: Axis.horizontal,
           itemCount: referenceCategories.length,
-          separatorBuilder: (_, __) => const SizedBox(width: 10),
+          separatorBuilder: (_, _) => const SizedBox(width: 10),
           itemBuilder: (context, i) => _QuickAccessChip(
             table: referenceCategories[i],
             onTap: () => _openTableSheet(context, referenceCategories[i]),

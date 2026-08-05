@@ -34,42 +34,22 @@ class _AddRoundModalState extends State<AddRoundModal> {
   SplitScore _selectedSplitScore = ScoreConstants.splitAllTrumpScores[0];
 
   void _emitRound() {
-    List<Round> rounds = [];
-    if (!_isSplit) {
-      Round newRound = Round(
-        gameVariant: _selectedGameVariant,
-        roundStatus: _selectedRoundStatus,
-        isCapot: _isCapot,
-        isDefending: isDefending,
-        winnerTeam: _selectedTeam,
-        score: 0,
-      );
-      newRound.score = calculateNormalScoreToAdd(newRound);
-      rounds.add(newRound);
-    } else {
-      Round callerRound = Round(
-        gameVariant: GameVariant.allTrump,
-        roundStatus: RoundStatus.normal,
-        isCapot: false,
-        isDefending: false,
-        winnerTeam: _selectedTeam,
-        score: _selectedSplitScore.callerScore,
-      );
-      rounds.add(callerRound);
-      final defenderTeam = widget.game.teams.firstWhere(
-        (team) => team.teamType != _selectedTeam,
-      );
-      Round defenderRound = Round(
-        gameVariant: GameVariant.allTrump,
-        roundStatus: RoundStatus.normal,
-        isCapot: false,
-        isDefending: false,
-        winnerTeam: defenderTeam.teamType,
-        score: _selectedSplitScore.defenderScore,
-      );
-      rounds.add(defenderRound);
-    }
-    Navigator.pop(context, rounds);
+    Round round;
+    round = Round.create(
+      gameVariant: _selectedGameVariant,
+      roundStatus: _selectedRoundStatus,
+      isCapot: _isCapot,
+      isDedans: isDefending,
+      teamAScore: 0,
+      teamBScore: 0,
+    );
+    round = calculateRoundScoresToAdd(
+      round,
+      _selectedTeam,
+      _isSplit,
+      _selectedSplitScore,
+    );
+    Navigator.pop(context, round);
   }
 
   @override

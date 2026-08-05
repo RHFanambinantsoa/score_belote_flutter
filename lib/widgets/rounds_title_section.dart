@@ -34,7 +34,7 @@ class RoundsTitleSection extends StatelessWidget {
                 flex: 4,
                 child: Center(
                   child: Text(
-                    game.teamALabel,
+                    game.teamA.label,
                     style: AppTextStyles.sectionLabel.copyWith(
                       fontSize: 15,
                       fontWeight: FontWeight.w800,
@@ -49,7 +49,7 @@ class RoundsTitleSection extends StatelessWidget {
                 flex: 4,
                 child: Center(
                   child: Text(
-                    game.teamBLabel,
+                    game.teamB.label,
                     style: AppTextStyles.sectionLabel.copyWith(
                       fontSize: 15,
                       fontWeight: FontWeight.w800,

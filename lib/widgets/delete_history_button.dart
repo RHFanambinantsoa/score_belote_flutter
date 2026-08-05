@@ -35,22 +35,26 @@ class AppDeleteHistoryButton extends StatelessWidget {
   );
 }
 
-Widget _valueRow(context, String label, String value, {Color? valueColor}) =>
-    _rowContainer(
-      Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(label, style: AppTextStyles.bodyBold.copyWith(fontSize: 14)),
-          Text(
-            value,
-            style: AppTextStyles.button.copyWith(
-              fontSize: 13,
-              color: valueColor ?? AppColors.wine,
-            ),
-          ),
-        ],
+Widget _valueRow(
+  dynamic context,
+  String label,
+  String value, {
+  Color? valueColor,
+}) => _rowContainer(
+  Row(
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    children: [
+      Text(label, style: AppTextStyles.bodyBold.copyWith(fontSize: 14)),
+      Text(
+        value,
+        style: AppTextStyles.button.copyWith(
+          fontSize: 13,
+          color: valueColor ?? AppColors.wine,
+        ),
       ),
-    );
+    ],
+  ),
+);
 
 Widget _rowContainer(Widget child) => Container(
   margin: const EdgeInsets.only(bottom: 10),

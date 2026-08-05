@@ -2,7 +2,6 @@ import 'package:flutter/widgets.dart';
 import 'package:score_belote/constants/app_strings.dart';
 import 'package:score_belote/enums/game_variant.dart';
 import 'package:score_belote/enums/round_status.dart';
-import 'package:score_belote/enums/team_type.dart';
 import 'package:score_belote/models/round.dart';
 import 'package:score_belote/theme/app_text_styles.dart';
 import '../theme/app_colors.dart';
@@ -52,7 +51,7 @@ class RoundsListview extends StatelessWidget {
       if (round.roundStatus != RoundStatus.normal)
         round.roundStatus.abbreviation,
       if (round.isCapot) AppStrings.capotAbbreviation,
-      if (round.isDefending) AppStrings.dedansAbbreviation,
+      if (round.isDedans) AppStrings.dedansAbbreviation,
     ];
     // collection if en dart
     // si la condition est rempli, ajoute dans la collection
@@ -91,7 +90,7 @@ class RoundsListview extends StatelessWidget {
                 flex: 4,
                 child: Center(
                   child: Text(
-                    round.winnerTeam == TeamType.teamA ? "${round.score}" : "-",
+                    round.teamAScore != 0 ? "${round.teamAScore}" : "-",
                     style: AppTextStyles.sectionLabel.copyWith(
                       fontSize: 14,
                       fontWeight: FontWeight.w700,
@@ -106,7 +105,7 @@ class RoundsListview extends StatelessWidget {
                 flex: 4,
                 child: Center(
                   child: Text(
-                    round.winnerTeam == TeamType.teamB ? "${round.score}" : "-",
+                    round.teamBScore != 0 ? "${round.teamBScore}" : "-",
                     style: AppTextStyles.sectionLabel.copyWith(
                       fontSize: 14,
                       fontWeight: FontWeight.w700,
