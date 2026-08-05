@@ -15,4 +15,9 @@ class GameSettings {
     required this.allowNoTrumpRedouble,
     required this.allTrumpCapotDedansEndGame,
   });
+
+  List<SplitScore> get orderedAllowedSplits {
+    return [...allowedSplits]
+      ..sort((a, b) => a.defenderScore.compareTo(b.defenderScore));
+  }
 }

@@ -16,4 +16,9 @@ class ScoreConstants {
     SplitScore(callerScore: 15, defenderScore: 11),
     SplitScore(callerScore: 14, defenderScore: 12),
   ];
+  static List<SplitScore> communSplitAllTrumpScores = [
+    SplitScore(callerScore: 18, defenderScore: 8),
+    SplitScore(callerScore: 16, defenderScore: 10),
+    SplitScore(callerScore: 14, defenderScore: 12),
+  ];
 }
