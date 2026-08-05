@@ -171,7 +171,7 @@ class _AddRoundModalState extends State<AddRoundModal> {
                     Column(
                       children: [
                         _groupLabel(AppStrings.splitValues),
-                        ...ScoreConstants.splitAllTrumpScores.map(
+                        ...widget.game.settings.orderedAllowedSplits.map(
                           (splitScore) => AppRadioOption(
                             value: splitScore,
                             groupValue: _selectedSplitScore,
