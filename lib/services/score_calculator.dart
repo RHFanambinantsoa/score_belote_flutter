@@ -43,6 +43,5 @@ Round calculateRoundScoresToAdd(
     round.teamAScore = teamSelected == TeamType.teamA ? score : 0;
     round.teamBScore = teamSelected == TeamType.teamB ? score : 0;
   }
-
   return round;
 }

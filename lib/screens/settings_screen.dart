@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:score_belote/constants/app_strings.dart';
 import 'package:score_belote/constants/score_contants.dart';
+import 'package:score_belote/models/game_settings.dart';
 import 'package:score_belote/models/split_score.dart';
 import 'package:score_belote/screens/rule_screen.dart';
+import 'package:score_belote/services/settings_service.dart';
 import 'package:score_belote/theme/app_colors.dart';
 import 'package:score_belote/theme/app_text_styles.dart';
 import 'package:score_belote/widgets/check_option.dart';
@@ -22,20 +24,26 @@ void _doSomething() {
 }
 
 class SettingsScreenState extends State<SettingsScreen> {
-  late bool _allowSplit = false; //tout A mizara
-  List<SplitScore> splitValuesAllowed = []; // liste ny fizarana
-  late bool _allowNoTrumpRedoubled = false; //sans A surcontré rava
-  late bool _allowClubsRedoubled = false; //trèfle surcontré rava
-  late bool _allTrumpCapotDedansEndsGame = false; //tout A capot dedans maty?
+  late GameSettings settings;
+
+  @override
+  void initState() {
+    super.initState();
+    settings = SettingsService.settings;
+  }
 
   void _toggleSplitScore(SplitScore splitScore) {
     setState(() {
-      if (splitValuesAllowed.contains(splitScore)) {
-        splitValuesAllowed.remove(splitScore);
-      } else {
-        splitValuesAllowed.add(splitScore);
-      }
-      // print(splitValuesAllowed.length);
+      SettingsService.update((settings) {
+        if (settings.allowedSplits.contains(splitScore)) {
+          settings.allowedSplits.remove(splitScore);
+        } else {
+          settings.allowedSplits.add(splitScore);
+        }
+      });
+
+      //
+      // print(allowedSplits.length);
     });
   }
 
@@ -57,24 +65,41 @@ class SettingsScreenState extends State<SettingsScreen> {
                 _rowExpanded(
                   SwitchOption(
                     label: AppStrings.allowSplitScore,
-                    value: _allowSplit,
-                    onChanged: (v) => setState(() => _allowSplit = v),
+                    value: settings.allowSplit,
+                    onChanged: (v) {
+                      setState(() {
+                        SettingsService.update((settings) {
+                          settings.allowSplit = v;
+                        });
+                      });
+                    },
                   ),
                 ),
-                if (_allowSplit) _selectScoreSplitGroupSection(),
+                if (settings.allowSplit) _selectScoreSplitGroupSection(),
                 _rowExpanded(
                   SwitchOption(
                     label: AppStrings.allowClubsRedoubleScore,
-                    value: _allowClubsRedoubled,
-                    onChanged: (v) => setState(() => _allowClubsRedoubled = v),
+                    value: settings.allowClubsRedouble,
+                    onChanged: (v) {
+                      setState(() {
+                        SettingsService.update((settings) {
+                          settings.allowClubsRedouble = v;
+                        });
+                      });
+                    },
                   ),
                 ),
                 _rowExpanded(
                   SwitchOption(
                     label: AppStrings.allowNoTrumpRedoubleScore,
-                    value: _allowNoTrumpRedoubled,
-                    onChanged: (v) =>
-                        setState(() => _allowNoTrumpRedoubled = v),
+                    value: settings.allowNoTrumpRedouble,
+                    onChanged: (v) {
+                      setState(() {
+                        SettingsService.update((settings) {
+                          settings.allowNoTrumpRedouble = v;
+                        });
+                      });
+                    },
                   ),
                 ),
                 SizedBox(height: 15),
@@ -86,9 +111,14 @@ class SettingsScreenState extends State<SettingsScreen> {
                 _rowExpanded(
                   SwitchOption(
                     label: AppStrings.allTrumpCapotDedansEndGame,
-                    value: _allTrumpCapotDedansEndsGame,
-                    onChanged: (v) =>
-                        setState(() => _allTrumpCapotDedansEndsGame = v),
+                    value: settings.allTrumpCapotDedansEndGame,
+                    onChanged: (v) {
+                      setState(() {
+                        SettingsService.update((settings) {
+                          settings.allTrumpCapotDedansEndGame = v;
+                        });
+                      });
+                    },
                   ),
                 ),
                 SizedBox(height: 15),
@@ -176,7 +206,7 @@ class SettingsScreenState extends State<SettingsScreen> {
                 (splitScore) => AppCheckOption(
                   label:
                       " ${splitScore.defenderScore}  -  ${splitScore.callerScore} ",
-                  checked: splitValuesAllowed.contains(splitScore),
+                  checked: settings.allowedSplits.contains(splitScore),
                   onChanged: (_) {
                     // Le _ signifie simplement "je reçois ce paramètre mais je ne m'en sers pas".
                     _toggleSplitScore(splitScore);

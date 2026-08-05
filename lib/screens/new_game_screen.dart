@@ -10,6 +10,7 @@ import 'package:score_belote/models/game.dart';
 import 'package:score_belote/models/team.dart';
 import 'package:score_belote/widgets/team_input.dart';
 import 'package:score_belote/widgets/topbar.dart';
+import 'package:score_belote/services/settings_service.dart';
 
 class NewGameScreen extends StatefulWidget {
   const NewGameScreen({super.key});
@@ -63,6 +64,7 @@ class _NewGameScreenState extends State<NewGameScreen> {
       teamA: Team(teamType: TeamType.teamA, label: _a),
       teamB: Team(teamType: TeamType.teamB, label: _b),
       targetScore: ScoreConstants.targetScore,
+      settings: SettingsService.settings,
     );
 
     _navigateTo(context, ScoreScreen(game: newGame));

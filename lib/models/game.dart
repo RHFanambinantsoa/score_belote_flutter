@@ -1,6 +1,7 @@
 import 'package:score_belote/enums/game_status.dart';
 import 'package:score_belote/constants/score_contants.dart';
 import 'package:score_belote/enums/team_type.dart';
+import 'package:score_belote/models/game_settings.dart';
 import 'package:score_belote/models/team.dart';
 import 'round.dart';
 
@@ -13,6 +14,7 @@ class Game {
   late Team teamA;
   late Team teamB;
   late GameStatus status;
+  late GameSettings settings;
 
   Game();
 
@@ -20,6 +22,7 @@ class Game {
     required this.teamA,
     required this.teamB,
     this.targetScore = ScoreConstants.targetScore,
+    required this.settings,
   }) {
     startedAt = DateTime.now();
     status = GameStatus.running;
