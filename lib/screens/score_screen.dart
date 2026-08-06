@@ -111,7 +111,11 @@ class _ScoreScreenState extends State<ScoreScreen> {
               targetScore: widget.game.targetScore,
             ),
             RoundsTitleSection(game: widget.game),
-            Expanded(child: RoundsListview(rounds: widget.game.rounds)),
+            Expanded(
+              child: RoundsListview(
+                rounds: widget.game.rounds.reversed.toList(),
+              ),
+            ),
             Row(
               spacing: 4,
               children: [
