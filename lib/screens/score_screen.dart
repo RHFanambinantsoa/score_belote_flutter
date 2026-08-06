@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:score_belote/constants/score_contants.dart';
+import 'package:score_belote/enums/game_status.dart';
+import 'package:score_belote/enums/team_type.dart';
 import 'package:score_belote/models/round.dart';
 import 'package:score_belote/models/game.dart';
-import 'package:score_belote/models/team.dart';
+import 'package:score_belote/widgets/base/snack_bar.dart';
 import 'package:score_belote/widgets/modals/add_round_modal.dart';
 import 'package:score_belote/widgets/base/buttons.dart';
 import 'package:score_belote/screens/new_game_screen.dart';
@@ -25,7 +26,7 @@ class _ScoreScreenState extends State<ScoreScreen> {
   //misy class 2 rehefa stafulwidget,
   //il y a une classe pour le widget et une classe pour l'état du widget.
   // dans la classe _ScoreScreenState, on peut accéder à widget.game pour récupérer l'objet game passé en paramètre au widget ScoreScreen.
-  bool gameFinish = false;
+
   bool? startNewGameFromDialog = true;
 
   @override
@@ -34,34 +35,33 @@ class _ScoreScreenState extends State<ScoreScreen> {
     super.initState();
   }
 
-  int targetScore = ScoreConstants.targetScore;
-
   void _saveGameToHistory(Game game) {}
 
-  void _checkVictory(Game game, int target) async {
-    if (game.totalScoreA >= target && game.totalScoreB >= target) {
+  void _checkVictory(Game game) async {
+    if (game.isDrawAtTarget) {
+      int oldTarget = game.targetScore;
       setState(() {
-        targetScore = target + ScoreConstants.targetIncrementInterval;
+        game.increaseTargetScore();
       });
-      showAboutDialog(
-        context: context,
-        children: [Text("samy tonga $target fa maty $targetScore indray")],
+      AppSnackBar.show(
+        context,
+        message:
+            "Les deux équipes ont atteint ${oldTarget}pts.\n\n"
+            "Score cible augmenté à ${game.targetScore}pts.",
       );
     } else {
-      if (game.totalScoreA >= target || game.totalScoreB >= target) {
-        Team teamWinner = game.totalScoreA > game.totalScoreB
-            ? game.teams[0]
-            : game.teams[1];
-        game.finishGame(teamWinner.teamType);
+      if (game.hasReachedTargetScore) {
         setState(() {
-          gameFinish = true;
+          game.finishGame();
         });
         _saveGameToHistory(game);
         startNewGameFromDialog = await showDialog<bool>(
           context: context,
           barrierColor: const Color(0x8D14080C),
           builder: (_) => VictoryModal(
-            winningTeam: teamWinner.label,
+            winningTeam: game.winner == TeamType.teamA
+                ? game.teamA.label
+                : game.teamB.label,
             scoreA: game.totalScoreA,
             scoreB: game.totalScoreB,
           ),
@@ -83,7 +83,7 @@ class _ScoreScreenState extends State<ScoreScreen> {
     setState(() {
       widget.game.rounds.add(round);
     });
-    _checkVictory(widget.game, targetScore);
+    _checkVictory(widget.game);
   }
 
   void _openScoreModal() async {
@@ -106,21 +106,25 @@ class _ScoreScreenState extends State<ScoreScreen> {
         child: Column(
           children: [
             // En-tête : nom + total, séparés par VS
-            TotalScoreSection(game: widget.game, targetScore: targetScore),
+            TotalScoreSection(
+              game: widget.game,
+              targetScore: widget.game.targetScore,
+            ),
             RoundsTitleSection(game: widget.game),
             Expanded(child: RoundsListview(rounds: widget.game.rounds)),
             Row(
               spacing: 4,
               children: [
                 SizedBox(width: 10),
-                if (!gameFinish)
+                if (widget.game.status != GameStatus.finished)
                   Expanded(
                     child: AppPrimaryButton(
                       label: '+ Ajouter un score',
                       onPressed: () => _openScoreModal(),
                     ),
                   ),
-                if (gameFinish && !startNewGameFromDialog!)
+                if (widget.game.status == GameStatus.finished &&
+                    !startNewGameFromDialog!)
                   Expanded(
                     child: AppPrimaryButton(
                       label: '♠ Nouvelle partie',
