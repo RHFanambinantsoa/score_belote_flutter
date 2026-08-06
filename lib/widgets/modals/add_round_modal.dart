@@ -6,7 +6,7 @@ import 'package:score_belote/enums/round_status.dart';
 import 'package:score_belote/enums/team_type.dart';
 import 'package:score_belote/models/game.dart';
 import 'package:score_belote/models/round.dart';
-import 'package:score_belote/models/split_score.dart';
+import 'package:score_belote/models/team_score.dart';
 import 'package:score_belote/services/score_calculator.dart';
 import 'package:score_belote/theme/app_text_styles.dart';
 import 'package:score_belote/widgets/add_round/action_buttons_section.dart';
@@ -27,50 +27,51 @@ class AddRoundModal extends StatefulWidget {
 }
 
 class _AddRoundModalState extends State<AddRoundModal> {
-  late bool _isCapot = false;
-  late bool _isSplit = false;
-  late bool _isDedans = false;
-  TeamType _selectedTeam = TeamType.teamA;
-  GameVariant _selectedGameVariant = GameVariant.clubs;
-  RoundStatus _selectedRoundStatus = RoundStatus.normal;
-  SplitScore _selectedSplitScore = ScoreConstants.splitAllTrumpScores[0];
+  ScoreParameters params = ScoreParameters(
+    gameVariant: GameVariant.clubs,
+    roundStatus: RoundStatus.normal,
+    isSplit: false,
+    isCapot: false,
+    isDedans: false,
+    winner: TeamType.teamA,
+    splitValue: ScoreConstants.splitAllTrumpScores[0],
+  );
 
-  void _emitRound() {
-    Round round;
-    round = Round.create(
-      gameVariant: _selectedGameVariant,
-      roundStatus: _selectedRoundStatus,
-      isCapot: _isCapot,
-      isDedans: _isDedans,
-      teamAScore: 0,
-      teamBScore: 0,
-    );
-    round = calculateRoundScoresToAdd(
-      round,
-      _selectedTeam,
-      _isSplit,
-      _selectedSplitScore,
+  @override
+  void initState() {
+    super.initState();
+    params.splitValue = widget.game.settings.orderedAllowedSplits[0];
+  }
+
+  void _onSubmit() {
+    Round round = Round.create(
+      gameVariant: params.gameVariant,
+      roundStatus: params.roundStatus,
+      isCapot: params.isCapot,
+      isDedans: params.isDedans,
+      teamAScore: calculateScores(params).teamA,
+      teamBScore: calculateScores(params).teamB,
     );
     Navigator.pop(context, round);
   }
 
   bool _hideRedouble() =>
-      (_selectedGameVariant == GameVariant.clubs &&
+      (params.gameVariant == GameVariant.clubs &&
           widget.game.settings.allowClubsRedouble == false) ||
-      (_selectedGameVariant == GameVariant.noTrump &&
+      (params.gameVariant == GameVariant.noTrump &&
           widget.game.settings.allowNoTrumpRedouble == false);
 
   bool _displayDedans() =>
-      _isCapot &&
-      ((_selectedGameVariant == GameVariant.allTrump &&
+      params.isCapot &&
+      ((params.gameVariant == GameVariant.allTrump &&
               widget.game.settings.allTrumpCapotDedansEndGame) ||
-          _selectedGameVariant == GameVariant.noTrump);
+          params.gameVariant == GameVariant.noTrump);
 
   void _resetAllFields() {
     setState(() {
-      _isCapot = false;
-      _isDedans = false;
-      _selectedRoundStatus = RoundStatus.normal;
+      params.isCapot = false;
+      params.isDedans = false;
+      params.roundStatus = RoundStatus.normal;
     });
   }
 
@@ -93,82 +94,84 @@ class _AddRoundModalState extends State<AddRoundModal> {
                 spacing: 12,
                 children: [
                   SplitOption(
-                    isSplit: _isSplit,
+                    isSplit: params.isSplit,
                     display: widget.game.settings.allowSplit,
                     onChanged: (v) {
                       setState(() {
-                        _isSplit = v;
+                        params.isSplit = v;
                         _resetAllFields();
                       });
                     },
                   ),
                   TeamSelector(
                     teams: widget.game.teams,
-                    selectedTeam: _selectedTeam,
-                    isSplit: _isSplit,
+                    selectedTeam: params.winner,
+                    isSplit: params.isSplit,
                     onSelected: (team) {
                       setState(() {
-                        _selectedTeam = team;
+                        params.winner = team;
                       });
                     },
                   ),
 
-                  if (!_isSplit)
+                  if (!params.isSplit)
                     Column(
                       spacing: 12,
                       children: [
                         GameVariantSelector(
-                          selected: _selectedGameVariant,
+                          selected: params.gameVariant,
                           onSelected: (v) {
                             setState(() {
-                              _selectedGameVariant = v;
+                              params.gameVariant = v;
                               _resetAllFields();
                             });
                           },
                         ),
                         CapotSelector(
                           displayDedans: _displayDedans(),
-                          onDedansChanged: (v) => setState(() => _isDedans = v),
-                          isCapot: _isCapot,
-                          isDedans: _isDedans,
-                          onCapotChanged: (v) => setState(() => _isCapot = v),
+                          onDedansChanged: (v) =>
+                              setState(() => params.isDedans = v),
+                          isCapot: params.isCapot,
+                          isDedans: params.isDedans,
+                          onCapotChanged: (v) =>
+                              setState(() => params.isCapot = v),
                         ),
                         RoundStatusSelector(
-                          selected: _selectedRoundStatus,
+                          selected: params.roundStatus,
                           hideRedouble: _hideRedouble(),
                           onChanged: (status) {
                             setState(() {
-                              _selectedRoundStatus = status;
+                              params.roundStatus = status;
                             });
                           },
                         ),
                       ],
                     ),
 
-                  if (_isSplit)
+                  if (params.isSplit && params.splitValue != null)
                     SplitSelector(
                       splits: widget.game.settings.orderedAllowedSplits,
-                      selected: _selectedSplitScore,
+                      selected: params.splitValue!,
                       onChanged: (split) {
                         setState(() {
-                          _selectedSplitScore = split;
+                          params.splitValue = split;
                         });
                       },
                     ),
                 ],
               ),
               RoundResumeSection(
-                roundNameResume: _selectedGameVariant.label,
-                isSplit: _isSplit,
-                roundStatusName: _selectedRoundStatus.label,
+                roundNameResume: params.gameVariant.label,
+                isSplit: params.isSplit,
+                roundStatusName: params.roundStatus.label,
                 teams: widget.game.teams,
-                teamAScore: 104,
-                teamBScore: 0,
+                teamAScore: calculateScores(params).teamA,
+                teamBScore: calculateScores(params).teamB,
               ),
               ActionButtonsSection(
                 onCancelPressed: () => Navigator.of(context).pop(),
                 onSubmitPressed: () {
-                  _emitRound();
+                  _onSubmit();
                 },
               ),
             ],

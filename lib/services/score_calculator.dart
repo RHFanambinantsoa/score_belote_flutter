@@ -1,47 +1,44 @@
 import 'package:score_belote/constants/score_contants.dart';
 import 'package:score_belote/enums/game_variant.dart';
 import 'package:score_belote/enums/team_type.dart';
-import 'package:score_belote/models/round.dart';
-import 'package:score_belote/enums/round_status.dart';
-import 'package:score_belote/models/split_score.dart';
+import 'package:score_belote/models/team_score.dart';
 
-Round calculateRoundScoresToAdd(
-  Round round,
-  TeamType? teamSelected,
-  bool? isSplit,
-  SplitScore? selectedSplitScore,
-) {
-  if (isSplit == true && selectedSplitScore != null) {
-    round.gameVariant = GameVariant.allTrump;
-    round.roundStatus = RoundStatus.normal;
-    round.isCapot = false;
-    round.teamAScore = teamSelected == TeamType.teamA
-        ? selectedSplitScore.callerScore
-        : selectedSplitScore.defenderScore;
-    round.teamBScore = teamSelected == TeamType.teamB
-        ? selectedSplitScore.callerScore
-        : selectedSplitScore.defenderScore;
+TeamScore calculateScores(ScoreParameters params) {
+  TeamScore scores = TeamScore(teamA: 0, teamB: 0);
+  if (params.isSplit && params.splitValue != null) {
+    scores.teamA = params.winner == TeamType.teamA
+        ? params.splitValue!.callerScore
+        : params.splitValue!.defenderScore;
+    scores.teamB = params.winner == TeamType.teamB
+        ? params.splitValue!.callerScore
+        : params.splitValue!.defenderScore;
   } else {
-    int score = 0;
-    if (!round.isCapot) {
-      score = round.gameVariant.baseScore;
+    int winnerScore = 0;
+    if (params.isCapot) {
+      winnerScore = _getCapotScore(params.gameVariant, params.isDedans);
     } else {
-      switch (round.gameVariant) {
-        case GameVariant.allTrump:
-          score = ScoreConstants.allTrumpCapotScore;
-          break;
-        case GameVariant.noTrump:
-          score = round.isDedans
-              ? ScoreConstants.noTrumpCapotDefendingTeamScore
-              : ScoreConstants.noTrumpCapotCallerTeamScore;
-          break;
-        default:
-          score = ScoreConstants.colorCapotScore;
-      }
+      winnerScore = params.gameVariant.baseScore;
     }
-    score *= round.roundStatus.multiplifier;
-    round.teamAScore = teamSelected == TeamType.teamA ? score : 0;
-    round.teamBScore = teamSelected == TeamType.teamB ? score : 0;
+    winnerScore *= params.roundStatus.multiplifier;
+    scores.teamA = params.winner == TeamType.teamA ? winnerScore : 0;
+    scores.teamB = params.winner == TeamType.teamB ? winnerScore : 0;
   }
-  return round;
+  return scores;
+}
+
+int _getCapotScore(GameVariant gameVariant, bool isDedans) {
+  int score = 0;
+  switch (gameVariant) {
+    case GameVariant.allTrump:
+      score = ScoreConstants.allTrumpCapotScore;
+      break;
+    case GameVariant.noTrump:
+      score = isDedans
+          ? ScoreConstants.noTrumpCapotDefendingTeamScore
+          : ScoreConstants.noTrumpCapotCallerTeamScore;
+      break;
+    default:
+      score = ScoreConstants.colorCapotScore;
+  }
+  return score;
 }
