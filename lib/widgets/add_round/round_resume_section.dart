@@ -6,8 +6,8 @@ import 'package:score_belote/theme/app_text_styles.dart';
 
 class RoundResumeSection extends StatelessWidget {
   final String roundNameResume;
+  final String capotStatus;
   final bool isSplit;
-  final String roundStatusName;
   final List<Team> teams;
   final int teamAScore;
   final int teamBScore;
@@ -16,10 +16,10 @@ class RoundResumeSection extends StatelessWidget {
     super.key,
     required this.roundNameResume,
     required this.isSplit,
-    required this.roundStatusName,
     required this.teams,
     required this.teamAScore,
     required this.teamBScore,
+    required this.capotStatus,
   });
 
   String _winnerName() =>
@@ -37,6 +37,15 @@ class RoundResumeSection extends StatelessWidget {
         child: Column(
           spacing: 4,
           children: [
+            if (capotStatus != "")
+              Text(
+                capotStatus,
+                style: AppTextStyles.sectionLabel.copyWith(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w800,
+                  color: AppColors.brown,
+                ),
+              ),
             Text(
               isSplit ? "ToutA Mizara" : roundNameResume,
               style: AppTextStyles.sectionLabel.copyWith(
@@ -45,18 +54,10 @@ class RoundResumeSection extends StatelessWidget {
                 color: AppColors.brown,
               ),
             ),
+
             if (!isSplit)
               Column(
                 children: [
-                  if (roundStatusName != "")
-                    Text(
-                      roundStatusName,
-                      style: AppTextStyles.sectionLabel.copyWith(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w800,
-                        color: AppColors.brown,
-                      ),
-                    ),
                   RichText(
                     text: TextSpan(
                       children: [

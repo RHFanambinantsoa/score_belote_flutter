@@ -25,3 +25,11 @@ String longRoundNameResume(GameVariant gameVariant, RoundStatus roundStatus) {
       ? "${gameVariant.suitSymbol}${gameVariant.label}"
       : "${gameVariant.suitSymbol}${gameVariant.label} - ${roundStatus.label}";
 }
+
+String capotStatus(bool isCapot, bool isDedans) {
+  return isCapot
+      ? (isDedans
+            ? "${AppStrings.capot} ${AppStrings.dedans}"
+            : AppStrings.capot)
+      : "";
+}

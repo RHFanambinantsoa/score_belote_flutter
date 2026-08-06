@@ -28,25 +28,27 @@ class AddRoundModal extends StatefulWidget {
 }
 
 class _AddRoundModalState extends State<AddRoundModal> {
-  ScoreParameters params = ScoreParameters(
-    gameVariant: GameVariant.clubs,
-    roundStatus: RoundStatus.normal,
-    isSplit: false,
-    isCapot: false,
-    isDedans: false,
-    winner: TeamType.teamA,
-    splitValue: ScoreConstants.splitAllTrumpScores[0],
-  );
+  late ScoreParameters params;
 
   @override
   void initState() {
     super.initState();
-    params.splitValue = widget.game.settings.orderedAllowedSplits[0];
+    params = ScoreParameters(
+      gameVariant: GameVariant.clubs,
+      roundStatus: RoundStatus.normal,
+      isSplit: false,
+      isCapot: false,
+      isDedans: false,
+      winner: TeamType.teamA,
+      splitValue: widget.game.settings.orderedAllowedSplits.isNotEmpty
+          ? widget.game.settings.orderedAllowedSplits[0]
+          : null,
+    );
   }
 
   void _onSubmit() {
     Round round = Round.create(
-      gameVariant: params.gameVariant,
+      gameVariant: params.isSplit ? GameVariant.allTrump : params.gameVariant,
       roundStatus: params.roundStatus,
       isCapot: params.isCapot,
       isDedans: params.isDedans,
@@ -73,6 +75,11 @@ class _AddRoundModalState extends State<AddRoundModal> {
       params.isCapot = false;
       params.isDedans = false;
       params.roundStatus = RoundStatus.normal;
+      params.splitValue = params.isSplit
+          ? widget.game.settings.orderedAllowedSplits.isNotEmpty
+                ? widget.game.settings.orderedAllowedSplits[0]
+                : null
+          : null;
     });
   }
 
@@ -167,7 +174,7 @@ class _AddRoundModalState extends State<AddRoundModal> {
                   params.roundStatus,
                 ),
                 isSplit: params.isSplit,
-                roundStatusName: params.roundStatus.label,
+                capotStatus: capotStatus(params.isCapot, params.isDedans),
                 teams: widget.game.teams,
                 teamAScore: calculateScores(params).teamA,
                 teamBScore: calculateScores(params).teamB,

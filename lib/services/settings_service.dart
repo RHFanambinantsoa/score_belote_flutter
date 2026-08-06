@@ -1,7 +1,7 @@
 import '../models/game_settings.dart';
 
 class SettingsService {
-  static GameSettings _settings = GameSettings();
+  static final GameSettings _settings = GameSettings();
 
   static GameSettings get settings => _settings;
 

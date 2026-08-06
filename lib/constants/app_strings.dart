@@ -21,8 +21,8 @@ class AppStrings {
   static const String teamA = "EQUIPE 1";
   static const String teamB = "EQUIPE 2";
   static const String versus = "◆ CONTRE ◆";
-  static const String defaultTeamAName = "Nous";
-  static const String defaultTeamBName = "Eux";
+  static const String defaultTeamAName = "Tsika";
+  static const String defaultTeamBName = "Zareo";
 
   static const String newScore = "Nouveau score";
   static const String splitScoreMode = "Score partagé";
