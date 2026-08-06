@@ -5,11 +5,11 @@ import 'package:score_belote/enums/team_type.dart';
 import 'package:score_belote/screens/score_screen.dart';
 import 'package:score_belote/theme/app_colors.dart';
 import 'package:score_belote/theme/app_text_styles.dart';
-import 'package:score_belote/widgets/buttons.dart';
+import 'package:score_belote/widgets/base/buttons.dart';
 import 'package:score_belote/models/game.dart';
 import 'package:score_belote/models/team.dart';
 import 'package:score_belote/widgets/team_input.dart';
-import 'package:score_belote/widgets/topbar.dart';
+import 'package:score_belote/widgets/base/topbar.dart';
 import 'package:score_belote/services/settings_service.dart';
 
 class NewGameScreen extends StatefulWidget {

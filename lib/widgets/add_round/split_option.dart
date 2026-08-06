@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:score_belote/constants/app_strings.dart';
-import 'package:score_belote/widgets/switch_option.dart';
+import 'package:score_belote/widgets/base/switch_option.dart';
 
 class SplitOption extends StatelessWidget {
   final bool display;

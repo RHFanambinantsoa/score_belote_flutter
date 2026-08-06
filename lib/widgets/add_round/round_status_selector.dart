@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:score_belote/constants/app_strings.dart';
 import 'package:score_belote/enums/round_status.dart';
-import 'package:score_belote/widgets/radio_option.dart';
+import 'package:score_belote/widgets/base/radio_option.dart';
 import 'package:score_belote/theme/app_text_styles.dart';
 
 class RoundStatusSelector extends StatelessWidget {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:score_belote/constants/app_strings.dart';
-import 'package:score_belote/widgets/buttons.dart';
+import 'package:score_belote/widgets/base/buttons.dart';
 
 class ActionButtonsSection extends StatelessWidget {
   final VoidCallback? onSubmitPressed;

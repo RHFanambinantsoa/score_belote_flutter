@@ -4,12 +4,12 @@ import 'package:score_belote/models/round.dart';
 import 'package:score_belote/models/game.dart';
 import 'package:score_belote/models/team.dart';
 import 'package:score_belote/widgets/modals/add_round_modal.dart';
-import 'package:score_belote/widgets/buttons.dart';
+import 'package:score_belote/widgets/base/buttons.dart';
 import 'package:score_belote/screens/new_game_screen.dart';
-import 'package:score_belote/widgets/rounds_title_section.dart';
-import 'package:score_belote/widgets/topbar.dart';
-import 'package:score_belote/widgets/total_score_section.dart';
-import 'package:score_belote/widgets/rounds_listview.dart';
+import 'package:score_belote/widgets/score_screen/rounds_title_section.dart';
+import 'package:score_belote/widgets/base/topbar.dart';
+import 'package:score_belote/widgets/score_screen/total_score_section.dart';
+import 'package:score_belote/widgets/score_screen/rounds_listview.dart';
 import 'package:score_belote/widgets/modals/victory_modal.dart';
 
 class ScoreScreen extends StatefulWidget {

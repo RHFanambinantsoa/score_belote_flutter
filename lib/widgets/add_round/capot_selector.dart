@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:score_belote/constants/app_strings.dart';
-import 'package:score_belote/widgets/check_option.dart';
+import 'package:score_belote/widgets/base/check_option.dart';
 
 class CapotSelector extends StatelessWidget {
   final bool displayDedans;

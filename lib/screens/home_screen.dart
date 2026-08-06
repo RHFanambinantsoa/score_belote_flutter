@@ -3,7 +3,7 @@ import 'package:score_belote/constants/fake_datas.dart';
 import 'package:score_belote/screens/history_screen.dart';
 import 'package:score_belote/screens/new_game_screen.dart';
 import 'package:score_belote/screens/settings_screen.dart';
-import 'package:score_belote/widgets/buttons.dart';
+import 'package:score_belote/widgets/base/buttons.dart';
 import 'package:score_belote/constants/app_strings.dart';
 import 'package:score_belote/theme/app_colors.dart';
 import 'package:score_belote/theme/app_text_styles.dart';

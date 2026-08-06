@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:score_belote/constants/app_strings.dart';
 import 'package:score_belote/models/split_score.dart';
 import 'package:score_belote/widgets/add_round/group_label.dart';
-import 'package:score_belote/widgets/radio_option.dart';
+import 'package:score_belote/widgets/base/radio_option.dart';
 
 class SplitSelector extends StatelessWidget {
   final List<SplitScore> splits;

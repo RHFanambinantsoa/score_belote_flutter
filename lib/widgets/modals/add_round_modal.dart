@@ -14,7 +14,7 @@ import 'package:score_belote/widgets/add_round/capot_selector.dart';
 import 'package:score_belote/widgets/add_round/round_resume_section.dart';
 import 'package:score_belote/widgets/add_round/split_option.dart';
 import 'package:score_belote/widgets/add_round/split_selector.dart';
-import 'package:score_belote/widgets/game_variant_selector.dart';
+import 'package:score_belote/widgets/add_round/game_variant_selector.dart';
 import 'package:score_belote/widgets/add_round/team_selector.dart';
 import 'package:score_belote/widgets/add_round/round_status_selector.dart';
 

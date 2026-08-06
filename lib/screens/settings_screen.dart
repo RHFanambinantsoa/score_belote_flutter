@@ -7,10 +7,10 @@ import 'package:score_belote/screens/rule_screen.dart';
 import 'package:score_belote/services/settings_service.dart';
 import 'package:score_belote/theme/app_colors.dart';
 import 'package:score_belote/theme/app_text_styles.dart';
-import 'package:score_belote/widgets/check_option.dart';
-import 'package:score_belote/widgets/switch_option.dart';
-import 'package:score_belote/widgets/topbar.dart';
-import 'package:score_belote/widgets/delete_history_button.dart';
+import 'package:score_belote/widgets/base/check_option.dart';
+import 'package:score_belote/widgets/base/switch_option.dart';
+import 'package:score_belote/widgets/base/topbar.dart';
+import 'package:score_belote/widgets/history_screen/delete_history_button.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
