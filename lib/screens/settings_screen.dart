@@ -40,6 +40,9 @@ class SettingsScreenState extends State<SettingsScreen> {
         } else {
           settings.allowedSplits.add(splitScore);
         }
+        if (settings.allowedSplits.isEmpty) {
+          settings.allowSplit = false;
+        }
       });
 
       //
