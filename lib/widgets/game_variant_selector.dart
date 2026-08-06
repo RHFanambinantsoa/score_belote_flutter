@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:score_belote/constants/app_strings.dart';
 import 'package:score_belote/enums/game_variant.dart';
+import 'package:score_belote/theme/app_text_styles.dart';
 import '../theme/app_colors.dart';
 
 /// Ajoute des propriétés d'affichage à GameVariant.
@@ -91,13 +93,29 @@ class GameVariantSelector extends StatelessWidget {
     );
   }
 
+  Widget _groupLabel(String text) => Padding(
+    padding: const EdgeInsets.all(4),
+    child: Center(
+      child: Text(
+        text,
+        style: AppTextStyles.sectionLabel.copyWith(fontWeight: FontWeight.w700),
+      ),
+    ),
+  );
+
   @override
   Widget build(BuildContext context) {
     return Column(
+      spacing: 4,
       children: [
-        _buildRow(_suits, square: true),
-        const SizedBox(height: 12),
-        _buildRow(_others),
+        _groupLabel(AppStrings.game),
+        Column(
+          children: [
+            _buildRow(_suits, square: true),
+            const SizedBox(height: 12),
+            _buildRow(_others),
+          ],
+        ),
       ],
     );
   }

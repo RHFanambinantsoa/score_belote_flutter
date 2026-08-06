@@ -10,11 +10,14 @@ import 'package:score_belote/models/split_score.dart';
 import 'package:score_belote/services/score_calculator.dart';
 import 'package:score_belote/theme/app_colors.dart';
 import 'package:score_belote/theme/app_text_styles.dart';
-import 'package:score_belote/widgets/buttons.dart';
-import 'package:score_belote/widgets/check_option.dart';
+import 'package:score_belote/widgets/add_round/action_buttons_section.dart';
+import 'package:score_belote/widgets/add_round/capot_selector.dart';
+import 'package:score_belote/widgets/add_round/round_resume_section.dart';
+import 'package:score_belote/widgets/add_round/split_option.dart';
+import 'package:score_belote/widgets/add_round/split_selector.dart';
 import 'package:score_belote/widgets/game_variant_selector.dart';
-import 'package:score_belote/widgets/radio_option.dart';
-import 'package:score_belote/widgets/switch_option.dart';
+import 'package:score_belote/widgets/add_round/team_selector.dart';
+import 'package:score_belote/widgets/add_round/round_status_selector.dart';
 
 class AddRoundModal extends StatefulWidget {
   final Game game;
@@ -27,12 +30,11 @@ class AddRoundModal extends StatefulWidget {
 class _AddRoundModalState extends State<AddRoundModal> {
   late bool _isCapot = false;
   late bool _isSplit = false;
-  late bool isDefending = false;
+  late bool _isDedans = false;
   TeamType _selectedTeam = TeamType.teamA;
   GameVariant _selectedGameVariant = GameVariant.clubs;
   RoundStatus _selectedRoundStatus = RoundStatus.normal;
   SplitScore _selectedSplitScore = ScoreConstants.splitAllTrumpScores[0];
-  bool _hideRedouble = false;
 
   void _emitRound() {
     Round round;
@@ -40,7 +42,7 @@ class _AddRoundModalState extends State<AddRoundModal> {
       gameVariant: _selectedGameVariant,
       roundStatus: _selectedRoundStatus,
       isCapot: _isCapot,
-      isDedans: isDefending,
+      isDedans: _isDedans,
       teamAScore: 0,
       teamBScore: 0,
     );
@@ -53,11 +55,24 @@ class _AddRoundModalState extends State<AddRoundModal> {
     Navigator.pop(context, round);
   }
 
-  bool _hideRedoubleRoundStatusOptions() {
-    return (_selectedGameVariant == GameVariant.clubs &&
-            widget.game.settings.allowClubsRedouble == false) ||
-        (_selectedGameVariant == GameVariant.noTrump &&
-            widget.game.settings.allowNoTrumpRedouble == false);
+  bool _hideRedouble() =>
+      (_selectedGameVariant == GameVariant.clubs &&
+          widget.game.settings.allowClubsRedouble == false) ||
+      (_selectedGameVariant == GameVariant.noTrump &&
+          widget.game.settings.allowNoTrumpRedouble == false);
+
+  bool _displayDedans() =>
+      _isCapot &&
+      ((_selectedGameVariant == GameVariant.allTrump &&
+              widget.game.settings.allTrumpCapotDedansEndGame) ||
+          _selectedGameVariant == GameVariant.noTrump);
+
+  void _resetAllFields() {
+    setState(() {
+      _isCapot = false;
+      _isDedans = false;
+      _selectedRoundStatus = RoundStatus.normal;
+    });
   }
 
   @override
@@ -78,156 +93,86 @@ class _AddRoundModalState extends State<AddRoundModal> {
               Column(
                 spacing: 12,
                 children: [
-                  Row(
-                    children: [
-                      if (widget.game.settings.allowSplit == true)
-                        Expanded(
-                          child: SwitchOption(
-                            label: AppStrings.splitScoreMode,
-                            value: _isSplit,
-                            onChanged: (v) => setState(() => _isSplit = v),
-                          ),
-                        ),
-                    ],
+                  SplitOption(
+                    isSplit: _isSplit,
+                    display: widget.game.settings.allowSplit,
+                    onChanged: (v) {
+                      setState(() {
+                        _isSplit = v;
+                        _resetAllFields();
+                      });
+                    },
                   ),
-                  Column(
-                    spacing: 4,
-                    children: [
-                      if (_isSplit)
-                        _groupLabel(
-                          "${AppStrings.game} : ${AppStrings.allTrump}",
-                        ),
-                      _groupLabel(
-                        _isSplit ? AppStrings.caller : AppStrings.winner,
-                      ),
-                      Row(
-                        spacing: 10,
-                        children: [
-                          ...widget.game.teams.map(
-                            (team) => Expanded(
-                              child: _teamButton(team.label, team.teamType),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
+                  TeamSelector(
+                    teams: widget.game.teams,
+                    selectedTeam: _selectedTeam,
+                    isSplit: _isSplit,
+                    onSelected: (team) {
+                      setState(() {
+                        _selectedTeam = team;
+                      });
+                    },
                   ),
 
                   if (!_isSplit)
                     Column(
                       spacing: 12,
                       children: [
-                        Column(
-                          spacing: 4,
-                          children: [
-                            _groupLabel(AppStrings.game),
-                            GameVariantSelector(
-                              selected: _selectedGameVariant,
-                              onSelected: (v) {
-                                setState(() {
-                                  _selectedGameVariant = v;
-                                  _hideRedouble =
-                                      _hideRedoubleRoundStatusOptions();
-                                });
-                              },
-                            ),
-                          ],
+                        GameVariantSelector(
+                          selected: _selectedGameVariant,
+                          onSelected: (v) {
+                            setState(() {
+                              _selectedGameVariant = v;
+                              _resetAllFields();
+                            });
+                          },
                         ),
-                        SizedBox(height: 10),
-                        Row(
-                          spacing: 10,
-                          children: [
-                            Expanded(
-                              child: AppCheckOption(
-                                label: AppStrings.capot,
-                                checked: _isCapot,
-                                onChanged: (v) => setState(() => _isCapot = v),
-                              ),
-                            ),
-                            if (_isCapot &&
-                                ((_selectedGameVariant ==
-                                            GameVariant.allTrump &&
-                                        widget
-                                            .game
-                                            .settings
-                                            .allTrumpCapotDedansEndGame) ||
-                                    _selectedGameVariant ==
-                                        GameVariant.noTrump))
-                              Expanded(
-                                child: AppCheckOption(
-                                  label: AppStrings.dedans,
-                                  checked: isDefending,
-                                  onChanged: (v) =>
-                                      setState(() => isDefending = v),
-                                ),
-                              ),
-                          ],
+                        CapotSelector(
+                          displayDedans: _displayDedans(),
+                          onDedansChanged: (v) => setState(() => _isDedans = v),
+                          isCapot: _isCapot,
+                          isDedans: _isDedans,
+                          onCapotChanged: (v) => setState(() => _isCapot = v),
                         ),
-
-                        Column(
-                          spacing: 4,
-                          children: [
-                            _groupLabel(AppStrings.mode),
-                            Column(
-                              spacing: 4,
-                              children: [
-                                ...(_hideRedouble
-                                        ? RoundStatus.withoutRedoubled
-                                        : RoundStatus.values)
-                                    .map(
-                                      (roundStatus) => AppRadioOption(
-                                        value: roundStatus,
-                                        groupValue: _selectedRoundStatus,
-                                        label: roundStatus.label,
-                                        onChanged: (v) => setState(
-                                          () => _selectedRoundStatus = v,
-                                        ),
-                                      ),
-                                    ),
-                              ],
-                            ),
-                          ],
+                        RoundStatusSelector(
+                          selected: _selectedRoundStatus,
+                          hideRedouble: _hideRedouble(),
+                          onChanged: (status) {
+                            setState(() {
+                              _selectedRoundStatus = status;
+                            });
+                          },
                         ),
                       ],
                     ),
+
                   if (_isSplit)
-                    Column(
-                      children: [
-                        _groupLabel(AppStrings.splitValues),
-                        ...widget.game.settings.orderedAllowedSplits.map(
-                          (splitScore) => AppRadioOption(
-                            value: splitScore,
-                            groupValue: _selectedSplitScore,
-                            label:
-                                " ${splitScore.defenderScore}  -  ${splitScore.callerScore} ",
-                            onChanged: (v) =>
-                                setState(() => _selectedSplitScore = v),
-                          ),
-                        ),
-                      ],
+                    SplitSelector(
+                      splits: widget.game.settings.orderedAllowedSplits,
+                      selected: _selectedSplitScore,
+                      onChanged: (split) {
+                        setState(() {
+                          _selectedSplitScore = split;
+                        });
+                      },
                     ),
                 ],
               ),
               const SizedBox(height: 16),
+              RoundResumeSection(
+                roundNameResume: _selectedGameVariant.label,
+                isSplit: _isSplit,
+                roundStatusName: _selectedRoundStatus.label,
+                teams: widget.game.teams,
+                teamAScore: 104,
+                teamBScore: 0,
+              ),
               _resumeNewScoreToAdd(),
-              Row(
-                children: [
-                  Expanded(
-                    child: AppSecondaryButton(
-                      label: AppStrings.cancel,
-                      onPressed: () => Navigator.of(context).pop(),
-                    ),
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: AppPrimaryButton(
-                      label: AppStrings.submit,
-                      onPressed: () {
-                        _emitRound();
-                      },
-                    ),
-                  ),
-                ],
+              ActionButtonsSection(
+                onCancelPressed: () => Navigator.of(context).pop(),
+                onSubmitPressed: () {
+                  _emitRound();
+                },
               ),
             ],
           ),
@@ -297,46 +242,4 @@ class _AddRoundModalState extends State<AddRoundModal> {
       ),
     );
   }
-
-  Widget _teamButton(String label, TeamType value) {
-    final active = _selectedTeam == value;
-    return GestureDetector(
-      onTap: () => setState(() => _selectedTeam = value),
-      child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 12),
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: active ? AppColors.gold : AppColors.cream2,
-          borderRadius: BorderRadius.circular(14),
-          border: Border.all(color: AppColors.brown, width: 2.5),
-          boxShadow: active
-              ? const [
-                  BoxShadow(color: AppColors.goldDeep, offset: Offset(0, 4)),
-                ]
-              : null,
-        ),
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 8, vertical: 0),
-          child: Text(
-            label,
-            style: AppTextStyles.button.copyWith(
-              fontSize: 15,
-              color: AppColors.wineDeep,
-            ),
-            overflow: TextOverflow.ellipsis,
-          ),
-        ),
-      ),
-    );
-  }
 }
-
-Widget _groupLabel(String text) => Padding(
-  padding: const EdgeInsets.all(4),
-  child: Center(
-    child: Text(
-      text,
-      style: AppTextStyles.sectionLabel.copyWith(fontWeight: FontWeight.w700),
-    ),
-  ),
-);
