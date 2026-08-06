@@ -8,7 +8,6 @@ import 'package:score_belote/models/game.dart';
 import 'package:score_belote/models/round.dart';
 import 'package:score_belote/models/split_score.dart';
 import 'package:score_belote/services/score_calculator.dart';
-import 'package:score_belote/theme/app_colors.dart';
 import 'package:score_belote/theme/app_text_styles.dart';
 import 'package:score_belote/widgets/add_round/action_buttons_section.dart';
 import 'package:score_belote/widgets/add_round/capot_selector.dart';
