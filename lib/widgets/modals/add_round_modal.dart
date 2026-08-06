@@ -158,7 +158,6 @@ class _AddRoundModalState extends State<AddRoundModal> {
                     ),
                 ],
               ),
-              const SizedBox(height: 16),
               RoundResumeSection(
                 roundNameResume: _selectedGameVariant.label,
                 isSplit: _isSplit,
@@ -167,7 +166,6 @@ class _AddRoundModalState extends State<AddRoundModal> {
                 teamAScore: 104,
                 teamBScore: 0,
               ),
-              _resumeNewScoreToAdd(),
               ActionButtonsSection(
                 onCancelPressed: () => Navigator.of(context).pop(),
                 onSubmitPressed: () {
@@ -176,68 +174,6 @@ class _AddRoundModalState extends State<AddRoundModal> {
               ),
             ],
           ),
-        ),
-      ),
-    );
-  }
-
-  //logique à faire
-  Widget _resumeNewScoreToAdd() {
-    return Padding(
-      padding: EdgeInsets.all(10),
-      child: Center(
-        child: Column(
-          spacing: 4,
-          children: [
-            Text(
-              "ToutA Contré Capot",
-              style: AppTextStyles.sectionLabel.copyWith(
-                fontSize: 18,
-                fontWeight: FontWeight.w800,
-                color: AppColors.brown,
-              ),
-            ),
-            RichText(
-              text: TextSpan(
-                children: [
-                  TextSpan(
-                    text: ' Pour  ',
-                    style: AppTextStyles.sectionLabel.copyWith(
-                      fontSize: 18,
-                      color: AppColors.brown,
-                    ),
-                  ),
-                  TextSpan(
-                    text: "Nous",
-                    style: AppTextStyles.sectionLabel.copyWith(
-                      fontSize: 20,
-                      color: AppColors.goldDeep,
-                    ),
-                  ),
-                  TextSpan(
-                    text: ' ? ',
-                    style: AppTextStyles.sectionLabel.copyWith(
-                      fontSize: 18,
-                      color: AppColors.brown,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            RichText(
-              text: TextSpan(
-                children: [
-                  TextSpan(
-                    text: "+ 104",
-                    style: AppTextStyles.bigScore.copyWith(
-                      fontSize: 28,
-                      color: AppColors.brown,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
         ),
       ),
     );
