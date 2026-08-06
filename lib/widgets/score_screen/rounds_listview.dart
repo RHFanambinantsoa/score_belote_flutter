@@ -1,15 +1,26 @@
 import 'package:flutter/widgets.dart';
-import 'package:score_belote/constants/app_strings.dart';
-import 'package:score_belote/models/game.dart';
+import 'package:score_belote/models/round.dart';
+import 'package:score_belote/services/round_name_parser.dart';
 import 'package:score_belote/theme/app_text_styles.dart';
-import '../theme/app_colors.dart';
+import '../../theme/app_colors.dart';
 
-class RoundsTitleSection extends StatelessWidget {
-  final Game game;
-  const RoundsTitleSection({super.key, required this.game});
+class RoundsListview extends StatelessWidget {
+  final List<Round> rounds;
+  const RoundsListview({super.key, required this.rounds});
 
   @override
   Widget build(BuildContext context) {
+    return ListView.builder(
+      itemCount: rounds.length,
+      itemBuilder: (context, index) {
+        final round = rounds[index];
+
+        return _row(round);
+      },
+    );
+  }
+
+  Widget _row(Round round) {
     return Padding(
       padding: EdgeInsets.all(5),
       child: Column(
@@ -21,9 +32,14 @@ class RoundsTitleSection extends StatelessWidget {
                 flex: 5,
                 child: Center(
                   child: Text(
-                    AppStrings.game,
+                    shortRoundResume(
+                      round.gameVariant,
+                      round.roundStatus,
+                      round.isCapot,
+                      round.isDedans,
+                    ),
                     style: AppTextStyles.sectionLabel.copyWith(
-                      fontSize: 15,
+                      fontSize: 14,
                       fontWeight: FontWeight.w800,
                     ),
                   ),
@@ -34,10 +50,10 @@ class RoundsTitleSection extends StatelessWidget {
                 flex: 4,
                 child: Center(
                   child: Text(
-                    game.teamA.label,
+                    round.teamAScore != 0 ? "${round.teamAScore}" : "-",
                     style: AppTextStyles.sectionLabel.copyWith(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w800,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w700,
                     ),
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -49,10 +65,10 @@ class RoundsTitleSection extends StatelessWidget {
                 flex: 4,
                 child: Center(
                   child: Text(
-                    game.teamB.label,
+                    round.teamBScore != 0 ? "${round.teamBScore}" : "-",
                     style: AppTextStyles.sectionLabel.copyWith(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w800,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w700,
                     ),
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -72,7 +88,7 @@ class RoundsTitleSection extends StatelessWidget {
       child: Center(
         child: Container(
           width: 2,
-          height: 35,
+          height: 26,
           color: AppColors.brown.withValues(alpha: 0.15),
         ),
       ),
@@ -81,10 +97,10 @@ class RoundsTitleSection extends StatelessWidget {
 
   Widget _horizontalLine() {
     return Container(
-      height: 3,
+      height: 2,
       margin: const EdgeInsets.symmetric(vertical: 2),
       decoration: BoxDecoration(
-        color: AppColors.wineDeep.withValues(alpha: 0.5),
+        color: AppColors.brown.withValues(alpha: 0.15),
         borderRadius: BorderRadius.circular(2),
       ),
     );

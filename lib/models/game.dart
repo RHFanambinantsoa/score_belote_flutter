@@ -47,9 +47,25 @@ class Game {
   int get totalScoreB => _totalScore(TeamType.teamB);
   List<Team> get teams => [teamA, teamB];
 
-  void finishGame(TeamType winnerTeam) {
+  bool get isDrawAtTarget => //les deux équipes ont dépassé l'objectif
+      totalScoreA >= targetScore && totalScoreB >= targetScore;
+
+  bool get hasReachedTargetScore => //un équipe à attenit l'objectif
+      totalScoreA >= targetScore || totalScoreB >= targetScore;
+
+  TeamType? _winner() {
+    if (totalScoreA > totalScoreB) return TeamType.teamA;
+    if (totalScoreB > totalScoreA) return TeamType.teamB;
+    return null;
+  }
+
+  void increaseTargetScore() {
+    targetScore += ScoreConstants.targetIncrementInterval;
+  }
+
+  void finishGame() {
     if (status != GameStatus.running) return;
-    winner = winnerTeam;
+    winner = _winner();
     status = GameStatus.finished;
     finishedAt = DateTime.now();
   }

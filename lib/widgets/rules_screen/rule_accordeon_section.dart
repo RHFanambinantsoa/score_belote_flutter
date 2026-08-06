@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../theme/app_colors.dart';
-import '../theme/app_text_styles.dart';
+import '../../theme/app_colors.dart';
+import '../../theme/app_text_styles.dart';
 
 /// Une section repliable de l'écran "Règles du jeu". `number` affiche le
 /// numéro de section en doré devant le titre (ex: "7."). Passe

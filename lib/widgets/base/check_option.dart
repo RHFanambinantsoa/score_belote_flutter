@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../theme/app_colors.dart';
-import '../theme/app_text_styles.dart';
+import '../../theme/app_colors.dart';
+import '../../theme/app_text_styles.dart';
 
 /// Case à cocher façon "carte" — utilisée pour Capot, Dedans, Split
 /// dans le modal de saisie du score. Contrairement à AppRadioOption,

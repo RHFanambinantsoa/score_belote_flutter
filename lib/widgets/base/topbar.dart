@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../theme/app_colors.dart';
-import '../theme/app_text_styles.dart';
+import '../../theme/app_colors.dart';
+import '../../theme/app_text_styles.dart';
 
 /// Barre du haut : flèche "‹" jaune pour revenir au menu, titre centré,
 /// et un slot optionnel à droite (ex: l'icône Paramètres pendant une

@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:score_belote/models/game.dart';
 import 'package:score_belote/theme/app_text_styles.dart';
-import '../theme/app_colors.dart';
+import '../../theme/app_colors.dart';
 
 class TotalScoreSection extends StatelessWidget {
   final Game game;

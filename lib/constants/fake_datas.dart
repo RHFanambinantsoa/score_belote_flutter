@@ -1,4 +1,4 @@
-import 'package:score_belote/widgets/history_card.dart';
+import 'package:score_belote/widgets/history_screen/history_card.dart';
 
 class FakeDatas {
   FakeDatas._();

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:score_belote/constants/app_strings.dart';
-import 'package:score_belote/widgets/buttons.dart';
+import 'package:score_belote/widgets/base/buttons.dart';
 import 'package:score_belote/widgets/emoji_badge.dart';
 import 'package:score_belote/widgets/warning_box.dart';
 import 'home_screen.dart';

@@ -3,7 +3,7 @@ import 'package:score_belote/constants/rule_data.dart';
 import 'package:score_belote/models/rule_content.dart';
 import 'package:score_belote/theme/app_colors.dart';
 import 'package:score_belote/theme/app_text_styles.dart';
-import 'package:score_belote/widgets/rules/rule_block_view.dart';
+import 'package:score_belote/widgets/rules_screen/rule_block_view.dart';
 
 class RuleQuickAccessBar extends StatelessWidget {
   final List<RuleTableReferenceCategory> referenceCategories;
