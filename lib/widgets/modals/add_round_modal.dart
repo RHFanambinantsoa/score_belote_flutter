@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:score_belote/constants/app_strings.dart';
-import 'package:score_belote/constants/score_contants.dart';
 import 'package:score_belote/enums/game_variant.dart';
 import 'package:score_belote/enums/round_status.dart';
 import 'package:score_belote/enums/team_type.dart';

@@ -29,8 +29,8 @@ class AppStrings {
   static const String winner = "GAGNANT";
   static const String caller = "Qui a fait l'appel?";
   static const String game = "Jeu";
-  static const String allTrump = "Tout Atout";
-  static const String noTrump = "Sans Atout";
+  static const String allTrump = "ToutA";
+  static const String noTrump = "SansA";
   static const String mode = "Mode";
   static const String capot = "Capot";
   static const String dedans = "Dedans";
