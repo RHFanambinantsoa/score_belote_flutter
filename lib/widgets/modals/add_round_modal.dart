@@ -7,6 +7,7 @@ import 'package:score_belote/enums/team_type.dart';
 import 'package:score_belote/models/game.dart';
 import 'package:score_belote/models/round.dart';
 import 'package:score_belote/models/team_score.dart';
+import 'package:score_belote/services/round_name_parser.dart';
 import 'package:score_belote/services/score_calculator.dart';
 import 'package:score_belote/theme/app_text_styles.dart';
 import 'package:score_belote/widgets/add_round/action_buttons_section.dart';
@@ -161,7 +162,10 @@ class _AddRoundModalState extends State<AddRoundModal> {
                 ],
               ),
               RoundResumeSection(
-                roundNameResume: params.gameVariant.label,
+                roundNameResume: longRoundNameResume(
+                  params.gameVariant,
+                  params.roundStatus,
+                ),
                 isSplit: params.isSplit,
                 roundStatusName: params.roundStatus.label,
                 teams: widget.game.teams,
