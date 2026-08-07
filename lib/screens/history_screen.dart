@@ -104,8 +104,6 @@ class _HistoryList extends StatelessWidget {
   }
 }
 
-Widget _rowExpanded(Widget child) => Row(children: [Expanded(child: child)]);
-
 Widget _groupLabel(String text) => Padding(
   padding: const EdgeInsets.all(4),
   child: Center(
