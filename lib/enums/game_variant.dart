@@ -6,13 +6,7 @@ enum GameVariant {
   hearts("Cœur", AppStrings.heartsSymbol, 16, 25, 35),
   spades("Pique", AppStrings.spadesSymbol, 16, 25, 35),
   noTrump("SansA", AppStrings.noTrumpAbbreviation, 52, 70, 90),
-  allTrump(
-    "ToutA",
-    AppStrings.allTrumpAbbreviation,
-    26,
-    35,
-    45,
-  ); //à confirmer le capotdedans toutA
+  allTrump("ToutA", AppStrings.allTrumpAbbreviation, 26, 35, 45);
 
   final String label;
   final int baseScore;
