@@ -1,27 +1,74 @@
+import 'package:score_belote/constants/app_strings.dart';
 import 'package:score_belote/constants/score_contants.dart';
+import 'package:score_belote/enums/option_types.dart';
+import 'package:score_belote/models/capto_victory_option.dart';
+import 'package:score_belote/models/redouble_option.dart';
 import 'package:score_belote/models/split_score.dart';
 
 class GameSettings {
-  bool allowSplit = true; //tout A mizara
-  List<SplitScore> allowedSplits =
-      ScoreConstants.communSplitAllTrumpScores; // liste ny fizarana
-  bool allowClubsRedouble = false; // trèfle surcontré rava
-  bool allowNoTrumpRedouble = false; //sans A surcontré rava
-  bool allowVictoryWithSuitsCapot = true; //tout A capot dedans maty?
-  bool allowVictoryWithAllTrumpCapotDedans = false; //tout A capot dedans maty?
+  //toutA mizara
+  bool allowSplit = true;
+
+  //liste des valeurs de split
+  List<SplitScore> allowedSplits = [
+    ...ScoreConstants.communSplitAllTrumpScores,
+  ]; //copie la liste sans la référence
+
+  List<RedoubleOption> redoubleOptions = [
+    //trèfle surcontré autorisé
+    RedoubleOption(
+      type: RedoubleType.clubs,
+      label: AppStrings.allowClubsRedoubleScore,
+      enabled: false,
+    ),
+    //sansA surcontré autorisé
+    RedoubleOption(
+      type: RedoubleType.noTrump,
+      label: AppStrings.allowNoTrumpRedoubleScore,
+      enabled: false,
+    ),
+  ];
+
+  List<CaptoVictoryOption> capotVictoryOptions = [
+    //capot couleur => victoire
+    CaptoVictoryOption(
+      type: CapotVictoryType.suits,
+      label: AppStrings.suitsCapotVictory,
+      enabled: false,
+    ),
+    //Capot Dedans toutA => victoire
+    CaptoVictoryOption(
+      type: CapotVictoryType.allTrumpDedans,
+      label: AppStrings.allTrumpCapotDedansVictory,
+      enabled: false,
+    ),
+  ];
 
   GameSettings();
 
-  GameSettings.create({
-    required this.allowSplit,
-    required this.allowClubsRedouble,
-    required this.allowNoTrumpRedouble,
-    required this.allowVictoryWithAllTrumpCapotDedans,
-    required this.allowVictoryWithSuitsCapot,
-  });
+  GameSettings.create({required this.allowSplit});
 
   List<SplitScore> get orderedAllowedSplits {
     return [...allowedSplits]
       ..sort((a, b) => a.defenderScore.compareTo(b.defenderScore));
+  }
+
+  bool isRedoubleAllowed(RedoubleType type) {
+    return redoubleOptions.firstWhere((option) => option.type == type).enabled;
+  }
+
+  void setRedouble(RedoubleType type, bool value) {
+    redoubleOptions.firstWhere((option) => option.type == type).enabled = value;
+  }
+
+  bool isCapotVictoryAllowed(CapotVictoryType type) {
+    return capotVictoryOptions
+        .firstWhere((option) => option.type == type)
+        .enabled;
+  }
+
+  void setCapotVictory(CapotVictoryType type, bool value) {
+    capotVictoryOptions.firstWhere((option) => option.type == type).enabled =
+        value;
   }
 }

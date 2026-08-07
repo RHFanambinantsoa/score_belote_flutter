@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:score_belote/constants/app_strings.dart';
 import 'package:score_belote/enums/game_variant.dart';
+import 'package:score_belote/enums/option_types.dart';
 import 'package:score_belote/enums/round_status.dart';
 import 'package:score_belote/enums/team_type.dart';
 import 'package:score_belote/models/game.dart';
@@ -53,13 +54,17 @@ class _AddRoundModalState extends State<AddRoundModal> {
       isDedans: params.isDedans,
       teamAScore: calculateScores(
         params,
-        widget.game.settings.allowVictoryWithAllTrumpCapotDedans,
-        widget.game.settings.allowVictoryWithSuitsCapot,
+        widget.game.settings.isCapotVictoryAllowed(
+          CapotVictoryType.allTrumpDedans,
+        ),
+        widget.game.settings.isCapotVictoryAllowed(CapotVictoryType.suits),
       ).teamA,
       teamBScore: calculateScores(
         params,
-        widget.game.settings.allowVictoryWithAllTrumpCapotDedans,
-        widget.game.settings.allowVictoryWithSuitsCapot,
+        widget.game.settings.isCapotVictoryAllowed(
+          CapotVictoryType.allTrumpDedans,
+        ),
+        widget.game.settings.isCapotVictoryAllowed(CapotVictoryType.suits),
       ).teamB,
     );
     Navigator.pop(context, round);
@@ -67,13 +72,15 @@ class _AddRoundModalState extends State<AddRoundModal> {
 
   bool _hideRedouble() =>
       (params.gameVariant == GameVariant.clubs &&
-          widget.game.settings.allowClubsRedouble == false) ||
+          widget.game.settings.isRedoubleAllowed(RedoubleType.clubs) ==
+              false) ||
       (params.gameVariant == GameVariant.noTrump &&
-          widget.game.settings.allowNoTrumpRedouble == false);
+          widget.game.settings.isRedoubleAllowed(RedoubleType.noTrump) ==
+              false);
 
   bool _hideDedans() =>
       !params.isCapot ||
-      widget.game.settings.allowVictoryWithSuitsCapot &&
+      widget.game.settings.isCapotVictoryAllowed(CapotVictoryType.suits) &&
           params.gameVariant.isSuit;
 
   void _resetAllFields() {
@@ -182,13 +189,21 @@ class _AddRoundModalState extends State<AddRoundModal> {
                 teams: widget.game.teams,
                 teamAScore: calculateScores(
                   params,
-                  widget.game.settings.allowVictoryWithAllTrumpCapotDedans,
-                  widget.game.settings.allowVictoryWithSuitsCapot,
+                  widget.game.settings.isCapotVictoryAllowed(
+                    CapotVictoryType.allTrumpDedans,
+                  ),
+                  widget.game.settings.isCapotVictoryAllowed(
+                    CapotVictoryType.suits,
+                  ),
                 ).teamA,
                 teamBScore: calculateScores(
                   params,
-                  widget.game.settings.allowVictoryWithAllTrumpCapotDedans,
-                  widget.game.settings.allowVictoryWithSuitsCapot,
+                  widget.game.settings.isCapotVictoryAllowed(
+                    CapotVictoryType.allTrumpDedans,
+                  ),
+                  widget.game.settings.isCapotVictoryAllowed(
+                    CapotVictoryType.suits,
+                  ),
                 ).teamB,
               ),
               ActionButtonsSection(
