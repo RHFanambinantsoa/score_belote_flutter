@@ -3,7 +3,11 @@ import 'package:score_belote/enums/game_variant.dart';
 import 'package:score_belote/enums/team_type.dart';
 import 'package:score_belote/models/team_score.dart';
 
-TeamScore calculateScores(ScoreParameters params) {
+TeamScore calculateScores(
+  ScoreParameters params,
+  bool allowVictoryWithAllTrumpCapotDedans,
+  bool allowVictoryWithSuitsCapot,
+) {
   TeamScore scores = TeamScore(teamA: 0, teamB: 0);
   if (params.isSplit && params.splitValue != null) {
     scores.teamA = params.winner == TeamType.teamA
@@ -16,6 +20,12 @@ TeamScore calculateScores(ScoreParameters params) {
     int winnerScore = 0;
     if (params.isCapot) {
       winnerScore = _getCapotScore(params.gameVariant, params.isDedans);
+      if (allowVictoryWithAllTrumpCapotDedans &&
+              params.isDedans &&
+              params.gameVariant == GameVariant.allTrump ||
+          allowVictoryWithSuitsCapot && params.gameVariant.isSuit) {
+        winnerScore = ScoreConstants.capotVictoryScore;
+      }
     } else {
       winnerScore = params.gameVariant.baseScore;
     }
@@ -26,19 +36,5 @@ TeamScore calculateScores(ScoreParameters params) {
   return scores;
 }
 
-int _getCapotScore(GameVariant gameVariant, bool isDedans) {
-  int score = 0;
-  switch (gameVariant) {
-    case GameVariant.allTrump:
-      score = ScoreConstants.allTrumpCapotScore;
-      break;
-    case GameVariant.noTrump:
-      score = isDedans
-          ? ScoreConstants.noTrumpCapotDefendingTeamScore
-          : ScoreConstants.noTrumpCapotCallerTeamScore;
-      break;
-    default:
-      score = ScoreConstants.colorCapotScore;
-  }
-  return score;
-}
+int _getCapotScore(GameVariant gameVariant, bool isDedans) =>
+    isDedans ? gameVariant.capotDedansScore : gameVariant.capotScore;

@@ -120,17 +120,31 @@ class SettingsScreenState extends State<SettingsScreen> {
                 ),
                 _rowExpanded(
                   SwitchOption(
-                    label: AppStrings.allTrumpCapotDedansEndGame,
-                    value: settings.allTrumpCapotDedansEndGame,
+                    label: AppStrings.suitsCapotVictory,
+                    value: settings.allowVictoryWithSuitsCapot,
                     onChanged: (v) {
                       setState(() {
                         SettingsService.update((settings) {
-                          settings.allTrumpCapotDedansEndGame = v;
+                          settings.allowVictoryWithSuitsCapot = v;
                         });
                       });
                     },
                   ),
                 ),
+                _rowExpanded(
+                  SwitchOption(
+                    label: AppStrings.allTrumpCapotDedansVictory,
+                    value: settings.allowVictoryWithAllTrumpCapotDedans,
+                    onChanged: (v) {
+                      setState(() {
+                        SettingsService.update((settings) {
+                          settings.allowVictoryWithAllTrumpCapotDedans = v;
+                        });
+                      });
+                    },
+                  ),
+                ),
+
                 SizedBox(height: 15),
                 Center(child: _groupLabel(AppStrings.data.toUpperCase())),
                 _rowExpanded(AppDeleteHistoryButton(onPressed: _doSomething)),

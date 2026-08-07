@@ -3,7 +3,7 @@ import 'package:score_belote/constants/app_strings.dart';
 import 'package:score_belote/widgets/base/check_option.dart';
 
 class CapotSelector extends StatelessWidget {
-  final bool displayDedans;
+  final bool hideDedans;
   final ValueChanged<bool> onDedansChanged;
   final ValueChanged<bool> onCapotChanged;
   final bool isCapot;
@@ -11,7 +11,7 @@ class CapotSelector extends StatelessWidget {
 
   const CapotSelector({
     super.key,
-    required this.displayDedans,
+    required this.hideDedans,
     required this.onDedansChanged,
     required this.isCapot,
     required this.isDedans,
@@ -32,7 +32,7 @@ class CapotSelector extends StatelessWidget {
             },
           ),
         ),
-        if (displayDedans)
+        if (!hideDedans)
           Expanded(
             child: AppCheckOption(
               label: AppStrings.dedans,

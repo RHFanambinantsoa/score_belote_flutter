@@ -51,8 +51,16 @@ class _AddRoundModalState extends State<AddRoundModal> {
       roundStatus: params.roundStatus,
       isCapot: params.isCapot,
       isDedans: params.isDedans,
-      teamAScore: calculateScores(params).teamA,
-      teamBScore: calculateScores(params).teamB,
+      teamAScore: calculateScores(
+        params,
+        widget.game.settings.allowVictoryWithAllTrumpCapotDedans,
+        widget.game.settings.allowVictoryWithSuitsCapot,
+      ).teamA,
+      teamBScore: calculateScores(
+        params,
+        widget.game.settings.allowVictoryWithAllTrumpCapotDedans,
+        widget.game.settings.allowVictoryWithSuitsCapot,
+      ).teamB,
     );
     Navigator.pop(context, round);
   }
@@ -63,11 +71,10 @@ class _AddRoundModalState extends State<AddRoundModal> {
       (params.gameVariant == GameVariant.noTrump &&
           widget.game.settings.allowNoTrumpRedouble == false);
 
-  bool _displayDedans() =>
-      params.isCapot &&
-      ((params.gameVariant == GameVariant.allTrump &&
-              widget.game.settings.allTrumpCapotDedansEndGame) ||
-          params.gameVariant == GameVariant.noTrump);
+  bool _hideDedans() =>
+      !params.isCapot ||
+      widget.game.settings.allowVictoryWithSuitsCapot &&
+          params.gameVariant.isSuit;
 
   void _resetAllFields() {
     params.isCapot = false;
@@ -133,7 +140,7 @@ class _AddRoundModalState extends State<AddRoundModal> {
                           },
                         ),
                         CapotSelector(
-                          displayDedans: _displayDedans(),
+                          hideDedans: _hideDedans(),
                           onDedansChanged: (v) =>
                               setState(() => params.isDedans = v),
                           isCapot: params.isCapot,
@@ -173,8 +180,16 @@ class _AddRoundModalState extends State<AddRoundModal> {
                 isSplit: params.isSplit,
                 capotStatus: capotStatus(params.isCapot, params.isDedans),
                 teams: widget.game.teams,
-                teamAScore: calculateScores(params).teamA,
-                teamBScore: calculateScores(params).teamB,
+                teamAScore: calculateScores(
+                  params,
+                  widget.game.settings.allowVictoryWithAllTrumpCapotDedans,
+                  widget.game.settings.allowVictoryWithSuitsCapot,
+                ).teamA,
+                teamBScore: calculateScores(
+                  params,
+                  widget.game.settings.allowVictoryWithAllTrumpCapotDedans,
+                  widget.game.settings.allowVictoryWithSuitsCapot,
+                ).teamB,
               ),
               ActionButtonsSection(
                 onCancelPressed: () => Navigator.of(context).pop(),
