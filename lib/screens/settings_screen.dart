@@ -12,6 +12,7 @@ import 'package:score_belote/widgets/base/check_option.dart';
 import 'package:score_belote/widgets/base/switch_option.dart';
 import 'package:score_belote/widgets/base/topbar.dart';
 import 'package:score_belote/widgets/history_screen/delete_history_button.dart';
+import 'package:score_belote/widgets/setting_screen/navigation_button.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -158,13 +159,12 @@ class SettingsScreenState extends State<SettingsScreen> {
                 _rowExpanded(AppDeleteHistoryButton(onPressed: _doSomething)),
                 SizedBox(height: 15),
                 Center(child: _groupLabel("INFO")),
-                _rowExpanded(
-                  _navigationButton(() {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => RuleScreen()),
-                    );
-                  }),
+
+                NavigationButton(
+                  onPressed: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => RuleScreen()),
+                  ),
                 ),
               ],
             ),
@@ -185,37 +185,6 @@ class SettingsScreenState extends State<SettingsScreen> {
   );
 
   Widget _rowExpanded(Widget child) => Row(children: [Expanded(child: child)]);
-
-  Widget _navigationButton(VoidCallback onPressed) {
-    return GestureDetector(
-      onTap: () {
-        onPressed.call();
-      },
-      child: Container(
-        // margin: const EdgeInsets.only(bottom: 10),
-        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
-        // padding: const EdgeInsets.all(30),
-        decoration: BoxDecoration(
-          color: AppColors.cream2,
-          borderRadius: BorderRadius.circular(14),
-          border: Border.all(
-            color: AppColors.brown.withValues(alpha: 0.15),
-            width: 2,
-          ),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              AppStrings.gameRules,
-              style: AppTextStyles.bodyBold.copyWith(fontSize: 14),
-            ),
-            Icon(Icons.chevron_right, color: AppColors.wine, size: 18),
-          ],
-        ),
-      ),
-    );
-  }
 
   Widget _selectScoreSplitGroupSection() {
     return Row(
