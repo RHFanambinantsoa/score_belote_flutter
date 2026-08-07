@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:score_belote/constants/app_strings.dart';
 import 'package:score_belote/enums/game_status.dart';
 import 'package:score_belote/enums/team_type.dart';
 import 'package:score_belote/models/round.dart';
@@ -7,6 +8,7 @@ import 'package:score_belote/widgets/base/snack_bar.dart';
 import 'package:score_belote/widgets/modals/add_round_modal.dart';
 import 'package:score_belote/widgets/base/buttons.dart';
 import 'package:score_belote/screens/new_game_screen.dart';
+import 'package:score_belote/widgets/modals/confirm_modal.dart';
 import 'package:score_belote/widgets/score_screen/rounds_title_section.dart';
 import 'package:score_belote/widgets/base/topbar.dart';
 import 'package:score_belote/widgets/score_screen/total_score_section.dart';
@@ -86,7 +88,7 @@ class _ScoreScreenState extends State<ScoreScreen> {
     _checkVictory(widget.game);
   }
 
-  void _openScoreModal() async {
+  void _onAddNewRound() async {
     final round = await showModalBottomSheet<Round>(
       context: context,
       builder: (context) {
@@ -95,6 +97,26 @@ class _ScoreScreenState extends State<ScoreScreen> {
     );
     if (round != null) {
       _addRoundsToGame(round);
+    }
+  }
+
+  void _onDeleteLastRound() async {
+    final confirmed = await AppConfirmDialog.show(
+      context,
+      title: widget.game.status != GameStatus.finished
+          ? AppStrings.deleteLastRound
+          : AppStrings.deleteWhileVictory,
+      message: '',
+      confirmLabel: AppStrings.delete,
+      isDestructive: true,
+      icon: AppStrings.binEmoji,
+    );
+    if (confirmed == true) {
+      setState(() {
+        widget.game.deleteLastRound();
+        startNewGameFromDialog = true;
+        //enregistre le changement à faire
+      });
     }
   }
 
@@ -120,21 +142,32 @@ class _ScoreScreenState extends State<ScoreScreen> {
               spacing: 4,
               children: [
                 SizedBox(width: 10),
+                if (widget.game.rounds.isNotEmpty)
+                  Expanded(
+                    flex: 2,
+                    child: AppSecondaryButton(
+                      label: "undo",
+                      onPressed: () => _onDeleteLastRound(),
+                    ),
+                  ),
                 if (widget.game.status != GameStatus.finished)
                   Expanded(
+                    flex: widget.game.rounds.isNotEmpty ? 8 : 1,
                     child: AppPrimaryButton(
                       label: '+ Ajouter un score',
-                      onPressed: () => _openScoreModal(),
+                      onPressed: () => _onAddNewRound(),
                     ),
                   ),
                 if (widget.game.status == GameStatus.finished &&
                     !startNewGameFromDialog!)
                   Expanded(
+                    flex: widget.game.rounds.isNotEmpty ? 8 : 1,
                     child: AppPrimaryButton(
                       label: '♠ Nouvelle partie',
                       onPressed: () => _navigateTo(context, NewGameScreen()),
                     ),
                   ),
+
                 SizedBox(width: 10),
               ],
             ),

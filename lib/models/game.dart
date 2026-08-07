@@ -63,6 +63,12 @@ class Game {
     targetScore += ScoreConstants.targetIncrementInterval;
   }
 
+  void deleteLastRound() {
+    rounds = rounds.sublist(0, rounds.length - 1);
+    status = GameStatus.running;
+    winner = null;
+  }
+
   void finishGame() {
     if (status != GameStatus.running) return;
     winner = _winner();
