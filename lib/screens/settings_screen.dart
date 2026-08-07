@@ -156,7 +156,7 @@ class SettingsScreenState extends State<SettingsScreen> {
 
                 SizedBox(height: 15),
                 Center(child: _groupLabel(AppStrings.data.toUpperCase())),
-                _rowExpanded(AppDeleteHistoryButton(onPressed: _doSomething)),
+                AppDeleteHistoryButton(onPressed: _doSomething),
                 SizedBox(height: 15),
                 Center(child: _groupLabel("INFO")),
 

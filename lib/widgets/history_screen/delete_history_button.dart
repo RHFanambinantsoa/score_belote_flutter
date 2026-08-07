@@ -10,28 +10,34 @@ class AppDeleteHistoryButton extends StatelessWidget {
   const AppDeleteHistoryButton({super.key, this.onPressed});
 
   @override
-  Widget build(BuildContext context) => GestureDetector(
-    onTap: () async {
-      final confirmed = await AppConfirmDialog.show(
-        context,
-        title: AppStrings.deleteHistoryModalTitle,
-        message: AppStrings.deleteHistoryModalMessage,
-        confirmLabel: AppStrings.delete,
-        isDestructive: true,
-        icon: AppStrings.binEmoji,
-      );
-      if (confirmed == true) {
-        onPressed!();
-        //execution de la fonction ou onPressed?.call()
-        // todo : suppresssion de l'historique
-      }
-    },
-    child: _valueRow(
-      context,
-      AppStrings.deleteHistory,
-      AppStrings.reset,
-      valueColor: AppColors.red,
-    ),
+  Widget build(BuildContext context) => Row(
+    children: [
+      Expanded(
+        child: GestureDetector(
+          onTap: () async {
+            final confirmed = await AppConfirmDialog.show(
+              context,
+              title: AppStrings.deleteHistoryModalTitle,
+              message: AppStrings.deleteHistoryModalMessage,
+              confirmLabel: AppStrings.delete,
+              isDestructive: true,
+              icon: AppStrings.binEmoji,
+            );
+            if (confirmed == true) {
+              onPressed!();
+              //execution de la fonction ou onPressed?.call()
+              // todo : suppresssion de l'historique
+            }
+          },
+          child: _valueRow(
+            context,
+            AppStrings.deleteHistory,
+            AppStrings.reset,
+            valueColor: AppColors.red,
+          ),
+        ),
+      ),
+    ],
   );
 }
 
