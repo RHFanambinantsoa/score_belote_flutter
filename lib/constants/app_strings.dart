@@ -74,6 +74,12 @@ class AppStrings {
   static const String deleteHistoryModalMessage =
       'Toutes les parties enregistrées seront définitivement supprimées. '
       'Cette action est irréversible.';
+  static const String deleteLastRound =
+      "Voulez-vous vraiment supprimer le dernier score de manche ?";
+  static const String deleteWhileVictory =
+      "Cette partie est terminé, supprimer le dernier score de manche annule la victoire "
+      "de l'équipe gagnante.\n\n Etes-vous sûr de continuer?";
+
   static const String delete = 'Supprimer';
   static const String victory = 'Victoire !';
   static const String winGame = 'remporte la partie';

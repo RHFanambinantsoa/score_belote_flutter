@@ -70,16 +70,14 @@ class _AddRoundModalState extends State<AddRoundModal> {
           params.gameVariant == GameVariant.noTrump);
 
   void _resetAllFields() {
-    setState(() {
-      params.isCapot = false;
-      params.isDedans = false;
-      params.roundStatus = RoundStatus.normal;
-      params.splitValue = params.isSplit
-          ? widget.game.settings.orderedAllowedSplits.isNotEmpty
-                ? widget.game.settings.orderedAllowedSplits[0]
-                : null
-          : null;
-    });
+    params.isCapot = false;
+    params.isDedans = false;
+    params.roundStatus = RoundStatus.normal;
+    params.splitValue = params.isSplit
+        ? widget.game.settings.orderedAllowedSplits.isNotEmpty
+              ? widget.game.settings.orderedAllowedSplits[0]
+              : null
+        : null;
   }
 
   @override
