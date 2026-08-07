@@ -1,25 +1,31 @@
 import 'package:score_belote/constants/app_strings.dart';
 
 enum GameVariant {
-  clubs("Trèfle", 32, AppStrings.clubsSymbol),
-  diamonds("Carreau", 16, AppStrings.diamondsSymbol),
-  hearts("Cœur", 16, AppStrings.heartsSymbol),
-  spades("Pique", 16, AppStrings.spadesSymbol),
-  noTrump("SansA", 52, AppStrings.noTrumpAbbreviation),
-  allTrump("ToutA", 26, AppStrings.allTrumpAbbreviation);
+  clubs("Trèfle", AppStrings.clubsSymbol, 32, 50, 70),
+  diamonds("Carreau", AppStrings.diamondsSymbol, 16, 25, 35),
+  hearts("Cœur", AppStrings.heartsSymbol, 16, 25, 35),
+  spades("Pique", AppStrings.spadesSymbol, 16, 25, 35),
+  noTrump("SansA", AppStrings.noTrumpAbbreviation, 52, 70, 90),
+  allTrump("ToutA", AppStrings.allTrumpAbbreviation, 26, 35, 45);
 
   final String label;
   final int baseScore;
+  final int capotScore;
+  final int capotDedansScore;
   final String abbreviation;
 
-  const GameVariant(this.label, this.baseScore, this.abbreviation);
+  const GameVariant(
+    this.label,
+    this.abbreviation,
+    this.baseScore,
+    this.capotScore,
+    this.capotDedansScore,
+  );
 
   bool get isRed => this == GameVariant.diamonds || this == GameVariant.hearts;
 
-  bool get hasSymbol =>
+  bool get isSuit =>
       this != GameVariant.allTrump && this != GameVariant.noTrump;
 
-  String get suitSymbol => hasSymbol ? abbreviation : "";
-
-  //comme ça on peut faire GameVariant.clubs.label pour récupérer le label "Trèfle", et le score de base avec GameVariant.clubs.baseScore pour récupérer le score de base 32
+  String get suitSymbol => isSuit ? abbreviation : "";
 }

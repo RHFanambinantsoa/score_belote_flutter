@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:score_belote/constants/app_strings.dart';
 import 'package:score_belote/constants/score_contants.dart';
+import 'package:score_belote/enums/option_types.dart';
 import 'package:score_belote/models/game_settings.dart';
 import 'package:score_belote/models/split_score.dart';
 import 'package:score_belote/screens/rule_screen.dart';
@@ -72,7 +73,6 @@ class SettingsScreenState extends State<SettingsScreen> {
                     onChanged: (v) {
                       setState(() {
                         SettingsService.update((settings) {
-                          settings.allowSplit = v;
                           if (v == false) {
                             settings.allowedSplits.clear();
                           } else {
@@ -80,6 +80,7 @@ class SettingsScreenState extends State<SettingsScreen> {
                               ScoreConstants.communSplitAllTrumpScores,
                             );
                           }
+                          settings.allowSplit = v;
                         });
                       });
                     },
@@ -89,11 +90,11 @@ class SettingsScreenState extends State<SettingsScreen> {
                 _rowExpanded(
                   SwitchOption(
                     label: AppStrings.allowClubsRedoubleScore,
-                    value: settings.allowClubsRedouble,
+                    value: settings.isRedoubleAllowed(RedoubleType.clubs),
                     onChanged: (v) {
                       setState(() {
                         SettingsService.update((settings) {
-                          settings.allowClubsRedouble = v;
+                          settings.setRedouble(RedoubleType.clubs, v);
                         });
                       });
                     },
@@ -102,11 +103,11 @@ class SettingsScreenState extends State<SettingsScreen> {
                 _rowExpanded(
                   SwitchOption(
                     label: AppStrings.allowNoTrumpRedoubleScore,
-                    value: settings.allowNoTrumpRedouble,
+                    value: settings.isRedoubleAllowed(RedoubleType.noTrump),
                     onChanged: (v) {
                       setState(() {
                         SettingsService.update((settings) {
-                          settings.allowNoTrumpRedouble = v;
+                          settings.setRedouble(RedoubleType.noTrump, v);
                         });
                       });
                     },
@@ -120,17 +121,38 @@ class SettingsScreenState extends State<SettingsScreen> {
                 ),
                 _rowExpanded(
                   SwitchOption(
-                    label: AppStrings.allTrumpCapotDedansEndGame,
-                    value: settings.allTrumpCapotDedansEndGame,
+                    label: AppStrings.suitsCapotVictory,
+                    value: settings.isCapotVictoryAllowed(
+                      CapotVictoryType.suits,
+                    ),
                     onChanged: (v) {
                       setState(() {
                         SettingsService.update((settings) {
-                          settings.allTrumpCapotDedansEndGame = v;
+                          settings.setCapotVictory(CapotVictoryType.suits, v);
                         });
                       });
                     },
                   ),
                 ),
+                _rowExpanded(
+                  SwitchOption(
+                    label: AppStrings.allTrumpCapotDedansVictory,
+                    value: settings.isCapotVictoryAllowed(
+                      CapotVictoryType.allTrumpDedans,
+                    ),
+                    onChanged: (v) {
+                      setState(() {
+                        SettingsService.update((settings) {
+                          settings.setCapotVictory(
+                            CapotVictoryType.allTrumpDedans,
+                            v,
+                          );
+                        });
+                      });
+                    },
+                  ),
+                ),
+
                 SizedBox(height: 15),
                 Center(child: _groupLabel(AppStrings.data.toUpperCase())),
                 _rowExpanded(AppDeleteHistoryButton(onPressed: _doSomething)),
