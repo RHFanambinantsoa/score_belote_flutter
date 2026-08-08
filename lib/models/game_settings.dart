@@ -1,7 +1,7 @@
 import 'package:score_belote/constants/app_strings.dart';
 import 'package:score_belote/constants/score_contants.dart';
 import 'package:score_belote/enums/option_types.dart';
-import 'package:score_belote/models/capto_victory_option.dart';
+import 'package:score_belote/models/capot_victory_option.dart';
 import 'package:score_belote/models/redouble_option.dart';
 import 'package:score_belote/models/split_score.dart';
 
@@ -29,15 +29,15 @@ class GameSettings {
     ),
   ];
 
-  List<CaptoVictoryOption> capotVictoryOptions = [
+  List<CapotVictoryOption> capotVictoryOptions = [
     //capot couleur => victoire
-    CaptoVictoryOption(
+    CapotVictoryOption(
       type: CapotVictoryType.suits,
       label: AppStrings.suitsCapotVictory,
       enabled: false,
     ),
     //Capot Dedans toutA => victoire
-    CaptoVictoryOption(
+    CapotVictoryOption(
       type: CapotVictoryType.allTrumpDedans,
       label: AppStrings.allTrumpCapotDedansVictory,
       enabled: false,
