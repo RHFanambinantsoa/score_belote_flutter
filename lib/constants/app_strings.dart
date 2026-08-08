@@ -67,6 +67,7 @@ class AppStrings {
       "Capot Dedans ToutA (150pts)";
   static const String suitsCapotVictory = "Capot Couleur (150pts)";
   static const String data = "Données";
+  static const String info = "Info";
   static const String deleteHistory = "Effacer l'historique";
   static const String reset = 'Réinitialiser';
   static const String gameRules = "Règles du jeu";

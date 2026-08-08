@@ -62,13 +62,12 @@ class _HistoryList extends StatelessWidget {
       child: Column(
         spacing: 5,
         children: [
-          _rowExpanded(
-            AppDeleteHistoryButton(
-              onPressed: () => {
-                // print(items.length)
-              },
-            ),
+          AppDeleteHistoryButton(
+            onPressed: () => {
+              // print(items.length)
+            },
           ),
+
           Container(
             height: 2,
             margin: const EdgeInsets.symmetric(vertical: 2),
@@ -104,8 +103,6 @@ class _HistoryList extends StatelessWidget {
     );
   }
 }
-
-Widget _rowExpanded(Widget child) => Row(children: [Expanded(child: child)]);
 
 Widget _groupLabel(String text) => Padding(
   padding: const EdgeInsets.all(4),
