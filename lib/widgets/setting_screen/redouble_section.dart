@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:score_belote/models/game_settings.dart';
-import 'package:score_belote/constants/app_strings.dart';
 import 'package:score_belote/services/settings_service.dart';
-import 'package:score_belote/widgets/add_round/group_label.dart';
 import 'package:score_belote/widgets/base/switch_option.dart';
 
 class RedoubleSection extends StatelessWidget {
