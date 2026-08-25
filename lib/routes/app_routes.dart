@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:score_belote/models/game.dart';
+import 'package:score_belote/screens/history_screen.dart';
 import 'package:score_belote/screens/home_screen.dart';
 import 'package:score_belote/screens/new_game_screen.dart';
 import 'package:score_belote/screens/rule_screen.dart';
@@ -13,7 +14,6 @@ import 'route_names.dart';
 
 class ScoreRouteArgs {
   final Game game;
-
   const ScoreRouteArgs({required this.game});
 }
 
@@ -41,6 +41,9 @@ class AppRoutes {
       case RouteNames.score:
         final args = settings.arguments as ScoreRouteArgs;
         return MaterialPageRoute(builder: (_) => ScoreScreen(game: args.game));
+
+      case RouteNames.history:
+        return MaterialPageRoute(builder: (_) => const HistoryScreen());
 
       default:
         return MaterialPageRoute(builder: (_) => const UnknownRouteScreen());

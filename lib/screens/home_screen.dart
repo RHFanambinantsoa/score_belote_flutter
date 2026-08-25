@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:score_belote/constants/fake_datas.dart';
 import 'package:score_belote/routes/route_names.dart';
-import 'package:score_belote/screens/history_screen.dart';
 import 'package:score_belote/widgets/base/buttons.dart';
 import 'package:score_belote/constants/app_strings.dart';
 import 'package:score_belote/theme/app_colors.dart';
@@ -10,11 +8,6 @@ import 'package:score_belote/widgets/emoji_badge.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
-
-  //declatation des fuctions
-  void _navigateTo(BuildContext context, Widget screen) {
-    Navigator.push(context, MaterialPageRoute(builder: (context) => screen));
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,10 +48,8 @@ class HomeScreen extends StatelessWidget {
               const SizedBox(height: 12),
               AppSecondaryButton(
                 label: AppStrings.history,
-                onPressed: () => _navigateTo(
-                  context,
-                  HistoryScreen(items: FakeDatas.fakeItems),
-                ),
+                onPressed: () =>
+                    Navigator.pushNamed(context, RouteNames.history),
               ),
               const SizedBox(height: 12),
               AppGhostButton(

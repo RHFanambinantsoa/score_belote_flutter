@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:score_belote/constants/app_strings.dart';
 import 'package:score_belote/routes/route_names.dart';
-import 'package:score_belote/screens/new_game_screen.dart';
 import 'package:score_belote/widgets/base/buttons.dart';
 import '../../theme/app_colors.dart';
 import '../../theme/app_text_styles.dart';
