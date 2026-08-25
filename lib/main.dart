@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:score_belote/screens/splash_screen.dart';
 import 'package:score_belote/theme/app_colors.dart';
+import 'package:score_belote/routes/route_names.dart';
+import 'package:score_belote/routes/app_routes.dart';
 
 void main() async {
   runApp(const MyApp());
@@ -32,7 +33,8 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: AppColors.wine),
       ),
       // home: const MyHomePage(title: 'Flutter Demo Home Page'),
-      home: const SplashScreen(),
+      initialRoute: RouteNames.splash,
+      onGenerateRoute: AppRoutes.onGenerateRoute,
     );
   }
 }

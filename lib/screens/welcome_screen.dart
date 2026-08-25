@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:score_belote/constants/app_strings.dart';
+import 'package:score_belote/routes/route_names.dart';
+import 'package:score_belote/theme/app_colors.dart';
+import 'package:score_belote/theme/app_text_styles.dart';
 import 'package:score_belote/widgets/base/buttons.dart';
 import 'package:score_belote/widgets/emoji_badge.dart';
 import 'package:score_belote/widgets/warning_box.dart';
-import 'home_screen.dart';
-import '../theme/app_colors.dart';
-import '../theme/app_text_styles.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
@@ -66,12 +66,7 @@ class WelcomeScreen extends StatelessWidget {
                   AppPrimaryButton(
                     label: AppStrings.startGame,
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const HomeScreen(),
-                        ),
-                      );
+                      Navigator.pushNamed(context, RouteNames.home);
                     },
                   ),
                 ],

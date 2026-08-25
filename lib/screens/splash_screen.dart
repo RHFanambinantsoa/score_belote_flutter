@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:score_belote/routes/route_names.dart';
 import 'package:score_belote/widgets/splash_background.dart';
-import 'welcome_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -74,20 +74,7 @@ class _SplashScreenState extends State<SplashScreen>
       const Duration(seconds: 4),
       () {
         if (!mounted) return;
-        Navigator.pushReplacement(
-          //Le Navigator ne reçoit pas directement un écran. Il reçoit une fonction capable de créer l'écran.
-          //pushReplacement remplace l'écran actuel par un nouvel écran.
-          //si on fait retour arrière, on ne revient pas à l'écran de splash.
-          //contrairement à push() qui empile les écrans les uns sur les autres.
-          context,
-          // context est un objet qui contient des informations sur l'endroit où le widget est dans l'arbre des widgets.
-          MaterialPageRoute(
-            // MaterialPageRoute est un objet qui décrit une transition entre deux écrans.
-            //quel ecran afficher, comment l'afficher, etc.
-            builder: (context) => const WelcomeScreen(),
-            //Le => signifie : "Quand Flutter aura besoin de construire cet écran, exécute cette fonction et retourne WelcomeScreen."
-          ),
-        );
+        Navigator.pushReplacementNamed(context, RouteNames.welcome);
       },
     );
   }
@@ -102,42 +89,6 @@ class _SplashScreenState extends State<SplashScreen>
     // On appelle ensuite la méthode dispose de la classe parente (State).
   }
 
-  // @override
-  // Widget build(BuildContext context) {
-  //   // build est une méthode spéciale qui est appelée à chaque fois que le widget doit être redessiné.
-  //   //appelle cette methode pour savoir comment il doit s'afficher à l'écran.
-  //   return Scaffold(
-  //     // Scaffold est un widget qui fournit une structure de base pour l'application (barre d'applications, corps, etc.)
-  //     body: Container(
-  //       // Container est un widget qui permet de créer une boîte avec des dimensions, des marges, des couleurs, etc.
-  //       decoration: const BoxDecoration(
-  //         // BoxDecoration est un objet qui permet de décorer un Container avec des couleurs, des images, des bordures, etc.
-  //         gradient: LinearGradient(
-  //           // LinearGradient est un objet qui permet de créer un dégradé de couleurs.
-  //           colors: [
-  //             Color.fromARGB(255, 202, 49, 22),
-  //             Color.fromARGB(255, 231, 226, 228),
-  //             Color.fromARGB(255, 15, 4, 2),
-  //           ],
-  //           begin: Alignment.topLeft,
-  //           end: Alignment.bottomRight,
-  //         ),
-  //       ),
-
-  //       child: Center(
-  //         child: FadeTransition(
-  //           opacity: _fadeAnimation,
-
-  //           child: ScaleTransition(
-  //             scale: _scaleAnimation,
-
-  //             child: Image.asset("assets/images/logo.png", width: 150),
-  //           ),
-  //         ),
-  //       ),
-  //     ),
-  //   );
-  // }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -148,7 +99,6 @@ class _SplashScreenState extends State<SplashScreen>
 
             child: ScaleTransition(
               scale: _scaleAnimation,
-
               child: Image.asset("assets/images/logo.png", width: 150),
             ),
           ),

@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:score_belote/constants/app_strings.dart';
 import 'package:score_belote/constants/score_contants.dart';
 import 'package:score_belote/enums/team_type.dart';
-import 'package:score_belote/screens/score_screen.dart';
+import 'package:score_belote/routes/app_routes.dart';
+import 'package:score_belote/routes/route_names.dart';
 import 'package:score_belote/theme/app_colors.dart';
 import 'package:score_belote/theme/app_text_styles.dart';
 import 'package:score_belote/widgets/base/buttons.dart';
@@ -67,13 +68,10 @@ class _NewGameScreenState extends State<NewGameScreen> {
       settings: SettingsService.settings,
     );
 
-    _navigateTo(context, ScoreScreen(game: newGame));
-  }
-
-  void _navigateTo(BuildContext context, Widget screen) {
-    Navigator.pushReplacement(
+    Navigator.pushNamed(
       context,
-      MaterialPageRoute(builder: (context) => screen),
+      RouteNames.score,
+      arguments: ScoreRouteArgs(game: newGame),
     );
   }
 
