@@ -66,7 +66,7 @@ class WelcomeScreen extends StatelessWidget {
                   AppPrimaryButton(
                     label: AppStrings.startGame,
                     onPressed: () {
-                      Navigator.pushNamed(context, RouteNames.home);
+                      Navigator.pushReplacementNamed(context, RouteNames.home);
                     },
                   ),
                 ],
