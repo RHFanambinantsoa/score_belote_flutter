@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:score_belote/constants/app_strings.dart';
+import 'package:score_belote/constants/history_strings.dart';
 import 'package:score_belote/theme/app_colors.dart';
 import 'package:score_belote/theme/app_text_styles.dart';
 
@@ -109,8 +110,8 @@ Widget _aboutSection(String roundName) {
       ),
       Text(
         roundName.isEmpty
-            ? AppStrings.classicVictory
-            : "${AppStrings.capotVictory} $roundName",
+            ? HistoryStrings.classicVictory
+            : "${HistoryStrings.capotVictory} $roundName",
         style: AppTextStyles.button.copyWith(fontSize: 13),
         overflow: TextOverflow.ellipsis,
       ),

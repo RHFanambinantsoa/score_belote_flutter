@@ -48,27 +48,7 @@ class AppStrings {
   static const String dedansAbbreviation = "D";
   static const String capotAbbreviation = "Cap.";
 
-  //setting screen
-  static const String gameOptions = "Options du jeu";
-  static const String allowSplitScore = "Autoriser le partage du score (TA)";
-  static const String allowClubsRedoubleScore = "Autoriser le Trèfle Surcontré";
-  static const String allowNoTrumpRedoubleScore =
-      "Autoriser le SansA Surcontré";
-  static const String endGameRoundsLabel = "Victoire par Capot";
-  static const String allTrumpCapotDedansVictory =
-      "Capot Dedans ToutA (150pts)";
-  static const String suitsCapotVictory = "Capot Couleur (150pts)";
-  static const String data = "Données";
-  static const String info = "Info";
-  static const String deleteHistory = "Effacer l'historique";
-  static const String reset = 'Réinitialiser';
-  static const String gameRules = "Règles du jeu";
-
   //modals
-  static const String deleteHistoryModalTitle = "Supprimer l'historique ?";
-  static const String deleteHistoryModalMessage =
-      'Toutes les parties enregistrées seront définitivement supprimées. '
-      'Cette action est irréversible.';
   static const String deleteLastRound =
       "Voulez-vous vraiment supprimer le dernier score de manche ?";
   static const String deleteWhileVictory =
@@ -89,12 +69,4 @@ class AppStrings {
   //score scree
   static const String addScore = '+ Ajouter un score';
   static const String startNewGame = '♠ Nouvelle partie';
-
-  //history
-  static const String emptyHistoryMessage =
-      "Aucune partie jouée pour l'instant.\nLancez votre première partie depuis le menu !";
-
-  //history modal
-  static const String classicVictory = "🎉 Victoire classique";
-  static const String capotVictory = "🔥 Victoire par Capot 👉 ";
 }

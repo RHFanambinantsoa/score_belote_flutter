@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:score_belote/constants/app_strings.dart';
 import 'package:score_belote/constants/fake_datas.dart';
+import 'package:score_belote/constants/history_strings.dart';
 import 'package:score_belote/theme/app_colors.dart';
 import 'package:score_belote/theme/app_text_styles.dart';
 import 'package:score_belote/widgets/history_screen/delete_history_button.dart';
@@ -35,7 +36,7 @@ class _EmptyHistory extends StatelessWidget {
             const Text(AppStrings.cardEmoji, style: TextStyle(fontSize: 36)),
             const SizedBox(height: 10),
             Text(
-              AppStrings.emptyHistoryMessage,
+              HistoryStrings.emptyHistoryMessage,
               textAlign: TextAlign.center,
               style: AppTextStyles.bodyBold.copyWith(
                 color: AppColors.wine.withValues(alpha: 0.7),
