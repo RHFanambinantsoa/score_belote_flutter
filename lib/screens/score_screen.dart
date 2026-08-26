@@ -160,8 +160,10 @@ class _ScoreScreenState extends State<ScoreScreen> {
                     flex: widget.game.rounds.isNotEmpty ? 8 : 1,
                     child: AppPrimaryButton(
                       label: '♠ Nouvelle partie',
-                      onPressed: () =>
-                          Navigator.pushNamed(context, RouteNames.newGame),
+                      onPressed: () => Navigator.pushReplacementNamed(
+                        context,
+                        RouteNames.newGame,
+                      ),
                     ),
                   ),
 

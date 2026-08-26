@@ -68,7 +68,7 @@ class _NewGameScreenState extends State<NewGameScreen> {
       settings: SettingsService.settings,
     );
 
-    Navigator.pushNamed(
+    Navigator.pushReplacementNamed(
       context,
       RouteNames.score,
       arguments: ScoreRouteArgs(game: newGame),

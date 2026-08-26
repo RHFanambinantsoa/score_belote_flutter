@@ -90,7 +90,7 @@ class VictoryModal extends StatelessWidget {
                   label: '♠ Nouvelle partie',
                   onPressed: () => {
                     Navigator.of(context).pop(true),
-                    Navigator.pushNamed(context, RouteNames.newGame),
+                    Navigator.pushReplacementNamed(context, RouteNames.newGame),
                   },
                 ),
               ],

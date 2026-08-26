@@ -38,12 +38,12 @@ class AppRoutes {
       case RouteNames.rules:
         return MaterialPageRoute(builder: (_) => const RuleScreen());
 
+      case RouteNames.history:
+        return MaterialPageRoute(builder: (_) => const HistoryScreen());
+
       case RouteNames.score:
         final args = settings.arguments as ScoreRouteArgs;
         return MaterialPageRoute(builder: (_) => ScoreScreen(game: args.game));
-
-      case RouteNames.history:
-        return MaterialPageRoute(builder: (_) => const HistoryScreen());
 
       default:
         return MaterialPageRoute(builder: (_) => const UnknownRouteScreen());
