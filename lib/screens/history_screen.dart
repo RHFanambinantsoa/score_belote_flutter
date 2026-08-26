@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:score_belote/constants/app_strings.dart';
-import 'package:score_belote/constants/fake_datas.dart';
-import 'package:score_belote/constants/history_strings.dart';
+import 'package:score_belote/services/history_service.dart';
 import 'package:score_belote/theme/app_colors.dart';
-import 'package:score_belote/theme/app_text_styles.dart';
 import 'package:score_belote/widgets/history_screen/delete_history_button.dart';
+import 'package:score_belote/widgets/history_screen/empty_history.dart';
 import 'package:score_belote/widgets/history_screen/history_card.dart';
+import 'package:score_belote/widgets/history_screen/grouped_date_label.dart';
 import 'package:score_belote/widgets/base/topbar.dart';
 
 class HistoryScreen extends StatelessWidget {
@@ -13,39 +13,12 @@ class HistoryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final items = FakeDatas.fakeItems;
+    // final items = FakeDatas.fakeItems;
+    final List<GameHistoryItem> items = [];
     return Scaffold(
       appBar: AppTopBar(title: AppStrings.history),
       backgroundColor: AppColors.cream,
-      body: items.isEmpty ? const _EmptyHistory() : _HistoryList(items: items),
-    );
-  }
-}
-
-class _EmptyHistory extends StatelessWidget {
-  const _EmptyHistory();
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 30),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Text(AppStrings.cardEmoji, style: TextStyle(fontSize: 36)),
-            const SizedBox(height: 10),
-            Text(
-              HistoryStrings.emptyHistoryMessage,
-              textAlign: TextAlign.center,
-              style: AppTextStyles.bodyBold.copyWith(
-                color: AppColors.wine.withValues(alpha: 0.7),
-                fontSize: 13,
-              ),
-            ),
-          ],
-        ),
-      ),
+      body: items.isEmpty ? const EmptyHistory() : _HistoryList(items: items),
     );
   }
 }
@@ -64,8 +37,9 @@ class _HistoryList extends StatelessWidget {
         spacing: 5,
         children: [
           AppDeleteHistoryButton(
-            onPressed: () => {
-              // print(items.length)
+            onPressed: () {
+              // HistoryService.clear();
+              // setState(() {});
             },
           ),
 
@@ -91,7 +65,7 @@ class _HistoryList extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     if (showDateLabel)
-                      _groupLabel(item.dateLabel.toUpperCase()),
+                      GroupedDateLabel(text: item.dateLabel.toUpperCase()),
                     HistoryCard(item: item),
                     const SizedBox(height: 12),
                   ],
@@ -104,13 +78,3 @@ class _HistoryList extends StatelessWidget {
     );
   }
 }
-
-Widget _groupLabel(String text) => Padding(
-  padding: const EdgeInsets.all(4),
-  child: Center(
-    child: Text(
-      text,
-      style: AppTextStyles.sectionLabel.copyWith(fontWeight: FontWeight.w700),
-    ),
-  ),
-);
