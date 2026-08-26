@@ -116,62 +116,99 @@ class _ScoreScreenState extends State<ScoreScreen> {
     }
   }
 
+  Future<void> _handleBack() async {
+    if (widget.game.status == GameStatus.running) {
+      final confirmed = await AppConfirmDialog.show(
+        context,
+        title: AppStrings.abandonGame,
+        message: AppStrings.abandonDesc,
+        confirmLabel: AppStrings.abandon,
+        isDestructive: true,
+        icon: '⚠️',
+      );
+
+      if (confirmed != true) {
+        return;
+      }
+
+      widget.game.abandonGame();
+      _saveGameToHistory(widget.game);
+
+      if (!mounted) return;
+
+      Navigator.pushNamedAndRemoveUntil(
+        context,
+        RouteNames.home,
+        (route) => false,
+      );
+    } else {
+      Navigator.of(context).maybePop();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppTopBar(title: 'Score', showDot: false),
-      body: Center(
-        child: Column(
-          children: [
-            // En-tête : nom + total, séparés par VS
-            TotalScoreSection(
-              game: widget.game,
-              targetScore: widget.game.targetScore,
-            ),
-            RoundsTitleSection(game: widget.game),
-            Expanded(
-              child: RoundsListview(
-                rounds: widget.game.rounds.reversed.toList(),
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) {
+        if (didPop) return;
+        _handleBack();
+      },
+      child: Scaffold(
+        appBar: AppTopBar(title: 'Score', showDot: false, onBack: _handleBack),
+        body: Center(
+          child: Column(
+            children: [
+              // En-tête : nom + total, séparés par VS
+              TotalScoreSection(
+                game: widget.game,
+                targetScore: widget.game.targetScore,
               ),
-            ),
-            Row(
-              spacing: 4,
-              children: [
-                SizedBox(width: 10),
-                if (widget.game.rounds.isNotEmpty)
-                  Expanded(
-                    flex: 2,
-                    child: AppSecondaryButton(
-                      label: "undo",
-                      onPressed: () => _onDeleteLastRound(),
-                    ),
-                  ),
-                if (widget.game.status != GameStatus.finished)
-                  Expanded(
-                    flex: widget.game.rounds.isNotEmpty ? 8 : 1,
-                    child: AppPrimaryButton(
-                      label: '+ Ajouter un score',
-                      onPressed: () => _onAddNewRound(),
-                    ),
-                  ),
-                if (widget.game.status == GameStatus.finished &&
-                    !startNewGameFromDialog!)
-                  Expanded(
-                    flex: widget.game.rounds.isNotEmpty ? 8 : 1,
-                    child: AppPrimaryButton(
-                      label: '♠ Nouvelle partie',
-                      onPressed: () => Navigator.pushReplacementNamed(
-                        context,
-                        RouteNames.newGame,
+              RoundsTitleSection(game: widget.game),
+              Expanded(
+                child: RoundsListview(
+                  rounds: widget.game.rounds.reversed.toList(),
+                ),
+              ),
+              Row(
+                spacing: 4,
+                children: [
+                  SizedBox(width: 10),
+                  if (widget.game.rounds.isNotEmpty)
+                    Expanded(
+                      flex: 2,
+                      child: AppSecondaryButton(
+                        label: "undo",
+                        onPressed: () => _onDeleteLastRound(),
                       ),
                     ),
-                  ),
+                  if (widget.game.status != GameStatus.finished)
+                    Expanded(
+                      flex: widget.game.rounds.isNotEmpty ? 8 : 1,
+                      child: AppPrimaryButton(
+                        label: AppStrings.addScore,
+                        onPressed: () => _onAddNewRound(),
+                      ),
+                    ),
+                  if (widget.game.status == GameStatus.finished &&
+                      !startNewGameFromDialog!)
+                    Expanded(
+                      flex: widget.game.rounds.isNotEmpty ? 8 : 1,
+                      child: AppPrimaryButton(
+                        label: AppStrings.startNewGame,
+                        onPressed: () => Navigator.pushReplacementNamed(
+                          context,
+                          RouteNames.newGame,
+                        ),
+                      ),
+                    ),
 
-                SizedBox(width: 10),
-              ],
-            ),
-            SizedBox(height: 20),
-          ],
+                  SizedBox(width: 10),
+                ],
+              ),
+              SizedBox(height: 20),
+            ],
+          ),
         ),
       ),
     );

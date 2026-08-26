@@ -87,7 +87,7 @@ class VictoryModal extends StatelessWidget {
                 const SizedBox(height: 24),
 
                 AppPrimaryButton(
-                  label: '♠ Nouvelle partie',
+                  label: AppStrings.startNewGame,
                   onPressed: () => {
                     Navigator.of(context).pop(true),
                     Navigator.pushReplacementNamed(context, RouteNames.newGame),

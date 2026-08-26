@@ -83,9 +83,20 @@ class AppStrings {
       "Cette partie est terminé, supprimer le dernier score de manche annule la victoire "
       "de l'équipe gagnante.\n\n Etes-vous sûr de continuer?";
 
+  static const String abandonGame =
+      'Voulez-vous vraiment abandonner la partie ?';
+  static const String abandonDesc =
+      "Votre progression sera conservée dans l’historique. "
+      "Vous pourrez reprendre cette partie plus tard si vous le souhaitez.";
+  static const String abandon = 'Abandonner';
+
   static const String delete = 'Supprimer';
   static const String victory = 'Victoire !';
   static const String winGame = 'remporte la partie';
+
+  //score scree
+  static const String addScore = '+ Ajouter un score';
+  static const String startNewGame = '♠ Nouvelle partie';
 
   //history
   static const String emptyHistoryMessage =
