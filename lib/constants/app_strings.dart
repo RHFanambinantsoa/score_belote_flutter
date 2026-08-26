@@ -45,14 +45,6 @@ class AppStrings {
   static const String trophyEmoji = '🏆';
   static const String cardEmoji = '🃏';
 
-  static const String clubsSymbol = '♣';
-  static const String diamondsSymbol = '♦';
-  static const String heartsSymbol = '♥';
-  static const String spadesSymbol = '♠';
-  static const String allTrumpAbbreviation = "TA";
-  static const String noTrumpAbbreviation = "SA";
-  static const String doubledAbbreviation = "x2";
-  static const String redoubledAbbreviation = "x4";
   static const String dedansAbbreviation = "D";
   static const String capotAbbreviation = "Cap.";
 
