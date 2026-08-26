@@ -1,15 +1,23 @@
-import 'package:score_belote/constants/app_strings.dart';
-
 enum RoundStatus {
-  normal("Normal", 1, ''),
-  doubled("Contré", 2, AppStrings.doubledAbbreviation),
-  redoubled("Surcontré", 4, AppStrings.redoubledAbbreviation);
+  normal("Normal", 1),
+  doubled("Contré", 2),
+  redoubled("Surcontré", 4);
 
   final String label;
   final int multiplifier;
-  final String abbreviation;
-  const RoundStatus(this.label, this.multiplifier, this.abbreviation);
+  const RoundStatus(this.label, this.multiplifier);
 
   static List<RoundStatus> get withoutRedoubled =>
       values.sublist(0, values.length - 1);
+
+  String get abbreviation {
+    switch (this) {
+      case RoundStatus.doubled:
+        return 'x2';
+      case RoundStatus.redoubled:
+        return 'x4';
+      default:
+        return '';
+    }
+  }
 }

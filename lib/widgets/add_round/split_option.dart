@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:score_belote/constants/app_strings.dart';
+import 'package:score_belote/constants/score_strings.dart';
 import 'package:score_belote/widgets/base/switch_option.dart';
 
 class SplitOption extends StatelessWidget {
@@ -21,7 +21,7 @@ class SplitOption extends StatelessWidget {
         if (display)
           Expanded(
             child: SwitchOption(
-              label: AppStrings.splitScoreMode,
+              label: ScoreStrings.splitScoreMode,
               value: isSplit,
               onChanged: (v) => onChanged(v),
             ),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:score_belote/constants/app_strings.dart';
+import 'package:score_belote/constants/settings_strings.dart';
 import 'package:score_belote/theme/app_colors.dart';
 import 'package:score_belote/theme/app_text_styles.dart';
 
@@ -31,7 +31,7 @@ class NavigationButton extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    AppStrings.gameRules,
+                    SettingsStrings.gameRules,
                     style: AppTextStyles.bodyBold.copyWith(fontSize: 14),
                   ),
                   Icon(Icons.chevron_right, color: AppColors.wine, size: 18),

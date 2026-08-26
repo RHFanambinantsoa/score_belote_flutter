@@ -1,5 +1,5 @@
-import 'package:score_belote/constants/app_strings.dart';
 import 'package:score_belote/constants/score_contants.dart';
+import 'package:score_belote/constants/settings_strings.dart';
 import 'package:score_belote/enums/option_types.dart';
 import 'package:score_belote/models/capot_victory_option.dart';
 import 'package:score_belote/models/redouble_option.dart';
@@ -18,13 +18,13 @@ class GameSettings {
     //trèfle surcontré autorisé
     RedoubleOption(
       type: RedoubleType.clubs,
-      label: AppStrings.allowClubsRedoubleScore,
+      label: SettingsStrings.allowClubsRedoubleScore,
       enabled: false,
     ),
     //sansA surcontré autorisé
     RedoubleOption(
       type: RedoubleType.noTrump,
-      label: AppStrings.allowNoTrumpRedoubleScore,
+      label: SettingsStrings.allowNoTrumpRedoubleScore,
       enabled: false,
     ),
   ];
@@ -33,13 +33,13 @@ class GameSettings {
     //capot couleur => victoire
     CapotVictoryOption(
       type: CapotVictoryType.suits,
-      label: AppStrings.suitsCapotVictory,
+      label: SettingsStrings.suitsCapotVictory,
       enabled: false,
     ),
     //Capot Dedans toutA => victoire
     CapotVictoryOption(
       type: CapotVictoryType.allTrumpDedans,
-      label: AppStrings.allTrumpCapotDedansVictory,
+      label: SettingsStrings.allTrumpCapotDedansVictory,
       enabled: false,
     ),
   ];

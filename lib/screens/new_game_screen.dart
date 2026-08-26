@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:score_belote/constants/app_strings.dart';
+import 'package:score_belote/constants/error_message.dart';
 import 'package:score_belote/constants/score_contants.dart';
+import 'package:score_belote/enums/game_variant.dart';
 import 'package:score_belote/enums/team_type.dart';
 import 'package:score_belote/routes/app_routes.dart';
 import 'package:score_belote/routes/route_names.dart';
@@ -95,7 +97,7 @@ class _NewGameScreenState extends State<NewGameScreen> {
             const SizedBox(height: 12),
             TeamNameField(
               controller: _teamAController,
-              suit: AppStrings.diamondsSymbol,
+              suit: GameVariant.diamonds.abbreviation,
             ),
             SizedBox(
               height: 24,
@@ -117,7 +119,7 @@ class _NewGameScreenState extends State<NewGameScreen> {
             const SizedBox(height: 12),
             TeamNameField(
               controller: _teamBController,
-              suit: AppStrings.spadesSymbol,
+              suit: GameVariant.spades.abbreviation,
             ),
             SizedBox(
               height: 24,

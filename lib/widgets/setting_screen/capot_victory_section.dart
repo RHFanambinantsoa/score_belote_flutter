@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:score_belote/constants/settings_strings.dart';
 import 'package:score_belote/models/game_settings.dart';
-import 'package:score_belote/constants/app_strings.dart';
 import 'package:score_belote/services/settings_service.dart';
 import 'package:score_belote/widgets/add_round/group_label.dart';
 import 'package:score_belote/widgets/base/switch_option.dart';
@@ -21,7 +21,9 @@ class CapotVictorySection extends StatelessWidget {
       spacing: 5,
       children: [
         Center(
-          child: GroupLabel(label: AppStrings.endGameRoundsLabel.toUpperCase()),
+          child: GroupLabel(
+            label: SettingsStrings.endGameRoundsLabel.toUpperCase(),
+          ),
         ),
 
         for (final option in settings.capotVictoryOptions)

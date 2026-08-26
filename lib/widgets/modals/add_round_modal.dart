@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:score_belote/constants/app_strings.dart';
+import 'package:score_belote/constants/score_strings.dart';
 import 'package:score_belote/enums/game_variant.dart';
 import 'package:score_belote/enums/option_types.dart';
 import 'package:score_belote/enums/round_status.dart';
@@ -105,7 +105,7 @@ class _AddRoundModalState extends State<AddRoundModal> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                AppStrings.newScore,
+                ScoreStrings.newScore,
                 textAlign: TextAlign.center,
                 style: AppTextStyles.modalTitle,
               ),

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:score_belote/constants/rule_data.dart';
+import 'package:score_belote/constants/settings_strings.dart';
 import 'package:score_belote/theme/app_colors.dart';
 import 'package:score_belote/widgets/rules_screen/rule_accordeon_section.dart';
 import 'package:score_belote/widgets/rules_screen/rule_block_view.dart';
 import 'package:score_belote/widgets/rules_screen/rule_quick_access_bar.dart';
 import 'package:score_belote/widgets/base/topbar.dart';
-import 'package:score_belote/constants/app_strings.dart';
 
 class RuleScreen extends StatelessWidget {
   const RuleScreen({super.key});
@@ -13,7 +13,7 @@ class RuleScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.cream,
-      appBar: const AppTopBar(title: AppStrings.gameRules),
+      appBar: const AppTopBar(title: SettingsStrings.gameRules),
       body: Column(
         children: [
           RuleQuickAccessBar(referenceCategories: quickAccessCategories),

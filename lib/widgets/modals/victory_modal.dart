@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:score_belote/constants/app_strings.dart';
+import 'package:score_belote/constants/score_strings.dart';
 import 'package:score_belote/routes/route_names.dart';
 import 'package:score_belote/widgets/base/buttons.dart';
 import '../../theme/app_colors.dart';
@@ -54,12 +54,12 @@ class VictoryModal extends StatelessWidget {
                 const SizedBox(height: 10),
 
                 Text(
-                  AppStrings.victory,
+                  ScoreStrings.victory,
                   style: AppTextStyles.appTitle.copyWith(fontSize: 26),
                 ),
 
                 Text(
-                  '$winningTeam ${AppStrings.winGame}',
+                  '$winningTeam ${ScoreStrings.winGame}',
                   style: AppTextStyles.button.copyWith(
                     fontSize: 17,
                     color: AppColors.wine,
@@ -87,7 +87,7 @@ class VictoryModal extends StatelessWidget {
                 const SizedBox(height: 24),
 
                 AppPrimaryButton(
-                  label: AppStrings.startNewGame,
+                  label: ScoreStrings.startNewGame,
                   onPressed: () => {
                     Navigator.of(context).pop(true),
                     Navigator.pushReplacementNamed(context, RouteNames.newGame),
