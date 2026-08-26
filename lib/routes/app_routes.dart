@@ -17,6 +17,7 @@ class ScoreRouteArgs {
   const ScoreRouteArgs({required this.game});
 }
 
+//plutard UTILISATION de go_router (à apprendre rehefa lehibebe ilay projet)
 class AppRoutes {
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
