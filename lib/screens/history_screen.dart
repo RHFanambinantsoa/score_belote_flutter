@@ -38,7 +38,7 @@ class _HistoryList extends StatelessWidget {
         children: [
           AppDeleteHistoryButton(
             onPressed: () {
-              // HistoryService.clear();
+              HistoryService.clear();
               // setState(() {});
             },
           ),

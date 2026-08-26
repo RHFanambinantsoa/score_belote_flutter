@@ -84,8 +84,8 @@ class SettingsScreenState extends State<SettingsScreen> {
                 ),
                 AppDeleteHistoryButton(
                   onPressed: () {
-                    // HistoryService.clear();
-                    // setState(() {});
+                    HistoryService.clear();
+                    setState(() {});
                   },
                 ),
                 SizedBox(height: 15),
