@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:score_belote/constants/app_strings.dart';
 import 'package:score_belote/models/game_settings.dart';
-import 'package:score_belote/screens/rule_screen.dart';
+import 'package:score_belote/routes/route_names.dart';
 import 'package:score_belote/services/settings_service.dart';
 import 'package:score_belote/widgets/add_round/group_label.dart';
 import 'package:score_belote/widgets/base/topbar.dart';
@@ -85,10 +85,8 @@ class SettingsScreenState extends State<SettingsScreen> {
                 //règle de jeu
                 Center(child: GroupLabel(label: AppStrings.info.toUpperCase())),
                 NavigationButton(
-                  onPressed: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => RuleScreen()),
-                  ),
+                  onPressed: () =>
+                      Navigator.pushNamed(context, RouteNames.rules),
                 ),
               ],
             ),

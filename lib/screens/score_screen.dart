@@ -4,10 +4,10 @@ import 'package:score_belote/enums/game_status.dart';
 import 'package:score_belote/enums/team_type.dart';
 import 'package:score_belote/models/round.dart';
 import 'package:score_belote/models/game.dart';
+import 'package:score_belote/routes/route_names.dart';
 import 'package:score_belote/widgets/base/snack_bar.dart';
 import 'package:score_belote/widgets/modals/add_round_modal.dart';
 import 'package:score_belote/widgets/base/buttons.dart';
-import 'package:score_belote/screens/new_game_screen.dart';
 import 'package:score_belote/widgets/modals/confirm_modal.dart';
 import 'package:score_belote/widgets/score_screen/rounds_title_section.dart';
 import 'package:score_belote/widgets/base/topbar.dart';
@@ -75,10 +75,6 @@ class _ScoreScreenState extends State<ScoreScreen> {
         }
       }
     }
-  }
-
-  void _navigateTo(BuildContext context, Widget screen) {
-    Navigator.push(context, MaterialPageRoute(builder: (context) => screen));
   }
 
   void _addRoundsToGame(Round round) {
@@ -164,7 +160,10 @@ class _ScoreScreenState extends State<ScoreScreen> {
                     flex: widget.game.rounds.isNotEmpty ? 8 : 1,
                     child: AppPrimaryButton(
                       label: '♠ Nouvelle partie',
-                      onPressed: () => _navigateTo(context, NewGameScreen()),
+                      onPressed: () => Navigator.pushReplacementNamed(
+                        context,
+                        RouteNames.newGame,
+                      ),
                     ),
                   ),
 

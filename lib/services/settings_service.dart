@@ -1,4 +1,4 @@
-import '../models/game_settings.dart';
+import 'package:score_belote/models/game_settings.dart';
 
 class SettingsService {
   static final GameSettings _settings = GameSettings();

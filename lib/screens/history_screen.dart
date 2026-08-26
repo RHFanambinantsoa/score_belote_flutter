@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:score_belote/constants/app_strings.dart';
+import 'package:score_belote/constants/fake_datas.dart';
 import 'package:score_belote/theme/app_colors.dart';
 import 'package:score_belote/theme/app_text_styles.dart';
 import 'package:score_belote/widgets/history_screen/delete_history_button.dart';
@@ -7,12 +8,11 @@ import 'package:score_belote/widgets/history_screen/history_card.dart';
 import 'package:score_belote/widgets/base/topbar.dart';
 
 class HistoryScreen extends StatelessWidget {
-  final List<GameHistoryItem> items;
-  // games.sort((a, b) => b.date.compareTo(a.date));
-  const HistoryScreen({super.key, required this.items});
+  const HistoryScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final items = FakeDatas.fakeItems;
     return Scaffold(
       appBar: AppTopBar(title: AppStrings.history),
       backgroundColor: AppColors.cream,

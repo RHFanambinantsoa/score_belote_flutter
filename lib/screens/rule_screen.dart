@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:score_belote/constants/rule_data.dart';
+import 'package:score_belote/theme/app_colors.dart';
 import 'package:score_belote/widgets/rules_screen/rule_accordeon_section.dart';
 import 'package:score_belote/widgets/rules_screen/rule_block_view.dart';
 import 'package:score_belote/widgets/rules_screen/rule_quick_access_bar.dart';
 import 'package:score_belote/widgets/base/topbar.dart';
-import '../theme/app_colors.dart';
 import 'package:score_belote/constants/app_strings.dart';
 
 class RuleScreen extends StatelessWidget {
