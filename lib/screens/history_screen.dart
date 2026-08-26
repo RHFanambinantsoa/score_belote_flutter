@@ -5,8 +5,8 @@ import 'package:score_belote/theme/app_colors.dart';
 import 'package:score_belote/widgets/history_screen/delete_history_button.dart';
 import 'package:score_belote/widgets/history_screen/empty_history.dart';
 import 'package:score_belote/widgets/history_screen/history_card.dart';
-import 'package:score_belote/widgets/history_screen/grouped_date_label.dart';
 import 'package:score_belote/widgets/base/topbar.dart';
+import 'package:score_belote/widgets/history_screen/history_listview.dart';
 
 class HistoryScreen extends StatelessWidget {
   const HistoryScreen({super.key});
@@ -29,8 +29,6 @@ class _HistoryList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Regroupe les parties consécutives ayant le même dateLabel sous un
-    // seul en-tête de section
     return Padding(
       padding: EdgeInsets.all(10),
       child: Column(
@@ -51,28 +49,7 @@ class _HistoryList extends StatelessWidget {
               borderRadius: BorderRadius.circular(2),
             ),
           ),
-          Expanded(
-            child: ListView.builder(
-              padding: const EdgeInsets.fromLTRB(18, 16, 18, 20),
-              itemCount: items.length,
-              itemBuilder: (context, i) {
-                final item = items[i];
-                final showDateLabel =
-                    i == 0 || items[i - 1].dateLabel != item.dateLabel;
-                //regroupe les même dates
-
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    if (showDateLabel)
-                      GroupedDateLabel(text: item.dateLabel.toUpperCase()),
-                    HistoryCard(item: item),
-                    const SizedBox(height: 12),
-                  ],
-                );
-              },
-            ),
-          ),
+          Expanded(child: HistoryListview(items: items)),
         ],
       ),
     );
