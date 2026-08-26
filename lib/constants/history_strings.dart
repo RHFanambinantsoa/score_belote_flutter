@@ -12,4 +12,5 @@ class HistoryStrings {
   //history card
   static const String classicVictory = "🎉 Victoire classique";
   static const String capotVictory = "🔥 Victoire par Capot 👉 ";
+  static const String abandonnedGame = 'Partie abandonnée';
 }

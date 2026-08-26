@@ -1,3 +1,4 @@
+import 'package:score_belote/constants/history_strings.dart';
 import 'package:score_belote/enums/game_status.dart';
 import 'package:score_belote/constants/score_contants.dart';
 import 'package:score_belote/enums/team_type.dart';
@@ -57,6 +58,60 @@ class Game {
     if (totalScoreA > totalScoreB) return TeamType.teamA;
     if (totalScoreB > totalScoreA) return TeamType.teamB;
     return null;
+  }
+
+  String get createdDateLabel {
+    final now = DateTime.now();
+    final today = DateTime(now.year, now.month, now.day);
+    final dateOnly = DateTime(startedAt.year, startedAt.month, startedAt.day);
+    final difference = today.difference(dateOnly).inDays;
+    if (difference == 0) {
+      return "Aujourd'hui";
+    }
+    if (difference == 1) {
+      return "Hier";
+    }
+    const months = [
+      "Janvier",
+      "Février",
+      "Mars",
+      "Avril",
+      "Mai",
+      "Juin",
+      "Juillet",
+      "Août",
+      "Septembre",
+      "Octobre",
+      "Novembre",
+      "Décembre",
+    ];
+    return "${startedAt.day} ${months[startedAt.month - 1]}";
+  }
+
+  String get createdTime {
+    final hour = startedAt.hour.toString().padLeft(2, '0');
+    final minute = startedAt.minute.toString().padLeft(2, '0');
+    return "$hour:$minute";
+  }
+
+  String get duration {
+    return 'null';
+  }
+
+  String get endGameInfo {
+    if (status == GameStatus.abandoned) {
+      return HistoryStrings.abandonnedGame;
+    } else {
+      Round lastRound = rounds.last;
+      if (rounds.isNotEmpty &&
+          lastRound.isCapot &&
+          (lastRound.teamAScore >= 150 || lastRound.teamBScore >= 150)) {
+        return "${HistoryStrings.capotVictory} "
+            "${lastRound.gameVariant.isSuit ? "Couleur ${lastRound.gameVariant.abbreviation}" : "${lastRound.gameVariant.abbreviation} Dedans"}";
+      } else {
+        return HistoryStrings.classicVictory;
+      }
+    }
   }
 
   void increaseTargetScore() {

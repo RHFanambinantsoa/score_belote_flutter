@@ -1,35 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:score_belote/constants/app_strings.dart';
-import 'package:score_belote/constants/history_strings.dart';
+import 'package:score_belote/enums/team_type.dart';
+import 'package:score_belote/models/game.dart';
+import 'package:score_belote/models/team.dart';
 import 'package:score_belote/theme/app_colors.dart';
 import 'package:score_belote/theme/app_text_styles.dart';
 
-class GameHistoryItem {
-  final String dateLabel; // ex: "Aujourd'hui", "Hier", "12 juillet"
-  final String time; // ex: "21:14"
-  final String teamAName;
-  final String teamBName;
-  final int scoreA;
-  final int scoreB;
-  final String capotWinGameName;
-
-  const GameHistoryItem({
-    required this.dateLabel,
-    required this.time,
-    required this.teamAName,
-    required this.teamBName,
-    required this.scoreA,
-    required this.scoreB,
-    required this.capotWinGameName,
-  });
-
-  bool get aWins => scoreA > scoreB;
-}
-
 class HistoryCard extends StatelessWidget {
-  final GameHistoryItem item;
+  final Game game;
 
-  const HistoryCard({super.key, required this.item});
+  const HistoryCard({super.key, required this.game});
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +30,7 @@ class HistoryCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                item.time,
+                game.createdTime,
                 style: AppTextStyles.bodyBold.copyWith(
                   fontSize: 11,
                   color: AppColors.wine,
@@ -61,26 +41,29 @@ class HistoryCard extends StatelessWidget {
           ),
           Row(
             children: [
-              Expanded(child: _side(item.teamAName, item.scoreA, item.aWins)),
+              Expanded(child: _side(game.teamA, game.totalScoreA, game.winner)),
               const Text(
                 AppStrings.versusEmoji,
                 style: TextStyle(color: AppColors.wine, fontSize: 20),
               ),
-              Expanded(child: _side(item.teamBName, item.scoreB, !item.aWins)),
+              Expanded(child: _side(game.teamB, game.totalScoreB, game.winner)),
             ],
           ),
-          _aboutSection(item.capotWinGameName),
+          _aboutSection(game.endGameInfo),
         ],
       ),
     );
   }
 }
 
-Widget _side(String name, int score, bool winner) {
+Widget _side(Team team, int score, TeamType? winner) {
   return Column(
     children: [
       Text(
-        (winner ? '${AppStrings.trophyEmoji} ' : '') + name.toUpperCase(),
+        (winner != null && winner == team.teamType
+                ? '${AppStrings.trophyEmoji} '
+                : '') +
+            team.label.toUpperCase(),
         textAlign: TextAlign.center,
         style: AppTextStyles.sectionLabel.copyWith(fontSize: 12),
         overflow: TextOverflow.ellipsis,
@@ -89,14 +72,16 @@ Widget _side(String name, int score, bool winner) {
         '$score',
         style: AppTextStyles.bigScore.copyWith(
           fontSize: 24,
-          color: winner ? AppColors.goldDeep : AppColors.wineDeep,
+          color: winner != null && winner == team.teamType
+              ? AppColors.goldDeep
+              : AppColors.wineDeep,
         ),
       ),
     ],
   );
 }
 
-Widget _aboutSection(String roundName) {
+Widget _aboutSection(String info) {
   return Column(
     spacing: 6,
     children: [
@@ -109,9 +94,7 @@ Widget _aboutSection(String roundName) {
         ),
       ),
       Text(
-        roundName.isEmpty
-            ? HistoryStrings.classicVictory
-            : "${HistoryStrings.capotVictory} $roundName",
+        info,
         style: AppTextStyles.button.copyWith(fontSize: 13),
         overflow: TextOverflow.ellipsis,
       ),

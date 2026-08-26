@@ -20,10 +20,6 @@ class SettingsScreen extends StatefulWidget {
   State<SettingsScreen> createState() => SettingsScreenState();
 }
 
-void _doSomething() {
-  // print("reinitialiser ");
-}
-
 class SettingsScreenState extends State<SettingsScreen> {
   late GameSettings settings;
 
