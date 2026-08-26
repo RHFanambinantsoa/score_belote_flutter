@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:score_belote/constants/app_strings.dart';
 import 'package:score_belote/constants/score_contants.dart';
+import 'package:score_belote/constants/settings_strings.dart';
 import 'package:score_belote/models/game_settings.dart';
 import 'package:score_belote/services/settings_service.dart';
 import 'package:score_belote/widgets/base/switch_option.dart';
@@ -21,7 +21,7 @@ class SplitSection extends StatelessWidget {
       children: [
         Expanded(
           child: SwitchOption(
-            label: AppStrings.allowSplitScore,
+            label: SettingsStrings.allowSplitScore,
             value: settings.allowSplit,
             onChanged: (v) {
               SettingsService.update((settings) {

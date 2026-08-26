@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:score_belote/constants/app_strings.dart';
+import 'package:score_belote/constants/settings_strings.dart';
 import 'package:score_belote/theme/app_colors.dart';
 import 'package:score_belote/theme/app_text_styles.dart';
 import 'package:score_belote/widgets/modals/confirm_modal.dart';
@@ -31,8 +32,8 @@ class AppDeleteHistoryButton extends StatelessWidget {
           },
           child: _valueRow(
             context,
-            AppStrings.deleteHistory,
-            AppStrings.reset,
+            SettingsStrings.deleteHistory,
+            SettingsStrings.reset,
             valueColor: AppColors.red,
           ),
         ),

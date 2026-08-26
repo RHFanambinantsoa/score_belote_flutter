@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:score_belote/constants/app_strings.dart';
+import 'package:score_belote/constants/settings_strings.dart';
 import 'package:score_belote/models/game_settings.dart';
 import 'package:score_belote/routes/route_names.dart';
 import 'package:score_belote/services/settings_service.dart';
@@ -46,7 +46,7 @@ class SettingsScreenState extends State<SettingsScreen> {
                 SizedBox(height: 20),
                 Center(
                   child: GroupLabel(
-                    label: AppStrings.gameOptions.toUpperCase(),
+                    label: SettingsStrings.gameOptions.toUpperCase(),
                   ),
                 ),
 
@@ -78,12 +78,16 @@ class SettingsScreenState extends State<SettingsScreen> {
                 SizedBox(height: 15),
 
                 //supprimer l'historique
-                Center(child: GroupLabel(label: AppStrings.data.toUpperCase())),
+                Center(
+                  child: GroupLabel(label: SettingsStrings.data.toUpperCase()),
+                ),
                 AppDeleteHistoryButton(onPressed: _doSomething),
                 SizedBox(height: 15),
 
                 //règle de jeu
-                Center(child: GroupLabel(label: AppStrings.info.toUpperCase())),
+                Center(
+                  child: GroupLabel(label: SettingsStrings.info.toUpperCase()),
+                ),
                 NavigationButton(
                   onPressed: () =>
                       Navigator.pushNamed(context, RouteNames.rules),
