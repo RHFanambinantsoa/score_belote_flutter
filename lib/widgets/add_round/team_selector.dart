@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:score_belote/constants/app_strings.dart';
+import 'package:score_belote/constants/score_strings.dart';
+import 'package:score_belote/enums/game_variant.dart';
 import 'package:score_belote/models/team.dart';
 import 'package:score_belote/enums/team_type.dart';
 import 'package:score_belote/theme/app_colors.dart';
@@ -26,8 +27,10 @@ class TeamSelector extends StatelessWidget {
       spacing: 4,
       children: [
         if (isSplit)
-          GroupLabel(label: "${AppStrings.game} : ${AppStrings.allTrump}"),
-        GroupLabel(label: isSplit ? AppStrings.caller : AppStrings.winner),
+          GroupLabel(
+            label: "${ScoreStrings.game} : ${GameVariant.allTrump.label}",
+          ),
+        GroupLabel(label: isSplit ? ScoreStrings.caller : ScoreStrings.winner),
         Row(
           spacing: 10,
           children: [

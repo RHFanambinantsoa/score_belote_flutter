@@ -34,7 +34,7 @@ class AppDeleteHistoryButton extends StatelessWidget {
           child: _valueRow(
             context,
             SettingsStrings.deleteHistory,
-            SettingsStrings.reset,
+            AppStrings.reset,
             valueColor: AppColors.red,
           ),
         ),

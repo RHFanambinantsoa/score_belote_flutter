@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:score_belote/constants/app_strings.dart';
+import 'package:score_belote/constants/score_strings.dart';
 import 'package:score_belote/enums/game_status.dart';
 import 'package:score_belote/enums/team_type.dart';
 import 'package:score_belote/models/round.dart';
@@ -100,8 +101,8 @@ class _ScoreScreenState extends State<ScoreScreen> {
     final confirmed = await AppConfirmDialog.show(
       context,
       title: widget.game.status != GameStatus.finished
-          ? AppStrings.deleteLastRound
-          : AppStrings.deleteWhileVictory,
+          ? ScoreStrings.deleteLastRound
+          : ScoreStrings.deleteWhileVictory,
       message: '',
       confirmLabel: AppStrings.delete,
       isDestructive: true,
@@ -120,8 +121,8 @@ class _ScoreScreenState extends State<ScoreScreen> {
     if (widget.game.status == GameStatus.running) {
       final confirmed = await AppConfirmDialog.show(
         context,
-        title: AppStrings.abandonGame,
-        message: AppStrings.abandonDesc,
+        title: ScoreStrings.abandonGame,
+        message: ScoreStrings.abandonDesc,
         confirmLabel: AppStrings.abandon,
         isDestructive: true,
         icon: '⚠️',
@@ -186,7 +187,7 @@ class _ScoreScreenState extends State<ScoreScreen> {
                     Expanded(
                       flex: widget.game.rounds.isNotEmpty ? 8 : 1,
                       child: AppPrimaryButton(
-                        label: AppStrings.addScore,
+                        label: ScoreStrings.addScore,
                         onPressed: () => _onAddNewRound(),
                       ),
                     ),
@@ -195,7 +196,7 @@ class _ScoreScreenState extends State<ScoreScreen> {
                     Expanded(
                       flex: widget.game.rounds.isNotEmpty ? 8 : 1,
                       child: AppPrimaryButton(
-                        label: AppStrings.startNewGame,
+                        label: ScoreStrings.startNewGame,
                         onPressed: () => Navigator.pushReplacementNamed(
                           context,
                           RouteNames.newGame,

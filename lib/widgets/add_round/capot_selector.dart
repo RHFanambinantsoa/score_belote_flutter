@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:score_belote/constants/app_strings.dart';
+import 'package:score_belote/constants/score_strings.dart';
 import 'package:score_belote/widgets/base/check_option.dart';
 
 class CapotSelector extends StatelessWidget {
@@ -25,7 +25,7 @@ class CapotSelector extends StatelessWidget {
       children: [
         Expanded(
           child: AppCheckOption(
-            label: AppStrings.capot,
+            label: ScoreStrings.capot,
             checked: isCapot,
             onChanged: (v) {
               onCapotChanged(v);
@@ -35,7 +35,7 @@ class CapotSelector extends StatelessWidget {
         if (!hideDedans)
           Expanded(
             child: AppCheckOption(
-              label: AppStrings.dedans,
+              label: ScoreStrings.dedans,
               checked: isDedans,
               onChanged: (v) {
                 onDedansChanged(v);

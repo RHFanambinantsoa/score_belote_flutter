@@ -1,5 +1,5 @@
 import 'package:flutter/widgets.dart';
-import 'package:score_belote/constants/app_strings.dart';
+import 'package:score_belote/constants/score_strings.dart';
 import 'package:score_belote/models/game.dart';
 import 'package:score_belote/theme/app_text_styles.dart';
 import '../../theme/app_colors.dart';
@@ -21,7 +21,7 @@ class RoundsTitleSection extends StatelessWidget {
                 flex: 5,
                 child: Center(
                   child: Text(
-                    AppStrings.game,
+                    ScoreStrings.game,
                     style: AppTextStyles.sectionLabel.copyWith(
                       fontSize: 15,
                       fontWeight: FontWeight.w800,

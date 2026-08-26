@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:score_belote/constants/app_strings.dart';
+import 'package:score_belote/constants/score_strings.dart';
 import 'package:score_belote/enums/game_variant.dart';
 import 'package:score_belote/theme/app_text_styles.dart';
 import '../../theme/app_colors.dart';
@@ -108,7 +108,7 @@ class GameVariantSelector extends StatelessWidget {
     return Column(
       spacing: 4,
       children: [
-        _groupLabel(AppStrings.game),
+        _groupLabel(ScoreStrings.game),
         Column(
           children: [
             _buildRow(_suits, square: true),

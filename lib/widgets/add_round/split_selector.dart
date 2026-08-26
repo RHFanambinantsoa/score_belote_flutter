@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:score_belote/constants/app_strings.dart';
+import 'package:score_belote/constants/score_strings.dart';
 import 'package:score_belote/models/split_score.dart';
 import 'package:score_belote/widgets/add_round/group_label.dart';
 import 'package:score_belote/widgets/base/radio_option.dart';
@@ -20,7 +20,7 @@ class SplitSelector extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        GroupLabel(label: AppStrings.splitValues),
+        GroupLabel(label: ScoreStrings.splitValues),
         Column(
           spacing: 4,
           children: [

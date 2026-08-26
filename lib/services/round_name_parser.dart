@@ -1,4 +1,4 @@
-import 'package:score_belote/constants/app_strings.dart';
+import 'package:score_belote/constants/score_strings.dart';
 import 'package:score_belote/enums/game_variant.dart';
 import 'package:score_belote/enums/round_status.dart';
 
@@ -11,8 +11,8 @@ String shortRoundResume(
   final shortGameVariant = gameVariant.abbreviation;
   final details = [
     if (roundStatus != RoundStatus.normal) roundStatus.abbreviation,
-    if (isCapot) AppStrings.capotAbbreviation,
-    if (isDedans) AppStrings.dedansAbbreviation,
+    if (isCapot) ScoreStrings.capotAbbreviation,
+    if (isDedans) ScoreStrings.dedansAbbreviation,
   ];
   if (details.isEmpty) {
     return shortGameVariant;
@@ -29,7 +29,7 @@ String longRoundNameResume(GameVariant gameVariant, RoundStatus roundStatus) {
 String capotStatus(bool isCapot, bool isDedans) {
   return isCapot
       ? (isDedans
-            ? "${AppStrings.capot} ${AppStrings.dedans}"
-            : AppStrings.capot)
+            ? "${ScoreStrings.capot} ${ScoreStrings.dedans}"
+            : ScoreStrings.capot)
       : "";
 }
