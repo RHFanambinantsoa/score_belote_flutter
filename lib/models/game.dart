@@ -7,7 +7,7 @@ import 'round.dart';
 
 class Game {
   late DateTime startedAt;
-  DateTime? finishedAt;
+  DateTime? endedAt;
   int targetScore = ScoreConstants.targetScore;
   TeamType? winner;
   List<Round> rounds = [];
@@ -73,13 +73,13 @@ class Game {
     if (status != GameStatus.running) return;
     winner = _winner();
     status = GameStatus.finished;
-    finishedAt = DateTime.now();
+    endedAt = DateTime.now();
   }
 
   void abandonGame() {
     if (status != GameStatus.running) return;
     winner = null;
     status = GameStatus.abandoned;
-    finishedAt = DateTime.now();
+    endedAt = DateTime.now();
   }
 }
