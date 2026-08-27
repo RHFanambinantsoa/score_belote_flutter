@@ -1,6 +1,8 @@
 import 'package:score_belote/constants/history_strings.dart';
 import 'package:score_belote/enums/game_status.dart';
 import 'package:score_belote/constants/score_contants.dart';
+import 'package:score_belote/enums/game_variant.dart';
+import 'package:score_belote/enums/option_types.dart';
 import 'package:score_belote/enums/team_type.dart';
 import 'package:score_belote/models/game_settings.dart';
 import 'package:score_belote/models/team.dart';
@@ -60,6 +62,27 @@ class Game {
     return null;
   }
 
+  GameResultType get gameResultType {
+    if (status == GameStatus.abandoned) {
+      return GameResultType.abandoned;
+    } else {
+      Round lastRound = rounds.last;
+      if (rounds.isNotEmpty &&
+          status == GameStatus.finished &&
+          lastRound.isCapot &&
+          ((lastRound.gameVariant.isSuit &&
+                  settings.isCapotVictoryAllowed(CapotVictoryType.suits)) ||
+              (lastRound.gameVariant == GameVariant.allTrump &&
+                  settings.isCapotVictoryAllowed(
+                    CapotVictoryType.allTrumpDedans,
+                  )))) {
+        return GameResultType.capotWin;
+      } else {
+        return GameResultType.classicWin;
+      }
+    }
+  }
+
   String get createdDateLabel {
     final now = DateTime.now();
     final today = DateTime(now.year, now.month, now.day);
@@ -94,23 +117,44 @@ class Game {
     return "$hour:$minute";
   }
 
-  String get duration {
-    return 'null';
+  String get durationLabel {
+    if (endedAt == null) return '';
+    return _formatDuration(startedAt, endedAt!);
   }
 
-  String get endGameInfo {
-    if (status == GameStatus.abandoned) {
-      return HistoryStrings.abandonnedGame;
-    } else {
-      Round lastRound = rounds.last;
-      if (rounds.isNotEmpty &&
-          lastRound.isCapot &&
-          (lastRound.teamAScore >= 150 || lastRound.teamBScore >= 150)) {
+  String _formatDuration(DateTime start, DateTime end) {
+    final duration = end.difference(start);
+
+    final days = duration.inDays;
+    final hours = duration.inHours % 24;
+    final minutes = duration.inMinutes % 60;
+    final seconds = duration.inSeconds % 60;
+
+    if (days > 0) {
+      return '${days}j${hours}h${minutes.toString().padLeft(2, '0')}mn';
+    }
+
+    if (hours > 0) {
+      return '${hours}h${minutes.toString().padLeft(2, '0')}mn';
+    }
+    if (minutes > 0) {
+      return '${minutes}mn';
+    }
+
+    return '${seconds}s';
+  }
+
+  String get gameResultLabel {
+    switch (gameResultType) {
+      case GameResultType.abandoned:
+        return HistoryStrings.abandonnedGame;
+
+      case GameResultType.capotWin:
         return "${HistoryStrings.capotVictory} "
-            "${lastRound.gameVariant.isSuit ? "Couleur ${lastRound.gameVariant.abbreviation}" : "${lastRound.gameVariant.abbreviation} Dedans"}";
-      } else {
+            "${rounds.last.gameVariant.isSuit ? "Couleur ${rounds.last.gameVariant.abbreviation}" : "${rounds.last.gameVariant.abbreviation} Dedans"}";
+
+      case GameResultType.classicWin:
         return HistoryStrings.classicVictory;
-      }
     }
   }
 

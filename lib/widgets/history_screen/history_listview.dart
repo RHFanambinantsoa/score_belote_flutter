@@ -24,7 +24,7 @@ class HistoryListview extends StatelessWidget {
             if (showDateLabel)
               GroupedDateLabel(text: game.createdDateLabel.toUpperCase()),
             HistoryCard(game: game),
-            const SizedBox(height: 12),
+            const SizedBox(height: 20),
           ],
         );
       },

@@ -5,6 +5,8 @@ import 'package:score_belote/models/game.dart';
 import 'package:score_belote/models/team.dart';
 import 'package:score_belote/theme/app_colors.dart';
 import 'package:score_belote/theme/app_text_styles.dart';
+import 'package:score_belote/widgets/history_screen/card_theme.dart';
+import 'package:score_belote/widgets/history_screen/time_badge.dart';
 
 class HistoryCard extends StatelessWidget {
   final Game game;
@@ -13,47 +15,88 @@ class HistoryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = ResultTheme.of(game.gameResultType);
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
       decoration: BoxDecoration(
-        color: AppColors.cream2,
+        color: theme.cardBg,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: AppColors.brown.withValues(alpha: 0.15),
+          color: theme.cardBorder.withValues(alpha: 0.5),
           width: 2,
         ),
       ),
-      child: Column(
-        spacing: 6,
+      child: Stack(
+        clipBehavior: Clip.none,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                game.createdTime,
-                style: AppTextStyles.bodyBold.copyWith(
-                  fontSize: 11,
-                  color: AppColors.wine,
-                  fontWeight: FontWeight.w800,
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _titleSection(game.gameResultLabel, theme),
+                const SizedBox(height: 10),
+                // Équipes et scores
+                Row(
+                  children: [
+                    Expanded(
+                      child: _side(game.teamA, game.totalScoreA, game.winner),
+                    ),
+                    const Text(
+                      AppStrings.versusEmoji,
+                      style: TextStyle(color: AppColors.wine, fontSize: 20),
+                    ),
+                    Expanded(
+                      child: _side(game.teamB, game.totalScoreB, game.winner),
+                    ),
+                  ],
                 ),
-              ),
-            ],
+                const SizedBox(height: 10),
+                _details(game.durationLabel, game.rounds.length),
+              ],
+            ),
           ),
-          Row(
-            children: [
-              Expanded(child: _side(game.teamA, game.totalScoreA, game.winner)),
-              const Text(
-                AppStrings.versusEmoji,
-                style: TextStyle(color: AppColors.wine, fontSize: 20),
-              ),
-              Expanded(child: _side(game.teamB, game.totalScoreB, game.winner)),
-            ],
+
+          TimeBadge(
+            time: game.createdTime,
+            gradient: theme.badgeGradient,
+            fg: theme.badgeFg,
           ),
-          _aboutSection(game.endGameInfo),
         ],
       ),
     );
   }
+}
+
+Widget _titleSection(String title, ResultTheme theme) {
+  return Column(
+    children: [
+      Row(
+        children: [
+          Text(theme.icon, style: const TextStyle(fontSize: 14)),
+          const SizedBox(width: 6),
+          Expanded(
+            child: Text(
+              title,
+              style: AppTextStyles.button.copyWith(
+                fontSize: 13,
+                color: AppColors.wineDeep,
+              ),
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+        ],
+      ),
+      Container(
+        height: 1,
+        margin: const EdgeInsets.symmetric(vertical: 4),
+        padding: EdgeInsets.symmetric(horizontal: 20),
+        decoration: BoxDecoration(
+          color: AppColors.wineDeep,
+          borderRadius: BorderRadius.circular(2),
+        ),
+      ),
+    ],
+  );
 }
 
 Widget _side(Team team, int score, TeamType? winner) {
@@ -81,23 +124,26 @@ Widget _side(Team team, int score, TeamType? winner) {
   );
 }
 
-Widget _aboutSection(String info) {
-  return Column(
-    spacing: 6,
+Widget _details(String duration, int rounds) {
+  return Row(
     children: [
+      Text('Nombre de manches : $rounds', style: _footStyle()),
       Container(
-        height: 2,
-        margin: const EdgeInsets.symmetric(vertical: 2),
+        width: 1,
+        height: 8,
+        margin: const EdgeInsets.symmetric(horizontal: 8),
         decoration: BoxDecoration(
-          color: AppColors.brown.withValues(alpha: 0.15),
+          color: AppColors.wineDeep.withValues(alpha: 0.75),
           borderRadius: BorderRadius.circular(2),
         ),
       ),
-      Text(
-        info,
-        style: AppTextStyles.button.copyWith(fontSize: 13),
-        overflow: TextOverflow.ellipsis,
-      ),
+      Text("Durée : $duration", style: _footStyle()),
     ],
   );
 }
+
+TextStyle _footStyle() => AppTextStyles.bodyBold.copyWith(
+  fontSize: 11,
+  color: AppColors.wineDeep.withValues(alpha: 0.75),
+  fontWeight: FontWeight.w700,
+);
