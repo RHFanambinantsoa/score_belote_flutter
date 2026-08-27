@@ -6,6 +6,7 @@ import 'package:score_belote/enums/team_type.dart';
 import 'package:score_belote/models/round.dart';
 import 'package:score_belote/models/game.dart';
 import 'package:score_belote/routes/route_names.dart';
+import 'package:score_belote/services/history_service.dart';
 import 'package:score_belote/widgets/base/snack_bar.dart';
 import 'package:score_belote/widgets/modals/add_round_modal.dart';
 import 'package:score_belote/widgets/base/buttons.dart';
@@ -38,7 +39,9 @@ class _ScoreScreenState extends State<ScoreScreen> {
     super.initState();
   }
 
-  void _saveGameToHistory(Game game) {}
+  void _saveGameToHistory(Game game) {
+    HistoryService.add(game);
+  }
 
   void _checkVictory(Game game) async {
     if (game.isDrawAtTarget) {

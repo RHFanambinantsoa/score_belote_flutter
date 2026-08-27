@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:score_belote/constants/settings_strings.dart';
 import 'package:score_belote/models/game_settings.dart';
 import 'package:score_belote/routes/route_names.dart';
+import 'package:score_belote/services/history_service.dart';
 import 'package:score_belote/services/settings_service.dart';
 import 'package:score_belote/widgets/add_round/group_label.dart';
 import 'package:score_belote/widgets/base/topbar.dart';
@@ -17,10 +18,6 @@ class SettingsScreen extends StatefulWidget {
 
   @override
   State<SettingsScreen> createState() => SettingsScreenState();
-}
-
-void _doSomething() {
-  // print("reinitialiser ");
 }
 
 class SettingsScreenState extends State<SettingsScreen> {
@@ -81,7 +78,12 @@ class SettingsScreenState extends State<SettingsScreen> {
                 Center(
                   child: GroupLabel(label: SettingsStrings.data.toUpperCase()),
                 ),
-                AppDeleteHistoryButton(onPressed: _doSomething),
+                AppDeleteHistoryButton(
+                  onPressed: () {
+                    HistoryService.clear();
+                    setState(() {});
+                  },
+                ),
                 SizedBox(height: 15),
 
                 //règle de jeu

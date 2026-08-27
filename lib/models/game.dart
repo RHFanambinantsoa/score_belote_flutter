@@ -1,5 +1,8 @@
+import 'package:score_belote/constants/history_strings.dart';
 import 'package:score_belote/enums/game_status.dart';
 import 'package:score_belote/constants/score_contants.dart';
+import 'package:score_belote/enums/game_variant.dart';
+import 'package:score_belote/enums/option_types.dart';
 import 'package:score_belote/enums/team_type.dart';
 import 'package:score_belote/models/game_settings.dart';
 import 'package:score_belote/models/team.dart';
@@ -7,7 +10,7 @@ import 'round.dart';
 
 class Game {
   late DateTime startedAt;
-  DateTime? finishedAt;
+  DateTime? endedAt;
   int targetScore = ScoreConstants.targetScore;
   TeamType? winner;
   List<Round> rounds = [];
@@ -59,6 +62,102 @@ class Game {
     return null;
   }
 
+  GameResultType get gameResultType {
+    if (status == GameStatus.abandoned) {
+      return GameResultType.abandoned;
+    } else {
+      Round lastRound = rounds.last;
+      if (rounds.isNotEmpty &&
+          status == GameStatus.finished &&
+          lastRound.isCapot &&
+          ((lastRound.gameVariant.isSuit &&
+                  settings.isCapotVictoryAllowed(CapotVictoryType.suits)) ||
+              (lastRound.gameVariant == GameVariant.allTrump &&
+                  settings.isCapotVictoryAllowed(
+                    CapotVictoryType.allTrumpDedans,
+                  )))) {
+        return GameResultType.capotWin;
+      } else {
+        return GameResultType.classicWin;
+      }
+    }
+  }
+
+  String get createdDateLabel {
+    final now = DateTime.now();
+    final today = DateTime(now.year, now.month, now.day);
+    final dateOnly = DateTime(startedAt.year, startedAt.month, startedAt.day);
+    final difference = today.difference(dateOnly).inDays;
+    if (difference == 0) {
+      return "Aujourd'hui";
+    }
+    if (difference == 1) {
+      return "Hier";
+    }
+    const months = [
+      "Janvier",
+      "Février",
+      "Mars",
+      "Avril",
+      "Mai",
+      "Juin",
+      "Juillet",
+      "Août",
+      "Septembre",
+      "Octobre",
+      "Novembre",
+      "Décembre",
+    ];
+    return "${startedAt.day} ${months[startedAt.month - 1]}";
+  }
+
+  String get createdTime {
+    final hour = startedAt.hour.toString().padLeft(2, '0');
+    final minute = startedAt.minute.toString().padLeft(2, '0');
+    return "$hour:$minute";
+  }
+
+  String get durationLabel {
+    if (endedAt == null) return '';
+    return _formatDuration(startedAt, endedAt!);
+  }
+
+  String _formatDuration(DateTime start, DateTime end) {
+    final duration = end.difference(start);
+
+    final days = duration.inDays;
+    final hours = duration.inHours % 24;
+    final minutes = duration.inMinutes % 60;
+    final seconds = duration.inSeconds % 60;
+
+    if (days > 0) {
+      return '${days}j${hours}h${minutes.toString().padLeft(2, '0')}mn';
+    }
+
+    if (hours > 0) {
+      return '${hours}h${minutes.toString().padLeft(2, '0')}mn';
+    }
+    if (minutes > 0) {
+      return '${minutes}mn';
+    }
+
+    return '${seconds}s';
+  }
+
+  String get gameResultLabel {
+    switch (gameResultType) {
+      case GameResultType.abandoned:
+        return HistoryStrings.abandonnedGame;
+
+      case GameResultType.capotWin:
+        return "${HistoryStrings.capotVictory} "
+            "${rounds.last.gameVariant.isSuit ? "Couleur ${rounds.last.gameVariant.abbreviation}" : "${rounds.last.gameVariant.abbreviation} Dedans"}";
+
+      case GameResultType.classicWin:
+        return HistoryStrings.classicVictory;
+    }
+  }
+
   void increaseTargetScore() {
     targetScore += ScoreConstants.targetIncrementInterval;
   }
@@ -73,13 +172,13 @@ class Game {
     if (status != GameStatus.running) return;
     winner = _winner();
     status = GameStatus.finished;
-    finishedAt = DateTime.now();
+    endedAt = DateTime.now();
   }
 
   void abandonGame() {
     if (status != GameStatus.running) return;
     winner = null;
     status = GameStatus.abandoned;
-    finishedAt = DateTime.now();
+    endedAt = DateTime.now();
   }
 }
