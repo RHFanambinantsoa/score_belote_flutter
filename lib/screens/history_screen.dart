@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:score_belote/constants/app_strings.dart';
+import 'package:score_belote/constants/history_strings.dart';
 import 'package:score_belote/models/game.dart';
+import 'package:score_belote/routes/app_routes.dart';
+import 'package:score_belote/routes/route_names.dart';
 import 'package:score_belote/services/history_service.dart';
 import 'package:score_belote/theme/app_colors.dart';
 import 'package:score_belote/widgets/history_screen/delete_history_button.dart';
 import 'package:score_belote/widgets/history_screen/empty_history.dart';
 import 'package:score_belote/widgets/base/topbar.dart';
 import 'package:score_belote/widgets/history_screen/history_listview.dart';
+import 'package:score_belote/widgets/modals/confirm_modal.dart';
 
 class HistoryScreen extends StatefulWidget {
   const HistoryScreen({super.key});
@@ -21,6 +25,31 @@ class _HistoryScreenState extends State<HistoryScreen> {
     setState(() {});
   }
 
+  Future<void> _deleteGame(Game game) async {
+    final confirmed = await AppConfirmDialog.show(
+      context,
+      title: HistoryStrings.deleteGameToHistory,
+      message: "",
+      confirmLabel: AppStrings.delete,
+      isDestructive: true,
+      icon: AppStrings.binEmoji,
+    );
+
+    if (confirmed != true) {
+      return;
+    }
+    HistoryService.remove(game);
+    setState(() {});
+  }
+
+  void _goToScoreScreen(Game game) {
+    Navigator.pushNamed(
+      context,
+      RouteNames.score,
+      arguments: ScoreRouteArgs(game: game, viewMode: true),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final games = HistoryService.games;
@@ -30,7 +59,12 @@ class _HistoryScreenState extends State<HistoryScreen> {
       backgroundColor: AppColors.cream,
       body: games.isEmpty
           ? const EmptyHistory()
-          : _HistoryList(games: games, onClearHistory: _clearHistory),
+          : _HistoryList(
+              games: games,
+              onClearHistory: _clearHistory,
+              onDeleteCard: _deleteGame,
+              onTapCard: _goToScoreScreen,
+            ),
     );
   }
 }
@@ -38,7 +72,15 @@ class _HistoryScreenState extends State<HistoryScreen> {
 class _HistoryList extends StatelessWidget {
   final List<Game> games;
   final VoidCallback onClearHistory;
-  const _HistoryList({required this.games, required this.onClearHistory});
+  final void Function(Game game) onDeleteCard;
+  final void Function(Game game) onTapCard;
+
+  const _HistoryList({
+    required this.games,
+    required this.onClearHistory,
+    required this.onDeleteCard,
+    required this.onTapCard,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +99,13 @@ class _HistoryList extends StatelessWidget {
               borderRadius: BorderRadius.circular(2),
             ),
           ),
-          Expanded(child: HistoryListview(games: games.reversed.toList())),
+          Expanded(
+            child: HistoryListview(
+              games: games.reversed.toList(),
+              onDeleteCard: onDeleteCard,
+              onTapCard: onTapCard,
+            ),
+          ),
         ],
       ),
     );

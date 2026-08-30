@@ -13,4 +13,8 @@ class HistoryStrings {
   static const String classicVictory = "Victoire classique";
   static const String capotVictory = "Victoire par Capot 👉 ";
   static const String abandonnedGame = 'Partie abandonnée';
+
+  //modal
+  static const String deleteGameToHistory =
+      "Voulez-vous vraiment supprimer cette partie de l'historique?";
 }

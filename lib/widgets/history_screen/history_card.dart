@@ -10,58 +10,108 @@ import 'package:score_belote/widgets/history_screen/time_badge.dart';
 
 class HistoryCard extends StatelessWidget {
   final Game game;
+  final VoidCallback onDelete;
+  final VoidCallback onTap;
 
-  const HistoryCard({super.key, required this.game});
+  const HistoryCard({
+    super.key,
+    required this.game,
+    required this.onDelete,
+    required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
     final theme = ResultTheme.of(game.gameResultType);
-    return Container(
-      decoration: BoxDecoration(
-        color: theme.cardBg,
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(
-          color: theme.cardBorder.withValues(alpha: 0.5),
-          width: 2,
+    return GestureDetector(
+      onTap: onTap,
+      onLongPress: () => {print("long press")},
+      child: Container(
+        decoration: BoxDecoration(
+          color: theme.cardBg,
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(
+            color: theme.cardBorder.withValues(alpha: 0.5),
+            width: 2,
+          ),
+        ),
+        child: Stack(
+          clipBehavior: Clip.none,
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _titleSection(game.gameResultLabel, theme),
+                  const SizedBox(height: 10),
+                  // Équipes et scores
+                  Row(
+                    children: [
+                      Expanded(
+                        child: _side(game.teamA, game.totalScoreA, game.winner),
+                      ),
+                      const Text(
+                        AppStrings.versusEmoji,
+                        style: TextStyle(color: AppColors.wine, fontSize: 20),
+                      ),
+                      Expanded(
+                        child: _side(game.teamB, game.totalScoreB, game.winner),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 10),
+                  _details(game.durationLabel, game.rounds.length),
+
+                  // if (!selectionMode)
+                ],
+              ),
+            ),
+
+            TimeBadge(
+              time: game.createdTime,
+              gradient: theme.badgeGradient,
+              fg: theme.badgeFg,
+            ),
+
+            DeleteGameButton(onDelete: onDelete),
+          ],
         ),
       ),
-      child: Stack(
-        clipBehavior: Clip.none,
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _titleSection(game.gameResultLabel, theme),
-                const SizedBox(height: 10),
-                // Équipes et scores
-                Row(
-                  children: [
-                    Expanded(
-                      child: _side(game.teamA, game.totalScoreA, game.winner),
-                    ),
-                    const Text(
-                      AppStrings.versusEmoji,
-                      style: TextStyle(color: AppColors.wine, fontSize: 20),
-                    ),
-                    Expanded(
-                      child: _side(game.teamB, game.totalScoreB, game.winner),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 10),
-                _details(game.durationLabel, game.rounds.length),
-              ],
+    );
+  }
+}
+
+class DeleteGameButton extends StatelessWidget {
+  final VoidCallback onDelete;
+  const DeleteGameButton({super.key, required this.onDelete});
+
+  @override
+  Widget build(BuildContext context) {
+    return Positioned(
+      bottom: 0,
+      right: 0,
+      child: GestureDetector(
+        onTap: onDelete,
+        child: Container(
+          width: 38,
+          height: 38,
+          decoration: BoxDecoration(
+            color: AppColors.red.withValues(alpha: 0.10),
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(16),
+              bottomRight: Radius.circular(16),
+            ),
+            border: Border.all(
+              color: AppColors.red.withValues(alpha: 0.20),
+              width: 1.5,
             ),
           ),
 
-          TimeBadge(
-            time: game.createdTime,
-            gradient: theme.badgeGradient,
-            fg: theme.badgeFg,
+          child: const Center(
+            child: Text('🗑️', style: TextStyle(fontSize: 14)),
           ),
-        ],
+        ),
       ),
     );
   }
