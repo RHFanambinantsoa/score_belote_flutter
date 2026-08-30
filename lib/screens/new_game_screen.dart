@@ -73,7 +73,7 @@ class _NewGameScreenState extends State<NewGameScreen> {
     Navigator.pushReplacementNamed(
       context,
       RouteNames.score,
-      arguments: ScoreRouteArgs(game: newGame),
+      arguments: ScoreRouteArgs(game: newGame, viewMode: false),
     );
   }
 

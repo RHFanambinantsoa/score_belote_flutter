@@ -19,8 +19,9 @@ import 'package:score_belote/widgets/modals/victory_modal.dart';
 
 class ScoreScreen extends StatefulWidget {
   final Game game;
+  final bool viewMode;
   //comme dans @input dans angular à peu près, on peut passer un objet game à ce widget ScoreScreen, et on pourra l'utiliser dans le widget.
-  const ScoreScreen({super.key, required this.game});
+  const ScoreScreen({super.key, required this.game, required this.viewMode});
 
   @override
   State<ScoreScreen> createState() => _ScoreScreenState();
@@ -121,6 +122,11 @@ class _ScoreScreenState extends State<ScoreScreen> {
   }
 
   Future<void> _handleBack() async {
+    if (widget.viewMode) {
+      Navigator.of(context).pop();
+      return;
+    }
+
     if (widget.game.status == GameStatus.running) {
       final confirmed = await AppConfirmDialog.show(
         context,
@@ -153,7 +159,7 @@ class _ScoreScreenState extends State<ScoreScreen> {
   @override
   Widget build(BuildContext context) {
     return PopScope(
-      canPop: false,
+      canPop: widget.viewMode || widget.game.status != GameStatus.running,
       onPopInvokedWithResult: (didPop, result) {
         if (didPop) return;
         _handleBack();
@@ -174,42 +180,43 @@ class _ScoreScreenState extends State<ScoreScreen> {
                   rounds: widget.game.rounds.reversed.toList(),
                 ),
               ),
-              Row(
-                spacing: 4,
-                children: [
-                  SizedBox(width: 10),
-                  if (widget.game.rounds.isNotEmpty)
-                    Expanded(
-                      flex: 2,
-                      child: AppSecondaryButton(
-                        label: "undo",
-                        onPressed: () => _onDeleteLastRound(),
-                      ),
-                    ),
-                  if (widget.game.status != GameStatus.finished)
-                    Expanded(
-                      flex: widget.game.rounds.isNotEmpty ? 8 : 1,
-                      child: AppPrimaryButton(
-                        label: ScoreStrings.addScore,
-                        onPressed: () => _onAddNewRound(),
-                      ),
-                    ),
-                  if (widget.game.status == GameStatus.finished &&
-                      !startNewGameFromDialog!)
-                    Expanded(
-                      flex: widget.game.rounds.isNotEmpty ? 8 : 1,
-                      child: AppPrimaryButton(
-                        label: ScoreStrings.startNewGame,
-                        onPressed: () => Navigator.pushReplacementNamed(
-                          context,
-                          RouteNames.newGame,
+              if (!widget.viewMode)
+                Row(
+                  spacing: 4,
+                  children: [
+                    SizedBox(width: 10),
+                    if (widget.game.rounds.isNotEmpty)
+                      Expanded(
+                        flex: 2,
+                        child: AppSecondaryButton(
+                          label: "undo",
+                          onPressed: () => _onDeleteLastRound(),
                         ),
                       ),
-                    ),
+                    if (widget.game.status != GameStatus.finished)
+                      Expanded(
+                        flex: widget.game.rounds.isNotEmpty ? 8 : 1,
+                        child: AppPrimaryButton(
+                          label: ScoreStrings.addScore,
+                          onPressed: () => _onAddNewRound(),
+                        ),
+                      ),
+                    if (widget.game.status == GameStatus.finished &&
+                        !startNewGameFromDialog!)
+                      Expanded(
+                        flex: widget.game.rounds.isNotEmpty ? 8 : 1,
+                        child: AppPrimaryButton(
+                          label: ScoreStrings.startNewGame,
+                          onPressed: () => Navigator.pushReplacementNamed(
+                            context,
+                            RouteNames.newGame,
+                          ),
+                        ),
+                      ),
 
-                  SizedBox(width: 10),
-                ],
-              ),
+                    SizedBox(width: 10),
+                  ],
+                ),
               SizedBox(height: 20),
             ],
           ),

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:score_belote/constants/app_strings.dart';
 import 'package:score_belote/constants/history_strings.dart';
 import 'package:score_belote/models/game.dart';
+import 'package:score_belote/routes/app_routes.dart';
+import 'package:score_belote/routes/route_names.dart';
 import 'package:score_belote/services/history_service.dart';
 import 'package:score_belote/theme/app_colors.dart';
 import 'package:score_belote/widgets/history_screen/delete_history_button.dart';
@@ -40,6 +42,14 @@ class _HistoryScreenState extends State<HistoryScreen> {
     setState(() {});
   }
 
+  void _goToScoreScreen(Game game) {
+    Navigator.pushNamed(
+      context,
+      RouteNames.score,
+      arguments: ScoreRouteArgs(game: game, viewMode: true),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final games = HistoryService.games;
@@ -53,6 +63,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
               games: games,
               onClearHistory: _clearHistory,
               onDeleteCard: _deleteGame,
+              onTapCard: _goToScoreScreen,
             ),
     );
   }
@@ -62,11 +73,13 @@ class _HistoryList extends StatelessWidget {
   final List<Game> games;
   final VoidCallback onClearHistory;
   final void Function(Game game) onDeleteCard;
+  final void Function(Game game) onTapCard;
 
   const _HistoryList({
     required this.games,
     required this.onClearHistory,
     required this.onDeleteCard,
+    required this.onTapCard,
   });
 
   @override
@@ -90,6 +103,7 @@ class _HistoryList extends StatelessWidget {
             child: HistoryListview(
               games: games.reversed.toList(),
               onDeleteCard: onDeleteCard,
+              onTapCard: onTapCard,
             ),
           ),
         ],

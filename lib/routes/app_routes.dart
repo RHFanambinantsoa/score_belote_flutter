@@ -14,7 +14,8 @@ import 'route_names.dart';
 
 class ScoreRouteArgs {
   final Game game;
-  const ScoreRouteArgs({required this.game});
+  final bool viewMode;
+  const ScoreRouteArgs({required this.game, required this.viewMode});
 }
 
 //plutard UTILISATION de go_router (à apprendre rehefa lehibebe ilay projet)
@@ -44,7 +45,9 @@ class AppRoutes {
 
       case RouteNames.score:
         final args = settings.arguments as ScoreRouteArgs;
-        return MaterialPageRoute(builder: (_) => ScoreScreen(game: args.game));
+        return MaterialPageRoute(
+          builder: (_) => ScoreScreen(game: args.game, viewMode: args.viewMode),
+        );
 
       default:
         return MaterialPageRoute(builder: (_) => const UnknownRouteScreen());

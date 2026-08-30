@@ -11,14 +11,20 @@ import 'package:score_belote/widgets/history_screen/time_badge.dart';
 class HistoryCard extends StatelessWidget {
   final Game game;
   final VoidCallback onDelete;
+  final VoidCallback onTap;
 
-  const HistoryCard({super.key, required this.game, required this.onDelete});
+  const HistoryCard({
+    super.key,
+    required this.game,
+    required this.onDelete,
+    required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
     final theme = ResultTheme.of(game.gameResultType);
     return GestureDetector(
-      onTap: () => {print("tab")},
+      onTap: onTap,
       onLongPress: () => {print("long press")},
       child: Container(
         decoration: BoxDecoration(
