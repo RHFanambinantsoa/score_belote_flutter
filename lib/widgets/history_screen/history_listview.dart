@@ -5,7 +5,12 @@ import 'package:score_belote/widgets/history_screen/history_card.dart';
 
 class HistoryListview extends StatelessWidget {
   final List<Game> games;
-  const HistoryListview({super.key, required this.games});
+  final void Function(Game game) onDeleteCard;
+  const HistoryListview({
+    super.key,
+    required this.games,
+    required this.onDeleteCard,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +28,7 @@ class HistoryListview extends StatelessWidget {
           children: [
             if (showDateLabel)
               GroupedDateLabel(text: game.createdDateLabel.toUpperCase()),
-            HistoryCard(game: game),
+            HistoryCard(game: game, onDelete: () => onDeleteCard(game)),
             const SizedBox(height: 20),
           ],
         );
