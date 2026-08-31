@@ -108,7 +108,8 @@ class Game {
       "Novembre",
       "Décembre",
     ];
-    return "${startedAt.day} ${months[startedAt.month - 1]}";
+    return "${startedAt.day} ${months[startedAt.month - 1]}"
+        "${startedAt.year != now.year ? " ${startedAt.year}" : ""}";
   }
 
   String get createdTime {
