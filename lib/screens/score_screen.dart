@@ -114,6 +114,9 @@ class _ScoreScreenState extends State<ScoreScreen> {
     );
     if (confirmed == true) {
       setState(() {
+        if (widget.game.status == GameStatus.finished) {
+          HistoryService.remove(widget.game);
+        }
         widget.game.deleteLastRound();
         startNewGameFromDialog = true;
         //enregistre le changement à faire
