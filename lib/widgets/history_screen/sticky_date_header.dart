@@ -8,10 +8,10 @@ class StickyDateHeader extends SliverPersistentHeaderDelegate {
   StickyDateHeader({required this.text});
 
   @override
-  double get minExtent => 40;
+  double get minExtent => 50;
 
   @override
-  double get maxExtent => 40;
+  double get maxExtent => 50;
 
   @override
   Widget build(
@@ -21,6 +21,7 @@ class StickyDateHeader extends SliverPersistentHeaderDelegate {
   ) {
     return Container(
       color: AppColors.cream,
+      margin: EdgeInsets.only(bottom: 10),
       child: GroupedDateLabel(text: text),
     );
   }
