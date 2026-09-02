@@ -1,32 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:score_belote/enums/game_status.dart';
 import 'package:score_belote/constants/history_strings.dart';
-import 'package:score_belote/constants/app_strings.dart';
+import 'package:score_belote/enums/game_status.dart';
+import 'package:score_belote/models/filter_fields.dart';
 import 'package:score_belote/theme/app_colors.dart';
 import 'package:score_belote/theme/app_text_styles.dart';
 import 'package:score_belote/widgets/base/buttons.dart';
 
 class FilterSheet extends StatefulWidget {
-  final TextEditingController teamController;
-
-  final DateTime? selectedDate;
-  final GameResultType? selectedResultType;
-
-  final ValueChanged<DateTime?> onDateChanged;
-  final ValueChanged<GameResultType?> onResultChanged;
-
-  final VoidCallback onReset;
-  final VoidCallback onApply;
+  final String initialTeam;
+  final DateTime? initialDate;
+  final GameResultType? initialResultType;
 
   const FilterSheet({
     super.key,
-    required this.teamController,
-    required this.selectedDate,
-    required this.selectedResultType,
-    required this.onDateChanged,
-    required this.onResultChanged,
-    required this.onReset,
-    required this.onApply,
+    this.initialTeam = '',
+    this.initialDate,
+    this.initialResultType,
   });
 
   @override
@@ -34,6 +23,7 @@ class FilterSheet extends StatefulWidget {
 }
 
 class _FilterSheetState extends State<FilterSheet> {
+  late final TextEditingController _teamController;
   late DateTime? _selectedDate;
   late GameResultType? _selectedResultType;
 
@@ -41,8 +31,16 @@ class _FilterSheetState extends State<FilterSheet> {
   void initState() {
     super.initState();
 
-    _selectedDate = widget.selectedDate;
-    _selectedResultType = widget.selectedResultType;
+    _teamController = TextEditingController(text: widget.initialTeam);
+
+    _selectedDate = widget.initialDate;
+    _selectedResultType = widget.initialResultType;
+  }
+
+  @override
+  void dispose() {
+    _teamController.dispose();
+    super.dispose();
   }
 
   Future<void> _pickDate() async {
@@ -58,16 +56,35 @@ class _FilterSheetState extends State<FilterSheet> {
     setState(() {
       _selectedDate = date;
     });
-
-    widget.onDateChanged(date);
   }
 
-  void _changeResult(GameResultType? result) {
+  void _resetFilters() {
     setState(() {
-      _selectedResultType = result;
+      _teamController.clear();
+      _selectedDate = null;
+      _selectedResultType = null;
     });
+  }
 
-    widget.onResultChanged(result);
+  void _applyFilters() {
+    Navigator.pop(
+      context,
+      FilterFields(
+        team: _teamController.text.trim(),
+        date: _selectedDate,
+        resultType: _selectedResultType,
+      ),
+    );
+  }
+
+  String get _dateLabel {
+    if (_selectedDate == null) {
+      return 'Toutes les dates';
+    }
+
+    return '${_selectedDate!.day.toString().padLeft(2, '0')}/'
+        '${_selectedDate!.month.toString().padLeft(2, '0')}/'
+        '${_selectedDate!.year}';
   }
 
   @override
@@ -100,19 +117,23 @@ class _FilterSheetState extends State<FilterSheet> {
                 ),
               ),
             ),
+
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text('🔍', style: TextStyle(fontSize: 16)),
+                const Icon(Icons.tune, size: 20, color: AppColors.wine),
                 const SizedBox(width: 8),
-                Text(HistoryStrings.filters, style: AppTextStyles.modalTitle),
+                Text('Filtres', style: AppTextStyles.modalTitle),
               ],
             ),
+
             const SizedBox(height: 16),
 
-            // --- Équipe ---
-            Text(AppStrings.team, style: AppTextStyles.sectionLabel),
+            // ÉQUIPE
+            Text('ÉQUIPE', style: AppTextStyles.sectionLabel),
+
             const SizedBox(height: 6),
+
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 14),
               decoration: BoxDecoration(
@@ -121,26 +142,33 @@ class _FilterSheetState extends State<FilterSheet> {
                 border: Border.all(color: AppColors.brown, width: 2.5),
               ),
               child: TextField(
-                controller: widget.teamController,
+                controller: _teamController,
                 style: AppTextStyles.bodyBold,
                 cursorColor: AppColors.wine,
                 decoration: InputDecoration(
-                  hintText: AppStrings.teamInputHint,
+                  hintText: 'Nom de l’équipe',
                   hintStyle: AppTextStyles.body.copyWith(
                     color: AppColors.wine.withValues(alpha: 0.4),
                   ),
-                  prefixText: '🔍  ',
+                  prefixIcon: const Icon(
+                    Icons.search,
+                    color: AppColors.wine,
+                    size: 20,
+                  ),
                   border: InputBorder.none,
                   isDense: true,
                   contentPadding: const EdgeInsets.symmetric(vertical: 12),
                 ),
               ),
             ),
+
             const SizedBox(height: 16),
 
-            // --- Date ---
-            Text(HistoryStrings.date, style: AppTextStyles.sectionLabel),
+            // DATE
+            Text('DATE', style: AppTextStyles.sectionLabel),
+
             const SizedBox(height: 6),
+
             GestureDetector(
               onTap: _pickDate,
               child: Container(
@@ -155,31 +183,34 @@ class _FilterSheetState extends State<FilterSheet> {
                 ),
                 child: Row(
                   children: [
-                    const Text('📅', style: TextStyle(fontSize: 16)),
-                    const SizedBox(width: 10),
-                    Expanded(
-                      child: Text(
-                        _selectedDate == null
-                            ? HistoryStrings.allDates
-                            : '${_selectedDate!.day.toString().padLeft(2, '0')}/'
-                                  '${_selectedDate!.month.toString().padLeft(2, '0')}/'
-                                  '${_selectedDate!.year}',
-                        style: AppTextStyles.bodyBold,
-                      ),
+                    const Icon(
+                      Icons.calendar_month,
+                      size: 20,
+                      color: AppColors.wine,
                     ),
-                    const Text(
-                      '›',
-                      style: TextStyle(color: AppColors.wine, fontSize: 16),
+                    const SizedBox(width: 10),
+
+                    Expanded(
+                      child: Text(_dateLabel, style: AppTextStyles.bodyBold),
+                    ),
+
+                    const Icon(
+                      Icons.chevron_right,
+                      color: AppColors.wine,
+                      size: 20,
                     ),
                   ],
                 ),
               ),
             ),
+
             const SizedBox(height: 16),
 
-            // --- Résultat ---
-            Text(HistoryStrings.result, style: AppTextStyles.sectionLabel),
+            // RÉSULTAT
+            Text('RÉSULTAT', style: AppTextStyles.sectionLabel),
+
             const SizedBox(height: 6),
+
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 14),
               decoration: BoxDecoration(
@@ -188,58 +219,68 @@ class _FilterSheetState extends State<FilterSheet> {
                 border: Border.all(color: AppColors.brown, width: 2.5),
               ),
               child: DropdownButtonHideUnderline(
-                child: DropdownButtonFormField<GameResultType?>(
-                  initialValue: _selectedResultType,
-                  icon: const Text('🏆', style: TextStyle(fontSize: 15)),
+                child: DropdownButton<GameResultType?>(
+                  value: _selectedResultType,
                   isExpanded: true,
+                  icon: const Icon(
+                    Icons.emoji_events,
+                    color: AppColors.wine,
+                    size: 20,
+                  ),
                   style: AppTextStyles.bodyBold,
                   dropdownColor: AppColors.cream2,
                   borderRadius: BorderRadius.circular(14),
-                  decoration: const InputDecoration(
-                    border: InputBorder.none,
-                    isDense: true,
-                    contentPadding: EdgeInsets.symmetric(vertical: 12),
-                  ),
+
                   items: const [
-                    DropdownMenuItem(
+                    DropdownMenuItem<GameResultType?>(
                       value: null,
-                      child: Text(HistoryStrings.allResult),
+                      child: Text('Tous les résultats'),
                     ),
-                    DropdownMenuItem(
+                    DropdownMenuItem<GameResultType?>(
                       value: GameResultType.classicVictory,
                       child: Text(HistoryStrings.classicVictory),
                     ),
-                    DropdownMenuItem(
+                    DropdownMenuItem<GameResultType?>(
                       value: GameResultType.capotVictory,
                       child: Text(HistoryStrings.capotVictory),
                     ),
-                    DropdownMenuItem(
+                    DropdownMenuItem<GameResultType?>(
                       value: GameResultType.abandoned,
                       child: Text(HistoryStrings.abandonnedGame),
                     ),
                   ],
-                  onChanged: _changeResult,
+
+                  onChanged: (value) {
+                    setState(() {
+                      _selectedResultType = value;
+                    });
+                  },
                 ),
               ),
             ),
 
             const SizedBox(height: 8),
+
             const Divider(),
+
             const SizedBox(height: 4),
 
+            // BOUTONS
             Row(
               children: [
                 Expanded(
-                  child: AppSecondaryButton(
-                    label: AppStrings.reset,
-                    onPressed: widget.onReset,
+                  child: AppGhostButton(
+                    label: 'Réinitialiser',
+                    onPressed: _resetFilters,
                   ),
                 ),
+
                 const SizedBox(width: 12),
+
                 Expanded(
                   child: AppPrimaryButton(
-                    label: AppStrings.apply,
-                    onPressed: widget.onApply,
+                    label: 'Appliquer',
+                    onPressed: _applyFilters,
                   ),
                 ),
               ],

@@ -15,6 +15,9 @@ class HistoryStrings {
   static const String allDates = "Toutes les dates";
   static const String result = "RÉSULTAT";
   static const String allResult = "Tous les résultats";
+  static const String noGameFound =
+      "Aucune partie trouvée correspondant aux filtres sélectionnés.";
+  static const String allGames = "Supprimer les filtres";
 
   //history card
   static const String classicVictory = "Victoire classique";
