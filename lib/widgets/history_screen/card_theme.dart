@@ -19,7 +19,7 @@ class ResultTheme {
 
   static ResultTheme of(GameResultType type) {
     switch (type) {
-      case GameResultType.classicWin:
+      case GameResultType.classicVictory:
         // Cas standard : fond crème habituel, badge doré — cohérent avec
         // le reste de l'app.
         return const ResultTheme(
@@ -29,7 +29,7 @@ class ResultTheme {
           badgeGradient: [AppColors.gold, AppColors.goldDeep],
           badgeFg: AppColors.wineDeep,
         );
-      case GameResultType.capotWin:
+      case GameResultType.capotVictory:
         // Résultat plus rare et plus fort : fond légèrement doré, badge
         // inversé (fond bordeaux, symbole doré) pour marquer le contraste.
         return ResultTheme(

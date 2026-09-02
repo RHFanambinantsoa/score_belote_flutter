@@ -21,6 +21,7 @@ class AppStrings {
 
   // Teams
   static const String teams = "Les équipes ...";
+  static const String team = "ÉQUIPE";
   static const String teamInputHint = "Nom de l'équipe";
   static const String teamA = "EQUIPE 1";
   static const String teamB = "EQUIPE 2";
@@ -35,6 +36,7 @@ class AppStrings {
   static const String delete = "Supprimer";
   static const String reset = "Réinitialiser";
   static const String abandon = 'Abandonner';
+  static const String apply = 'Appliquer';
 
   // Common emojis / symbols
   static const String warningEmoji = "⚠️";
