@@ -1,3 +1,3 @@
 enum GameStatus { running, finished, abandoned }
 
-enum GameResultType { classicWin, capotWin, abandoned }
+enum GameResultType { classicVictory, capotVictory, abandoned }

@@ -12,34 +12,28 @@ class AppDeleteHistoryButton extends StatelessWidget {
   const AppDeleteHistoryButton({super.key, this.onPressed});
 
   @override
-  Widget build(BuildContext context) => Row(
-    children: [
-      Expanded(
-        child: GestureDetector(
-          onTap: () async {
-            final confirmed = await AppConfirmDialog.show(
-              context,
-              title: HistoryStrings.deleteHistoryModalTitle,
-              message: HistoryStrings.deleteHistoryModalMessage,
-              confirmLabel: AppStrings.delete,
-              isDestructive: true,
-              icon: AppStrings.binEmoji,
-            );
-            if (confirmed == true) {
-              onPressed!();
-              //execution de la fonction ou onPressed?.call()
-              // todo : suppresssion de l'historique
-            }
-          },
-          child: _valueRow(
-            context,
-            SettingsStrings.deleteHistory,
-            AppStrings.reset,
-            valueColor: AppColors.red,
-          ),
-        ),
-      ),
-    ],
+  Widget build(BuildContext context) => GestureDetector(
+    onTap: () async {
+      final confirmed = await AppConfirmDialog.show(
+        context,
+        title: HistoryStrings.deleteHistoryModalTitle,
+        message: HistoryStrings.deleteHistoryModalMessage,
+        confirmLabel: AppStrings.delete,
+        isDestructive: true,
+        icon: AppStrings.binEmoji,
+      );
+      if (confirmed == true) {
+        onPressed!();
+        //execution de la fonction ou onPressed?.call()
+        // todo : suppresssion de l'historique
+      }
+    },
+    child: _valueRow(
+      context,
+      SettingsStrings.deleteHistory,
+      AppStrings.reset,
+      valueColor: AppColors.red,
+    ),
   );
 }
 
@@ -65,7 +59,6 @@ Widget _valueRow(
 );
 
 Widget _rowContainer(Widget child) => Container(
-  margin: const EdgeInsets.only(bottom: 10),
   padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
   decoration: BoxDecoration(
     color: AppColors.cream2,

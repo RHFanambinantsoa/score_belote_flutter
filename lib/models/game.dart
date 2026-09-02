@@ -76,9 +76,9 @@ class Game {
                   settings.isCapotVictoryAllowed(
                     CapotVictoryType.allTrumpDedans,
                   )))) {
-        return GameResultType.capotWin;
+        return GameResultType.capotVictory;
       } else {
-        return GameResultType.classicWin;
+        return GameResultType.classicVictory;
       }
     }
   }
@@ -150,11 +150,11 @@ class Game {
       case GameResultType.abandoned:
         return HistoryStrings.abandonnedGame;
 
-      case GameResultType.capotWin:
+      case GameResultType.capotVictory:
         return "${HistoryStrings.capotVictory} "
-            "${rounds.last.gameVariant.isSuit ? "Couleur ${rounds.last.gameVariant.abbreviation}" : "${rounds.last.gameVariant.abbreviation} Dedans"}";
+            "${rounds.last.gameVariant.isSuit ? "👉 Couleur ${rounds.last.gameVariant.abbreviation}" : "${rounds.last.gameVariant.abbreviation} Dedans"}";
 
-      case GameResultType.classicWin:
+      case GameResultType.classicVictory:
         return HistoryStrings.classicVictory;
     }
   }
