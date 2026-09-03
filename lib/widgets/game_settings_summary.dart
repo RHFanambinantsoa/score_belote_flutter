@@ -30,7 +30,13 @@ class GameSettingsSummary extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('PARAMÈTRES DE LA PARTIE', style: AppTextStyles.sectionLabel),
+        Center(
+          child: Text(
+            'OPTIONS DE LA PARTIE',
+            style: AppTextStyles.sectionLabel,
+          ),
+        ),
+
         const SizedBox(height: 6),
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 4),
@@ -76,7 +82,7 @@ class GameSettingsSummary extends StatelessWidget {
         const SizedBox(height: 10),
         if (!viewMode)
           AppGhostButton(
-            label: 'Modifier les paramètres',
+            label: 'Modifier les options',
             onPressed: onEditSettings,
           ),
       ],

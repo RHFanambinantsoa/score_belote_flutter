@@ -8,10 +8,13 @@ import '../../theme/app_colors.dart';
 class RoundsTitleSection extends StatelessWidget {
   final Game game;
   final void Function(TeamType team) addFromTeam;
+  final VoidCallback? showSettings;
+
   const RoundsTitleSection({
     super.key,
     required this.game,
     required this.addFromTeam,
+    this.showSettings,
   });
   @override
   Widget build(BuildContext context) {
@@ -24,12 +27,15 @@ class RoundsTitleSection extends StatelessWidget {
             children: [
               Expanded(
                 flex: 5,
-                child: Center(
-                  child: Text(
-                    ScoreStrings.game,
-                    style: AppTextStyles.sectionLabel.copyWith(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w800,
+                child: GestureDetector(
+                  onTap: showSettings,
+                  child: Center(
+                    child: Text(
+                      "${ScoreStrings.game} ℹ️",
+                      style: AppTextStyles.sectionLabel.copyWith(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w800,
+                      ),
                     ),
                   ),
                 ),

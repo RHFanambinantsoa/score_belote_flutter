@@ -167,7 +167,7 @@ class _ScoreScreenState extends State<ScoreScreen> {
       context: context,
       backgroundColor: Colors.transparent,
       builder: (_) => Container(
-        padding: const EdgeInsets.fromLTRB(22, 10, 22, 24),
+        padding: const EdgeInsets.fromLTRB(15, 40, 15, 0),
         decoration: const BoxDecoration(
           color: AppColors.cream,
           borderRadius: BorderRadius.vertical(top: Radius.circular(26)),
@@ -213,6 +213,8 @@ class _ScoreScreenState extends State<ScoreScreen> {
               RoundsTitleSection(
                 game: widget.game,
                 addFromTeam: _onAddNewRound,
+                showSettings: () =>
+                    _openSettingsSheet(context, widget.game.settings),
               ),
               Expanded(
                 child: RoundsListview(
