@@ -92,11 +92,11 @@ class _ScoreScreenState extends State<ScoreScreen> {
     _checkVictory(widget.game);
   }
 
-  void _onAddNewRound() async {
+  void _onAddNewRound(TeamType? team) async {
     final round = await showModalBottomSheet<Round>(
       context: context,
       builder: (context) {
-        return AddRoundModal(game: widget.game);
+        return AddRoundModal(game: widget.game, team: team);
       },
     );
     if (round != null) {
@@ -196,7 +196,10 @@ class _ScoreScreenState extends State<ScoreScreen> {
                 game: widget.game,
                 targetScore: widget.game.targetScore,
               ),
-              RoundsTitleSection(game: widget.game),
+              RoundsTitleSection(
+                game: widget.game,
+                addFromTeam: _onAddNewRound,
+              ),
               Expanded(
                 child: RoundsListview(
                   rounds: widget.game.rounds.reversed.toList(),
@@ -220,7 +223,7 @@ class _ScoreScreenState extends State<ScoreScreen> {
                         flex: widget.game.rounds.isNotEmpty ? 8 : 1,
                         child: AppPrimaryButton(
                           label: ScoreStrings.addScore,
-                          onPressed: () => _onAddNewRound(),
+                          onPressed: () => _onAddNewRound(null),
                         ),
                       ),
                     if (widget.game.status == GameStatus.finished &&

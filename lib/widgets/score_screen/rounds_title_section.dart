@@ -1,13 +1,18 @@
 import 'package:flutter/widgets.dart';
 import 'package:score_belote/constants/score_strings.dart';
+import 'package:score_belote/enums/team_type.dart';
 import 'package:score_belote/models/game.dart';
 import 'package:score_belote/theme/app_text_styles.dart';
 import '../../theme/app_colors.dart';
 
 class RoundsTitleSection extends StatelessWidget {
   final Game game;
-  const RoundsTitleSection({super.key, required this.game});
-
+  final void Function(TeamType team) addFromTeam;
+  const RoundsTitleSection({
+    super.key,
+    required this.game,
+    required this.addFromTeam,
+  });
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -32,14 +37,17 @@ class RoundsTitleSection extends StatelessWidget {
               _verticalLine(),
               Expanded(
                 flex: 4,
-                child: Center(
-                  child: Text(
-                    game.teamA.label,
-                    style: AppTextStyles.sectionLabel.copyWith(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w800,
+                child: GestureDetector(
+                  onTap: () => addFromTeam(TeamType.teamA),
+                  child: Center(
+                    child: Text(
+                      game.teamA.label,
+                      style: AppTextStyles.sectionLabel.copyWith(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w800,
+                      ),
+                      overflow: TextOverflow.ellipsis,
                     ),
-                    overflow: TextOverflow.ellipsis,
                   ),
                 ),
               ),
@@ -47,14 +55,17 @@ class RoundsTitleSection extends StatelessWidget {
               _verticalLine(),
               Expanded(
                 flex: 4,
-                child: Center(
-                  child: Text(
-                    game.teamB.label,
-                    style: AppTextStyles.sectionLabel.copyWith(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w800,
+                child: GestureDetector(
+                  onTap: () => addFromTeam(TeamType.teamB),
+                  child: Center(
+                    child: Text(
+                      game.teamB.label,
+                      style: AppTextStyles.sectionLabel.copyWith(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w800,
+                      ),
+                      overflow: TextOverflow.ellipsis,
                     ),
-                    overflow: TextOverflow.ellipsis,
                   ),
                 ),
               ),
