@@ -178,6 +178,20 @@ class _ScoreScreenState extends State<ScoreScreen> {
     );
   }
 
+  void _resumeGame() {
+    setState(() {
+      HistoryService.remove(widget.game);
+      widget.game.resumeGame();
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(
+          builder: (_) => ScoreScreen(game: widget.game, viewMode: false),
+        ),
+        (route) => route.isFirst,
+      );
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return PopScope(
@@ -242,6 +256,22 @@ class _ScoreScreenState extends State<ScoreScreen> {
                     SizedBox(width: 10),
                   ],
                 ),
+              if (widget.game.status == GameStatus.abandoned && widget.viewMode)
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 15),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        flex: 1,
+                        child: AppPrimaryButton(
+                          label: ScoreStrings.resumeGame,
+                          onPressed: () => _resumeGame(),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+
               SizedBox(height: 20),
             ],
           ),

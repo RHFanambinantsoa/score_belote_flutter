@@ -145,6 +145,13 @@ class Game {
     endedAt = DateTime.now();
   }
 
+  void resumeGame() {
+    if (status != GameStatus.abandoned) return;
+    winner = null;
+    status = GameStatus.running;
+    endedAt = null;
+  }
+
   //Private methods
   int _totalScore(TeamType teamType) {
     return rounds.fold(

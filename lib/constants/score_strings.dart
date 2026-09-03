@@ -4,6 +4,7 @@ class ScoreStrings {
   //add score
   static const String newScore = "Nouveau score";
   static const String splitScoreMode = "Score partagé";
+  static const String resumeGame = "Reprendre la partie";
 
   static const String winner = "GAGNANT";
   static const String caller = "Qui a fait l'appel?";
