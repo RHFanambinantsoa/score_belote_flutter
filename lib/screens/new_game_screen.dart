@@ -11,8 +11,10 @@ import 'package:score_belote/theme/app_text_styles.dart';
 import 'package:score_belote/widgets/base/buttons.dart';
 import 'package:score_belote/models/game.dart';
 import 'package:score_belote/models/team.dart';
+import 'package:score_belote/models/game_settings.dart';
 import 'package:score_belote/widgets/team_input.dart';
 import 'package:score_belote/widgets/base/topbar.dart';
+import 'package:score_belote/widgets/game_settings_summary.dart';
 import 'package:score_belote/services/settings_service.dart';
 
 class NewGameScreen extends StatefulWidget {
@@ -79,64 +81,63 @@ class _NewGameScreenState extends State<NewGameScreen> {
 
   @override
   Widget build(BuildContext context) {
+    GameSettings settings = SettingsService.settings;
     return Scaffold(
       appBar: AppTopBar(title: AppStrings.newGame),
       body: Padding(
         padding: const EdgeInsets.all(24),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
 
-          children: [
-            Center(
-              child: Text(AppStrings.teams, style: AppTextStyles.appTitle),
-            ),
-            const SizedBox(height: 40),
-
-            Text(AppStrings.teamA, style: AppTextStyles.sectionLabel),
-            const SizedBox(height: 12),
-            TeamNameField(
-              controller: _teamAController,
-              suit: GameVariant.diamonds.abbreviation,
-            ),
-            SizedBox(
-              height: 24,
-              child: _aEmpty ? _warning(ErrorMessages.emptyTeamField) : null,
-            ),
-
-            const SizedBox(height: 12),
-            Center(
-              child: Text(
-                AppStrings.versus,
-                style: AppTextStyles.sectionLabel.copyWith(
-                  color: AppColors.goldDeep,
-                  fontWeight: FontWeight(800),
-                ),
+            children: [
+              Text(AppStrings.teamA, style: AppTextStyles.sectionLabel),
+              const SizedBox(height: 6),
+              TeamNameField(
+                controller: _teamAController,
+                suit: GameVariant.diamonds.abbreviation,
               ),
-            ),
-            const SizedBox(height: 12),
-            Text(AppStrings.teamB, style: AppTextStyles.sectionLabel),
-            const SizedBox(height: 12),
-            TeamNameField(
-              controller: _teamBController,
-              suit: GameVariant.spades.abbreviation,
-            ),
-            SizedBox(
-              height: 24,
-              child: _bEmpty
-                  ? _warning(ErrorMessages.emptyTeamField)
-                  : _duplicate
-                  ? _warning(ErrorMessages.duplicateTeamsNames)
-                  : null,
-            ),
-            const SizedBox(height: 40),
+              SizedBox(
+                height: 24,
+                child: _aEmpty ? _warning(ErrorMessages.emptyTeamField) : null,
+              ),
 
-            AppPrimaryButton(
-              label: AppStrings.play,
-              onPressed: _isValid ? _validateTeams : null,
-            ),
-            //comme ngIf en Angular,
-          ],
+              const SizedBox(height: 12),
+
+              Text(AppStrings.teamB, style: AppTextStyles.sectionLabel),
+              const SizedBox(height: 6),
+              TeamNameField(
+                controller: _teamBController,
+                suit: GameVariant.spades.abbreviation,
+              ),
+              SizedBox(
+                height: 24,
+                child: _bEmpty
+                    ? _warning(ErrorMessages.emptyTeamField)
+                    : _duplicate
+                    ? _warning(ErrorMessages.duplicateTeamsNames)
+                    : null,
+              ),
+
+              //settings
+              const SizedBox(height: 20),
+              GameSettingsSummary(
+                settings: settings,
+                onEditSettings: () {
+                  Navigator.pushNamed(context, RouteNames.settings).then((_) {
+                    setState(() {});
+                  });
+                },
+              ),
+              const SizedBox(height: 40),
+              AppPrimaryButton(
+                label: AppStrings.play,
+                onPressed: _isValid ? _validateTeams : null,
+              ),
+              //comme ngIf en Angular,
+            ],
+          ),
         ),
       ),
     );
