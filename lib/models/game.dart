@@ -31,17 +31,12 @@ class Game {
     status = GameStatus.running;
   }
 
-  int _totalScore(TeamType teamType) {
-    return rounds.fold(
-      //fold, accumulateur equivalent à reduce()
-      //argument1: 0 valeur de départ => total=0
-      //argument2: fonction qui prend en paramète l'accumulateur total et l'élément courant de la liste
-      0,
-      (total, round) =>
-          total +
-          (teamType == TeamType.teamA ? round.teamAScore : round.teamBScore),
-    );
-  }
+  //Getters
+  bool get isDrawAtTarget => //les deux équipes ont dépassé l'objectif
+      totalScoreA >= targetScore && totalScoreB >= targetScore;
+
+  bool get hasReachedTargetScore => //un équipe à attenit l'objectif
+      totalScoreA >= targetScore || totalScoreB >= targetScore;
 
   int get totalScoreA => _totalScore(TeamType.teamA);
   //C'est un getter Dart. Un getter ressemble à une propriété, mais il exécute du code.
@@ -49,18 +44,6 @@ class Game {
 
   int get totalScoreB => _totalScore(TeamType.teamB);
   List<Team> get teams => [teamA, teamB];
-
-  bool get isDrawAtTarget => //les deux équipes ont dépassé l'objectif
-      totalScoreA >= targetScore && totalScoreB >= targetScore;
-
-  bool get hasReachedTargetScore => //un équipe à attenit l'objectif
-      totalScoreA >= targetScore || totalScoreB >= targetScore;
-
-  TeamType? _winner() {
-    if (totalScoreA > totalScoreB) return TeamType.teamA;
-    if (totalScoreB > totalScoreA) return TeamType.teamB;
-    return null;
-  }
 
   GameResultType get gameResultType {
     if (status == GameStatus.abandoned) {
@@ -123,28 +106,6 @@ class Game {
     return _formatDuration(startedAt, endedAt!);
   }
 
-  String _formatDuration(DateTime start, DateTime end) {
-    final duration = end.difference(start);
-
-    final days = duration.inDays;
-    final hours = duration.inHours % 24;
-    final minutes = duration.inMinutes % 60;
-    final seconds = duration.inSeconds % 60;
-
-    if (days > 0) {
-      return '${days}j${hours}h${minutes.toString().padLeft(2, '0')}mn';
-    }
-
-    if (hours > 0) {
-      return '${hours}h${minutes.toString().padLeft(2, '0')}mn';
-    }
-    if (minutes > 0) {
-      return '${minutes}mn';
-    }
-
-    return '${seconds}s';
-  }
-
   String get gameResultLabel {
     switch (gameResultType) {
       case GameResultType.abandoned:
@@ -159,6 +120,7 @@ class Game {
     }
   }
 
+  //ACTIONS
   void increaseTargetScore() {
     targetScore += ScoreConstants.targetIncrementInterval;
   }
@@ -181,5 +143,45 @@ class Game {
     winner = null;
     status = GameStatus.abandoned;
     endedAt = DateTime.now();
+  }
+
+  //Private methods
+  int _totalScore(TeamType teamType) {
+    return rounds.fold(
+      //fold, accumulateur equivalent à reduce()
+      //argument1: 0 valeur de départ => total=0
+      //argument2: fonction qui prend en paramète l'accumulateur total et l'élément courant de la liste
+      0,
+      (total, round) =>
+          total +
+          (teamType == TeamType.teamA ? round.teamAScore : round.teamBScore),
+    );
+  }
+
+  TeamType? _winner() {
+    if (totalScoreA > totalScoreB) return TeamType.teamA;
+    if (totalScoreB > totalScoreA) return TeamType.teamB;
+    return null;
+  }
+
+  String _formatDuration(DateTime start, DateTime end) {
+    final duration = end.difference(start);
+
+    final days = duration.inDays;
+    final hours = duration.inHours % 24;
+    final minutes = duration.inMinutes % 60;
+    final seconds = duration.inSeconds % 60;
+
+    if (days > 0) {
+      return '${days}j${hours}h${minutes.toString().padLeft(2, '0')}mn';
+    }
+
+    if (hours > 0) {
+      return '${hours}h${minutes.toString().padLeft(2, '0')}mn';
+    }
+    if (minutes > 0) {
+      return '${minutes}mn';
+    }
+    return '${seconds}s';
   }
 }

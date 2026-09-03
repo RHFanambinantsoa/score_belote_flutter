@@ -124,6 +124,7 @@ class _NewGameScreenState extends State<NewGameScreen> {
               const SizedBox(height: 20),
               GameSettingsSummary(
                 settings: settings,
+                viewMode: false,
                 onEditSettings: () {
                   Navigator.pushNamed(context, RouteNames.settings).then((_) {
                     setState(() {});

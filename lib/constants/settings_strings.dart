@@ -2,11 +2,10 @@ class SettingsStrings {
   SettingsStrings._();
 
   static const String gameOptions = "Options du jeu";
-  static const String allowSplitScore = "Autoriser le partage du score (TA)";
+  static const String allowSplitScore = "ToutA Mizara";
   static const String allowClubsRedoubleScore = "Autoriser le Trèfle Surcontré";
   static const String allowNoTrumpRedoubleScore =
       "Autoriser le SansA Surcontré";
-  static const String endGameRoundsLabel = "Victoire par Capot";
   static const String allTrumpCapotDedansVictory =
       "Capot Dedans ToutA (150pts)";
   static const String suitsCapotVictory = "Capot Couleur (150pts)";

@@ -20,12 +20,10 @@ class AppStrings {
       "elle vous permet de suivre le score sans avoir à vous soucier des calculs complexes.";
 
   // Teams
-  static const String teams = "Les équipes ...";
   static const String team = "ÉQUIPE";
   static const String teamInputHint = "Nom de l'équipe";
   static const String teamA = "EQUIPE 1";
   static const String teamB = "EQUIPE 2";
-  static const String versus = "◆ CONTRE ◆";
 
   static const String defaultTeamAName = "Tsika";
   static const String defaultTeamBName = "Zareo";
@@ -47,8 +45,9 @@ class AppStrings {
   static const String cardEmoji = "🃏";
 
   //not found screen
-  static const String notFoundPage = "Page introuvable";
+  static const String notFoundPage =
+      "Page introuvable"; //tsy hita ilay pejy haha
   static const String notFoundDesc =
-      'Désolé, cette page n’existe pas ou n’est plus disponible.';
+      'Désolé, cette page n’existe pas ou n’est plus disponible.'; //tsy misy na tsy mandeha intsony io pejy io
   static const String backToHome = 'Retour à l’accueil';
 }
