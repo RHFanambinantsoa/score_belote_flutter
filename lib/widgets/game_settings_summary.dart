@@ -7,14 +7,14 @@ import 'package:score_belote/widgets/base/buttons.dart';
 
 class GameSettingsSummary extends StatelessWidget {
   final GameSettings settings;
-  final VoidCallback onEditSettings;
+  final VoidCallback? onEditSettings;
   final bool viewMode;
 
   const GameSettingsSummary({
     super.key,
     required this.settings,
-    required this.onEditSettings,
     required this.viewMode,
+    this.onEditSettings,
   });
 
   @override

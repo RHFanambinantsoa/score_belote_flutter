@@ -3,11 +3,13 @@ import 'package:score_belote/constants/app_strings.dart';
 import 'package:score_belote/constants/score_strings.dart';
 import 'package:score_belote/enums/game_status.dart';
 import 'package:score_belote/enums/team_type.dart';
+import 'package:score_belote/models/game_settings.dart';
 import 'package:score_belote/models/round.dart';
 import 'package:score_belote/models/game.dart';
 import 'package:score_belote/routes/route_names.dart';
 import 'package:score_belote/services/history_service.dart';
 import 'package:score_belote/widgets/base/snack_bar.dart';
+import 'package:score_belote/widgets/game_settings_summary.dart';
 import 'package:score_belote/widgets/modals/add_round_modal.dart';
 import 'package:score_belote/widgets/base/buttons.dart';
 import 'package:score_belote/widgets/modals/confirm_modal.dart';
@@ -16,6 +18,7 @@ import 'package:score_belote/widgets/base/topbar.dart';
 import 'package:score_belote/widgets/score_screen/total_score_section.dart';
 import 'package:score_belote/widgets/score_screen/rounds_listview.dart';
 import 'package:score_belote/widgets/modals/victory_modal.dart';
+import 'package:score_belote/theme/app_colors.dart';
 
 class ScoreScreen extends StatefulWidget {
   final Game game;
@@ -157,6 +160,22 @@ class _ScoreScreenState extends State<ScoreScreen> {
     } else {
       Navigator.of(context).maybePop();
     }
+  }
+
+  void _openSettingsSheet(BuildContext context, GameSettings settings) {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      builder: (_) => Container(
+        padding: const EdgeInsets.fromLTRB(22, 10, 22, 24),
+        decoration: const BoxDecoration(
+          color: AppColors.cream,
+          borderRadius: BorderRadius.vertical(top: Radius.circular(26)),
+          border: Border(top: BorderSide(color: AppColors.brown, width: 4)),
+        ),
+        child: GameSettingsSummary(settings: settings, viewMode: true),
+      ),
+    );
   }
 
   @override
