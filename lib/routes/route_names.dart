@@ -6,5 +6,6 @@ class RouteNames {
   static const score = '/score';
   static const settings = '/settings';
   static const rules = '/rules';
+  static const about = '/about';
   static const history = '/history';
 }

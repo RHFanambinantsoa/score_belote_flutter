@@ -21,7 +21,8 @@ import 'package:score_belote/widgets/add_round/round_status_selector.dart';
 
 class AddRoundModal extends StatefulWidget {
   final Game game;
-  const AddRoundModal({super.key, required this.game});
+  final TeamType? team;
+  const AddRoundModal({super.key, required this.game, required this.team});
 
   @override
   State<AddRoundModal> createState() => _AddRoundModalState();
@@ -39,7 +40,9 @@ class _AddRoundModalState extends State<AddRoundModal> {
       isSplit: false,
       isCapot: false,
       isDedans: false,
-      winner: TeamType.teamA,
+      winner: widget.team == null || widget.team == TeamType.teamA
+          ? TeamType.teamA
+          : TeamType.teamB,
       splitValue: widget.game.settings.orderedAllowedSplits.isNotEmpty
           ? widget.game.settings.orderedAllowedSplits[0]
           : null,

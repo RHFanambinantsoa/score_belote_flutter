@@ -91,6 +91,12 @@ class SettingsScreenState extends State<SettingsScreen> {
                   child: GroupLabel(label: SettingsStrings.info.toUpperCase()),
                 ),
                 NavigationButton(
+                  text: SettingsStrings.about,
+                  onPressed: () =>
+                      Navigator.pushNamed(context, RouteNames.about),
+                ),
+                NavigationButton(
+                  text: SettingsStrings.gameRules,
                   onPressed: () =>
                       Navigator.pushNamed(context, RouteNames.rules),
                 ),

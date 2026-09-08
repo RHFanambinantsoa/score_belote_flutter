@@ -3,11 +3,13 @@ import 'package:score_belote/constants/app_strings.dart';
 import 'package:score_belote/constants/score_strings.dart';
 import 'package:score_belote/enums/game_status.dart';
 import 'package:score_belote/enums/team_type.dart';
+import 'package:score_belote/models/game_settings.dart';
 import 'package:score_belote/models/round.dart';
 import 'package:score_belote/models/game.dart';
 import 'package:score_belote/routes/route_names.dart';
 import 'package:score_belote/services/history_service.dart';
 import 'package:score_belote/widgets/base/snack_bar.dart';
+import 'package:score_belote/widgets/game_settings_summary.dart';
 import 'package:score_belote/widgets/modals/add_round_modal.dart';
 import 'package:score_belote/widgets/base/buttons.dart';
 import 'package:score_belote/widgets/modals/confirm_modal.dart';
@@ -16,6 +18,7 @@ import 'package:score_belote/widgets/base/topbar.dart';
 import 'package:score_belote/widgets/score_screen/total_score_section.dart';
 import 'package:score_belote/widgets/score_screen/rounds_listview.dart';
 import 'package:score_belote/widgets/modals/victory_modal.dart';
+import 'package:score_belote/theme/app_colors.dart';
 
 class ScoreScreen extends StatefulWidget {
   final Game game;
@@ -89,11 +92,11 @@ class _ScoreScreenState extends State<ScoreScreen> {
     _checkVictory(widget.game);
   }
 
-  void _onAddNewRound() async {
+  void _onAddNewRound(TeamType? team) async {
     final round = await showModalBottomSheet<Round>(
       context: context,
       builder: (context) {
-        return AddRoundModal(game: widget.game);
+        return AddRoundModal(game: widget.game, team: team);
       },
     );
     if (round != null) {
@@ -159,6 +162,36 @@ class _ScoreScreenState extends State<ScoreScreen> {
     }
   }
 
+  void _openSettingsSheet(BuildContext context, GameSettings settings) {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      builder: (_) => Container(
+        padding: const EdgeInsets.fromLTRB(15, 40, 15, 0),
+        decoration: const BoxDecoration(
+          color: AppColors.cream,
+          borderRadius: BorderRadius.vertical(top: Radius.circular(26)),
+          border: Border(top: BorderSide(color: AppColors.brown, width: 4)),
+        ),
+        child: GameSettingsSummary(settings: settings, viewMode: true),
+      ),
+    );
+  }
+
+  void _resumeGame() {
+    setState(() {
+      HistoryService.remove(widget.game);
+      widget.game.resumeGame();
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(
+          builder: (_) => ScoreScreen(game: widget.game, viewMode: false),
+        ),
+        (route) => route.isFirst,
+      );
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return PopScope(
@@ -177,7 +210,12 @@ class _ScoreScreenState extends State<ScoreScreen> {
                 game: widget.game,
                 targetScore: widget.game.targetScore,
               ),
-              RoundsTitleSection(game: widget.game),
+              RoundsTitleSection(
+                game: widget.game,
+                addFromTeam: _onAddNewRound,
+                showSettings: () =>
+                    _openSettingsSheet(context, widget.game.settings),
+              ),
               Expanded(
                 child: RoundsListview(
                   rounds: widget.game.rounds.reversed.toList(),
@@ -201,7 +239,7 @@ class _ScoreScreenState extends State<ScoreScreen> {
                         flex: widget.game.rounds.isNotEmpty ? 8 : 1,
                         child: AppPrimaryButton(
                           label: ScoreStrings.addScore,
-                          onPressed: () => _onAddNewRound(),
+                          onPressed: () => _onAddNewRound(null),
                         ),
                       ),
                     if (widget.game.status == GameStatus.finished &&
@@ -220,6 +258,22 @@ class _ScoreScreenState extends State<ScoreScreen> {
                     SizedBox(width: 10),
                   ],
                 ),
+              if (widget.game.status == GameStatus.abandoned && widget.viewMode)
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 15),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        flex: 1,
+                        child: AppPrimaryButton(
+                          label: ScoreStrings.resumeGame,
+                          onPressed: () => _resumeGame(),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+
               SizedBox(height: 20),
             ],
           ),

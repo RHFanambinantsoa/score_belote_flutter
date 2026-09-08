@@ -7,6 +7,7 @@ class HistoryService {
 
   static void add(Game game) {
     _games.add(game);
+    _games.sort((a, b) => b.startedAt.compareTo(a.startedAt));
   }
 
   static void remove(Game game) {

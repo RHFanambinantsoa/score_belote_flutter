@@ -1,13 +1,21 @@
 import 'package:flutter/widgets.dart';
 import 'package:score_belote/constants/score_strings.dart';
+import 'package:score_belote/enums/team_type.dart';
 import 'package:score_belote/models/game.dart';
 import 'package:score_belote/theme/app_text_styles.dart';
 import '../../theme/app_colors.dart';
 
 class RoundsTitleSection extends StatelessWidget {
   final Game game;
-  const RoundsTitleSection({super.key, required this.game});
+  final void Function(TeamType team) addFromTeam;
+  final VoidCallback? showSettings;
 
+  const RoundsTitleSection({
+    super.key,
+    required this.game,
+    required this.addFromTeam,
+    this.showSettings,
+  });
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -19,12 +27,15 @@ class RoundsTitleSection extends StatelessWidget {
             children: [
               Expanded(
                 flex: 5,
-                child: Center(
-                  child: Text(
-                    ScoreStrings.game,
-                    style: AppTextStyles.sectionLabel.copyWith(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w800,
+                child: GestureDetector(
+                  onTap: showSettings,
+                  child: Center(
+                    child: Text(
+                      "${ScoreStrings.game} ℹ️",
+                      style: AppTextStyles.sectionLabel.copyWith(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w800,
+                      ),
                     ),
                   ),
                 ),
@@ -32,14 +43,17 @@ class RoundsTitleSection extends StatelessWidget {
               _verticalLine(),
               Expanded(
                 flex: 4,
-                child: Center(
-                  child: Text(
-                    game.teamA.label,
-                    style: AppTextStyles.sectionLabel.copyWith(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w800,
+                child: GestureDetector(
+                  onTap: () => addFromTeam(TeamType.teamA),
+                  child: Center(
+                    child: Text(
+                      game.teamA.label,
+                      style: AppTextStyles.sectionLabel.copyWith(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w800,
+                      ),
+                      overflow: TextOverflow.ellipsis,
                     ),
-                    overflow: TextOverflow.ellipsis,
                   ),
                 ),
               ),
@@ -47,14 +61,17 @@ class RoundsTitleSection extends StatelessWidget {
               _verticalLine(),
               Expanded(
                 flex: 4,
-                child: Center(
-                  child: Text(
-                    game.teamB.label,
-                    style: AppTextStyles.sectionLabel.copyWith(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w800,
+                child: GestureDetector(
+                  onTap: () => addFromTeam(TeamType.teamB),
+                  child: Center(
+                    child: Text(
+                      game.teamB.label,
+                      style: AppTextStyles.sectionLabel.copyWith(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w800,
+                      ),
+                      overflow: TextOverflow.ellipsis,
                     ),
-                    overflow: TextOverflow.ellipsis,
                   ),
                 ),
               ),

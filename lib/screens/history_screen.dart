@@ -238,7 +238,7 @@ class _HistoryList extends StatelessWidget {
             child: hasActiveFilters && games.isEmpty
                 ? _noGamesFound()
                 : HistoryListview(
-                    games: games.reversed.toList(),
+                    games: games,
                     onDeleteCard: onDeleteCard,
                     onTapCard: onTapCard,
                   ),
