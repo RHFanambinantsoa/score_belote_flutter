@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:score_belote/constants/settings_strings.dart';
 import 'package:score_belote/theme/app_colors.dart';
 import 'package:score_belote/theme/app_text_styles.dart';
 
 class NavigationButton extends StatelessWidget {
+  final String text;
   final VoidCallback? onPressed;
 
-  const NavigationButton({super.key, required this.onPressed});
+  const NavigationButton({
+    super.key,
+    required this.text,
+    required this.onPressed,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +20,7 @@ class NavigationButton extends StatelessWidget {
           child: GestureDetector(
             onTap: onPressed,
             child: Container(
-              // margin: const EdgeInsets.only(bottom: 10),
+              margin: const EdgeInsets.only(bottom: 10),
               padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
               // padding: const EdgeInsets.all(30),
               decoration: BoxDecoration(
@@ -31,7 +35,7 @@ class NavigationButton extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    SettingsStrings.gameRules,
+                    text,
                     style: AppTextStyles.bodyBold.copyWith(fontSize: 14),
                   ),
                   Icon(Icons.chevron_right, color: AppColors.wine, size: 18),

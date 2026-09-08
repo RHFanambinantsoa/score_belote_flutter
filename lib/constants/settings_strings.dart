@@ -13,4 +13,5 @@ class SettingsStrings {
   static const String info = "Info";
   static const String deleteHistory = "Effacer l'historique";
   static const String gameRules = "Règles du jeu";
+  static const String about = "À propos";
 }

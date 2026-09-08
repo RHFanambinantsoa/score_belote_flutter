@@ -9,6 +9,7 @@ import 'package:score_belote/screens/settings_screen.dart';
 import 'package:score_belote/screens/splash_screen.dart';
 import 'package:score_belote/screens/unknown_route_screen.dart';
 import 'package:score_belote/screens/welcome_screen.dart';
+import 'package:score_belote/screens/about_screen.dart';
 
 import 'route_names.dart';
 
@@ -39,6 +40,9 @@ class AppRoutes {
 
       case RouteNames.rules:
         return MaterialPageRoute(builder: (_) => const RuleScreen());
+
+      case RouteNames.about:
+        return MaterialPageRoute(builder: (_) => const AboutScreen());
 
       case RouteNames.history:
         return MaterialPageRoute(builder: (_) => const HistoryScreen());
