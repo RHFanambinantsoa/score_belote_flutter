@@ -25,7 +25,6 @@ class HistoryCard extends StatelessWidget {
     final theme = ResultTheme.of(game.gameResultType);
     return GestureDetector(
       onTap: onTap,
-      onLongPress: () => {print("long press")},
       child: Container(
         decoration: BoxDecoration(
           color: theme.cardBg,
