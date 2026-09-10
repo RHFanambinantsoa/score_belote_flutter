@@ -14,8 +14,6 @@ class AboutScreen extends StatelessWidget {
       body: ListView(
         padding: const EdgeInsets.fromLTRB(24, 22, 24, 28),
         children: [
-          // _Header(),
-          // const SizedBox(height: 4),
           _Paragraph(
             'Pour compter le score à la Belote, il y a deux catégories de '
             'joueurs.',
@@ -123,37 +121,6 @@ class AboutScreen extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
-}
-
-class _Header extends StatelessWidget {
-  const _Header();
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          width: 72,
-          height: 72,
-          alignment: Alignment.center,
-          decoration: const BoxDecoration(
-            shape: BoxShape.circle,
-            gradient: RadialGradient(
-              colors: [AppColors.wineLight, AppColors.wineDeep],
-              center: Alignment(-0.3, -0.4),
-            ),
-            border: Border.fromBorderSide(
-              BorderSide(color: AppColors.gold, width: 3),
-            ),
-          ),
-          child: const Text('🤔', style: TextStyle(fontSize: 32)),
-        ),
-        const SizedBox(height: 8),
-        Text('À propos', style: AppTextStyles.appTitle.copyWith(fontSize: 22)),
-        const SizedBox(height: 14),
-      ],
     );
   }
 }
